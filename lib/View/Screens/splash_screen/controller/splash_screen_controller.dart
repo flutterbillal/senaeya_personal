@@ -13,7 +13,7 @@ class SplashScreenController extends GetxController {
     String token = await SharePrefsHelper.getString(
       SharedPreferenceValue.token,
     );
-    
+
     log("""
 ✅✅✅✅✅✅✅✅✅✅✅✅✅
 
