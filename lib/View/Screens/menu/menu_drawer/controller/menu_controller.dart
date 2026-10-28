@@ -65,13 +65,12 @@ class MenuController extends GetxController {
         'https://play.google.com/store/apps/details?id=com.fahadalfayez.senaeya';
 
     const hueaweiUrl = 'https://appgallery.huawei.com/app/C116338049';
-    const gelaxyUrl = 'https://galaxystore.samsung.com/detail/com.fahadalfayez.senaeya';
+    const gelaxyUrl =
+        'https://galaxystore.samsung.com/detail/com.fahadalfayez.senaeya';
 
     const iosUrl = 'https://apps.apple.com/app/senaeya-الصناعية/id6756404472';
 
-    final String storeUrl = Platform.isAndroid
-        ?  androidUrl
-        : iosUrl;
+    final String storeUrl = Platform.isAndroid ? gelaxyUrl : iosUrl;
     launchUrl(storeUrl);
   }
 
