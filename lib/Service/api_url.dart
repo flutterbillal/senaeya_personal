@@ -1,10 +1,12 @@
 class ApiConstant {
   // "https://api.senaeya.net/api/v1"
   // "http://10.10.7.77:8002/api/v1"
-  static const baseUrl = "https://api.senaeya.net/api/v1"; //This is local url
-  static const imageBaseUrl = "https://api.senaeya.net"; //This is local url
+  //https://api-v2.senaeya.net
+  static const baseUrl =
+      "https://api-v2.senaeya.net/api/v1"; //This is local url
+  static const imageBaseUrl = "https://api-v2.senaeya.net"; //This is local url
   // static const imageBaseUrl = "http://10.10.7.103:7010/api/v1"; //This is local url
-  static const socketUrl = "https://api.senaeya.net";
+  static const socketUrl = "https://api-v2.senaeya.net";
   // static const socketUrl = "http://158.252.71.185:7010";
 
   ///<=================================== For Auth part ====================>
@@ -71,4 +73,6 @@ class ApiConstant {
       "/subscription/details/workshop/$id";
   static const getSparePartsByCode = "/spare-parts";
   static getDiscountByCupon(var id) => "/coupon/try/$id";
+
+  static const appVersion = "/settings/app-version";
 }

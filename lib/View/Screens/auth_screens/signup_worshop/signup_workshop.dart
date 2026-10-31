@@ -17,7 +17,6 @@ class SignupWorkshopScreen extends StatelessWidget {
 
   // Form key to perform validation checks for enabling the Create button
 
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SignupWorkshopController>(
@@ -79,7 +78,8 @@ class SignupWorkshopScreen extends StatelessWidget {
                           ],
                           keyboardType: TextInputType.number,
                           validator: (val) {
-                            if (val == null || val.trim().isEmpty) return 'UNN is required'.tr;
+                            if (val == null || val.trim().isEmpty)
+                              return 'UNN is required'.tr;
                             final ok = controller.validateUNN(val.trim());
                             return ok ? null : controller.unnError.value;
                           },
@@ -97,36 +97,36 @@ class SignupWorkshopScreen extends StatelessWidget {
                                 )
                               : const SizedBox.shrink(),
                         ),
-                        SizedBox(height: 12.h),
-                        _requiredField(
-                          controller.registrationNumberController,
-                          'commercial_reg_number'.tr,
-                          fontSize: 18.h,
-                          requiredDouble: true,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(10),
-                          ],
-                          keyboardType: TextInputType.number,
-                          validator: (val) {
-                            if (val == null || val.trim().isEmpty) return 'CRN is required'.tr;
-                            final ok = controller.validateCRN(val.trim());
-                            return ok ? null : controller.crnError.value;
-                          },
-                        ),
+                        // SizedBox(height: 12.h),
+                        // _requiredField(
+                        //   controller.registrationNumberController,
+                        //   'commercial_reg_number'.tr,
+                        //   fontSize: 18.h,
+                        //   requiredDouble: true,
+                        //   inputFormatters: [
+                        //     FilteringTextInputFormatter.digitsOnly,
+                        //     LengthLimitingTextInputFormatter(10),
+                        //   ],
+                        //   keyboardType: TextInputType.number,
+                        //   validator: (val) {
+                        //     if (val == null || val.trim().isEmpty) return 'CRN is required'.tr;
+                        //     final ok = controller.validateCRN(val.trim());
+                        //     return ok ? null : controller.crnError.value;
+                        //   },
+                        // ),
                         // Show CRN validation error
-                        Obx(
-                          () => controller.crnError.value.isNotEmpty
-                              ? Padding(
-                                  padding: EdgeInsets.only(top: 4.h, left: 8.w),
-                                  child: CustomText(
-                                    text: controller.crnError.value,
-                                    fontSize: 11.sp,
-                                    color: Colors.red,
-                                  ),
-                                )
-                              : const SizedBox.shrink(),
-                        ),
+                        // Obx(
+                        //   () => controller.crnError.value.isNotEmpty
+                        //       ? Padding(
+                        //           padding: EdgeInsets.only(top: 4.h, left: 8.w),
+                        //           child: CustomText(
+                        //             text: controller.crnError.value,
+                        //             fontSize: 11.sp,
+                        //             color: Colors.red,
+                        //           ),
+                        //         )
+                        //       : const SizedBox.shrink(),
+                        // ),
                         SizedBox(height: 12.h),
                         _requiredField(
                           controller.licenseNumberController,
@@ -134,12 +134,13 @@ class SignupWorkshopScreen extends StatelessWidget {
                           requiredDouble: true,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(11),
+                            LengthLimitingTextInputFormatter(12)
                           ],
                           fontSize: 18.h,
                           keyboardType: TextInputType.number,
                           validator: (val) {
-                            if (val == null || val.trim().isEmpty) return 'MLN is required'.tr;
+                            if (val == null || val.trim().isEmpty)
+                              return 'MLN is required'.tr;
                             final ok = controller.validateMLN(val.trim());
                             return ok ? null : controller.mlnError.value;
                           },
@@ -179,7 +180,8 @@ class SignupWorkshopScreen extends StatelessWidget {
                           keyboardType: TextInputType.number,
                           // Make tax optional: don't show "required" error when empty.
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty) return null;
+                            if (value == null || value.trim().isEmpty)
+                              return null;
                             // Use controller validation for format/length and return message if invalid.
                             final ok = controller.validateTaxVAT(value.trim());
                             return ok ? null : controller.taxVatError.value;
@@ -206,39 +208,47 @@ class SignupWorkshopScreen extends StatelessWidget {
                               controller.ibanController,
                               'bank_account_iban'.tr,
                               requiredDouble: false,
-
                               requiredSingle: false,
                               showNoStar: true,
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(24),
-                                TextInputFormatter.withFunction((oldValue, newValue) {
+                                TextInputFormatter.withFunction(
+                                    (oldValue, newValue) {
                                   // Ensure text always starts with "SA"
                                   String text = newValue.text.toUpperCase();
 
                                   // If user tries to delete "SA" or text is empty, reset to "SA"
-                                  if (text.isEmpty || text.length < 2 || !text.startsWith('SA')) {
+                                  if (text.isEmpty ||
+                                      text.length < 2 ||
+                                      !text.startsWith('SA')) {
                                     return const TextEditingValue(
                                       text: 'SA',
-                                      selection: TextSelection.collapsed(offset: 2),
+                                      selection:
+                                          TextSelection.collapsed(offset: 2),
                                     );
                                   }
 
                                   // Only allow digits after "SA"
                                   if (text.length > 2) {
                                     String afterSA = text.substring(2);
-                                    String digitsOnly = afterSA.replaceAll(RegExp(r'[^0-9]'), '');
+                                    String digitsOnly = afterSA.replaceAll(
+                                        RegExp(r'[^0-9]'), '');
                                     text = 'SA$digitsOnly';
                                   }
 
                                   return TextEditingValue(
                                     text: text,
-                                    selection: TextSelection.collapsed(offset: text.length),
+                                    selection: TextSelection.collapsed(
+                                        offset: text.length),
                                   );
                                 }),
                               ],
                               keyboardType: TextInputType.number,
                             ),
-                            const Positioned(top: 4,left: 0,child: CustomText(text: 'iBan'))
+                            const Positioned(
+                                top: 4,
+                                left: 0,
+                                child: CustomText(text: 'iBan'))
                           ],
                         ),
                         // Show IBAN validation error
@@ -262,9 +272,8 @@ class SignupWorkshopScreen extends StatelessWidget {
                             Obx(
                               () => Checkbox(
                                 value: controller.isMobileWorkshop.value,
-                                onChanged: (val) =>
-                                    controller.isMobileWorkshop.value =
-                                        val ?? false,
+                                onChanged: (val) => controller
+                                    .isMobileWorkshop.value = val ?? false,
                                 activeColor: const Color(0xFF0C5CA8),
                               ),
                             ),
@@ -332,11 +341,11 @@ class SignupWorkshopScreen extends StatelessWidget {
                         ),
                         // Show selected location
                         Obx(
-                          () =>
-                              controller.isLocationAdded.value &&
+                          () => controller.isLocationAdded.value &&
                                   controller.locationAddress.value.isNotEmpty
                               ? Padding(
-                                  padding: EdgeInsets.only(top: 8.h, left: 24.w),
+                                  padding:
+                                      EdgeInsets.only(top: 8.h, left: 24.w),
                                   child: Row(
                                     children: [
                                       Icon(
@@ -347,7 +356,8 @@ class SignupWorkshopScreen extends StatelessWidget {
                                       SizedBox(width: 4.w),
                                       Expanded(
                                         child: CustomText(
-                                          text: controller.locationAddress.value,
+                                          text:
+                                              controller.locationAddress.value,
                                           fontSize: 12.sp,
                                           color: Colors.green,
                                         ),
@@ -382,7 +392,9 @@ class SignupWorkshopScreen extends StatelessWidget {
                           () => CustomButton(
                             text: 'Create Workshop'.tr,
                             // Avoid calling `formKey.currentState?.validate()` in build; rely on controller.isFormValid
-                            onPressed: controller.isFormValid.value ? controller.onTapSubmit : null,
+                            onPressed: controller.isFormValid.value
+                                ? controller.onTapSubmit
+                                : null,
                             enabled: controller.isFormValid.value,
                             isLoading: controller.isLoading.value,
                           ),
@@ -419,7 +431,7 @@ class SignupWorkshopScreen extends StatelessWidget {
     bool requiredSingle = false,
     bool showNoStar = false,
     int manxLines = 1,
-        double fontSize=14,
+    double fontSize = 14,
     List<TextInputFormatter>? inputFormatters,
     TextInputType keyboardType = TextInputType.text,
     String? Function(String?)? validator,
@@ -444,10 +456,10 @@ class SignupWorkshopScreen extends StatelessWidget {
                 showOneStar: showNoStar
                     ? false
                     : requiredSingle
-                    ? true
-                    : requiredDouble
-                    ? false
-                    : true,
+                        ? true
+                        : requiredDouble
+                            ? false
+                            : true,
                 showTwoStar: requiredDouble ? true : false,
               ),
             ),
@@ -566,7 +578,6 @@ class SignupWorkshopScreen extends StatelessWidget {
             icon: SvgPicture.asset(AppIcon.dropDown),
             value: day.value,
             isExpanded: true,
-
             underline: const SizedBox(),
             style: const TextStyle(color: Colors.black87, fontSize: 10),
             items: dayKeys

@@ -16,9 +16,7 @@ class SplashScreenController extends GetxController {
 
     log("""
 ✅✅✅✅✅✅✅✅✅✅✅✅✅
-
 $token
-
 ✅✅✅✅✅✅✅✅✅✅✅✅✅
 """);
     Future.delayed(const Duration(milliseconds: 500), () {

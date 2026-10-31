@@ -317,33 +317,33 @@ class SignupScreen extends StatelessWidget {
                 : const SizedBox.shrink(),
           ),
           // Username
-          Row(
-            children: [
-              Expanded(
-                child: CustomTextFormField(
-                  controller: controller.emailController,
-                  hintText: 'email_hint'.tr,
-                  icon: AppIcon.blueMail,
-                  showOneStar: true,
-                  onChanged: (_) => controller.validateFields(),
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     Expanded(
+          //       child: CustomTextFormField(
+          //         controller: controller.emailController,
+          //         hintText: 'email_hint'.tr,
+          //         icon: AppIcon.blueMail,
+          //         showOneStar: true,
+          //         onChanged: (_) => controller.validateFields(),
+          //       ),
+          //     ),
+          //   ],
+          // ),
 
-          Row(
-            children: [
-              Expanded(
-                child: CustomTextFormField(
-                  controller: controller.confirmEmailController,
-                  hintText: 'confirm_email_hint'.tr,
-                  icon: AppIcon.blueMail,
-                  showOneStar: true,
-                  onChanged: (_) => controller.validateFields(),
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     Expanded(
+          //       child: CustomTextFormField(
+          //         controller: controller.confirmEmailController,
+          //         hintText: 'confirm_email_hint'.tr,
+          //         icon: AppIcon.blueMail,
+          //         showOneStar: true,
+          //         onChanged: (_) => controller.validateFields(),
+          //       ),
+          //     ),
+          //   ],
+          // ),
           // Password
           Row(
             children: [

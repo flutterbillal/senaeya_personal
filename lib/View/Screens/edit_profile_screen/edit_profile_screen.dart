@@ -64,7 +64,6 @@ class EditProfileScreen extends StatelessWidget {
                                     hintText: 'name_hint'.tr,
                                     icon: AppIcon.profile,
                                     showOneStar: true,
-
                                   ),
                                   // Phone (Read-only, no check button)
                                   CustomTextFieldWithButton(
@@ -83,12 +82,19 @@ class EditProfileScreen extends StatelessWidget {
                                     controller: controller.emailController,
                                     hintText: 'email_hint'.tr,
                                     icon: AppIcon.blueMail,
-                                    showOneStar: true,
+                                    showOneStar: false,
                                   ),
                                   // Password (optional for update)
                                   CustomTextFormField(
                                     controller: controller.passwordController,
-                                    hintText: 'new_password_optional'.tr,
+                                    hintText: 'new_password'.tr,
+                                    icon: AppIcon.lock,
+                                    obscureText: true,
+                                  ),
+                                  CustomTextFormField(
+                                    controller:
+                                        controller.confirmPasswordController,
+                                    hintText: 'confirm_password'.tr,
                                     icon: AppIcon.lock,
                                     obscureText: true,
                                   ),
@@ -227,7 +233,7 @@ class EditProfileScreen extends StatelessWidget {
                                   //               controller: controller
                                   //                   .additionalUsers[0]['password']!,
                                   //               hintText:
-                                  //                   'new_password_optional'.tr,
+                                  //                   'new_password'.tr,
                                   //               icon: AppIcon.lock,
                                   //               obscureText: true,
                                   //             ),

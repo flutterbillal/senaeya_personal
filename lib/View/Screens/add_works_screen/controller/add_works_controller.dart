@@ -15,7 +15,6 @@ import 'package:get/get.dart';
 
 import '../../../../Utils/AppColors/app_colors.dart';
 
-
 class CommonWorkItem {
   final String code;
   final String name;
@@ -74,15 +73,16 @@ class AddWorksController extends GetxController {
   // Calculations
   var discount = RxDouble(0.0);
 
-
   double get totalBeforeTax {
     double total = works.fold(0.0, (sum, item) => sum + item.total);
     return total;
   }
 
-  double get tax => isTaxAvailable.value?((totalBeforeTax-discount.value) * 0.15):0; // 15% VAT
+  double get tax => isTaxAvailable.value
+      ? ((totalBeforeTax - discount.value) * 0.15)
+      : 0; // 15% VAT
 
-  double get totalIncludingTax => totalBeforeTax-discount.value + tax;
+  double get totalIncludingTax => totalBeforeTax - discount.value + tax;
 
   ///from works screen value
 
@@ -105,17 +105,15 @@ class AddWorksController extends GetxController {
   String brandImage = '';
   RxBool isTaxAvailable = false.obs;
 
-
-
   RxList<WorkItem> selectedWorkModel = <WorkItem>[].obs;
-  RxList<String>selectedWorkIds=<String>[].obs;
+  RxList<String> selectedWorkIds = <String>[].obs;
 
   // Key to match HomeController's saved workshop works
   final String _prefsKeyWorkShop = 'selected_workshopwork_ids';
   RxList<String> savedWorkShopIds = <String>[].obs;
 
   @override
-  void onInit() async{
+  void onInit() async {
     super.onInit();
 
     // Get arguments
@@ -155,18 +153,20 @@ class AddWorksController extends GetxController {
     ever(searchQuery, (_) => filterWorks());
   }
 
-  RxList<WorksModel>worksList=<WorksModel>[].obs;
-  RxBool isLoading= false.obs;
+  RxList<WorksModel> worksList = <WorksModel>[].obs;
+  RxBool isLoading = false.obs;
 
   /// Load saved workshop work IDs from shared preferences
   Future<void> loadSavedWorkShopIds() async {
     try {
-      List<String> saved = await SharePrefsHelper.getLisOfString(_prefsKeyWorkShop);
+      List<String> saved =
+          await SharePrefsHelper.getLisOfString(_prefsKeyWorkShop);
       savedWorkShopIds.clear();
       //TODO: Check if saved contains duplicates before adding
       savedWorkShopIds.addAll(saved);
 
-      print("================ Loaded saved workshop work IDs: ${savedWorkShopIds.length}");
+      print(
+          "================ Loaded saved workshop work IDs: ${savedWorkShopIds.length}");
       print("================ Workshop work IDs: $savedWorkShopIds");
 
       update();
@@ -183,7 +183,11 @@ class AddWorksController extends GetxController {
 
   // Dynamic computed lists based on API data
   List<String> get availableCodes {
-    return worksList.map((work) => work.code ?? '').where((code) => code.isNotEmpty).toSet().toList();
+    return worksList
+        .map((work) => work.code ?? '')
+        .where((code) => code.isNotEmpty)
+        .toSet()
+        .toList();
   }
 
   List<String> get availableWorks {
@@ -216,13 +220,12 @@ class AddWorksController extends GetxController {
   }
 
   /// Fetch works from the repository
-  Future<void>getWorks()async{
+  Future<void> getWorks() async {
     // Build query string using saved workshop work IDs
     String queryString = '';
     if (savedWorkShopIds.isNotEmpty) {
-      queryString = savedWorkShopIds
-          .map((id) => 'workCategoryName=$id')
-          .join('&');
+      queryString =
+          savedWorkShopIds.map((id) => 'workCategoryName=$id').join('&');
     }
 
     String url = '/works?${queryString.isNotEmpty ? queryString : ''}';
@@ -232,19 +235,23 @@ class AddWorksController extends GetxController {
     isLoading.value = true;
     Response response = await AddWorksRepo().getWorks(url: url);
     isLoading.value = false;
-    if(response.statusCode==200){
-      WorksListResponse worksListResponse = WorksListResponse.fromJson(response.body);
+    if (response.statusCode == 200) {
+      WorksListResponse worksListResponse =
+          WorksListResponse.fromJson(response.body);
       worksList.clear();
-      worksList.addAll(worksListResponse.data?.workList??[]);
+      worksList.addAll(worksListResponse.data?.workList ?? []);
 
       print("================ Loaded works count: ${worksList.length}");
-    }else{
+    } else {
       showCustomSnackBar("${response.statusText}");
     }
   }
 
   void addWork() {
-    if (selectedCode.value.isEmpty || workName.value.isEmpty|| qty.value <= 0 || price.value <= 0.0) {
+    if (selectedCode.value.isEmpty ||
+        workName.value.isEmpty ||
+        qty.value <= 0 ||
+        price.value <= 0.0) {
       showCustomSnackBar('please_fill_all_required_fields'.tr, isError: true);
       return;
     }
@@ -260,8 +267,7 @@ class AddWorksController extends GetxController {
     filterWorks();
     clearForm();
     update();
-    showCustomSnackBar('work_item_added_successfully'.tr,isError: false);
-
+    showCustomSnackBar('work_item_added_successfully'.tr, isError: false);
   }
 
   void editWork(int index) {
@@ -287,10 +293,10 @@ class AddWorksController extends GetxController {
     clearForm();
     selectedIndex.value = -1;
     update();
-    showCustomSnackBar('work_item_updated_successfully'.tr,isError: false);
+    showCustomSnackBar('work_item_updated_successfully'.tr, isError: false);
   }
 
-  void onTapNext(){
+  void onTapNext() {
     // Create a list of work items with work ID, quantity, and price
     List<Map<String, dynamic>> workItems = works.map((workItem) {
       // Find the work model to get the ID
@@ -310,15 +316,15 @@ class AddWorksController extends GetxController {
       'workItems': workItems,
       'clientId': clientId,
       'clientCarId': clientCarId,
-      'discount':discount.value,
-      'brandName':brandName,
-      'brandId':brandId,
-      'modelId':carModelId,
-      'modelName':carModel,
-      'year':carYear,
-      'brandImage':brandImage,
-      'clientName':clientName,
-      'clientPhone':clientPhone,
+      'discount': discount.value,
+      'brandName': brandName,
+      'brandId': brandId,
+      'modelId': carModelId,
+      'modelName': carModel,
+      'year': carYear,
+      'brandImage': brandImage,
+      'clientName': clientName,
+      'clientPhone': clientPhone,
       // Saudi plate information
       'saudiPlateEnglishText': saudiPlateEnglishText,
       'saudiPlateArabicText': saudiPlateArabicText,
@@ -328,7 +334,6 @@ class AddWorksController extends GetxController {
       // International plate information
       'internationalPlateNumber': internationalPlateNumber,
       'costOfWorks': totalIncludingTax,
-
     });
   }
 
@@ -352,23 +357,29 @@ class AddWorksController extends GetxController {
     filteredWorks.refresh();
     selectedIndex.value = -1;
     update();
-    showCustomSnackBar('work_item_updated_successfully'.tr,isError: false);
+    showCustomSnackBar('work_item_updated_successfully'.tr, isError: false);
   }
 
   void deleteWork(int index) {
     if (index < 0 || index >= works.length) return;
 
-    CustomAlert.showConfirmation(context: Get.context!, message:'are_you_sure_delete_work_item'.tr,onYesPressed: (){
-      works.removeAt(index);
-      filterWorks();
-      selectedIndex.value = -1;
-      Navigator.pop(Get.context!);
-      showCustomSnackBar('work_item_deleted_successfully'.tr,isError: false);
-    },onNoPressed: (){
-      Navigator.pop(Get.context!);
-    },yesButtonText: "delete".tr,noButtonText: "cancel".tr);
+    CustomAlert.showConfirmation(
+        context: Get.context!,
+        message: 'are_you_sure_delete_work_item'.tr,
+        onYesPressed: () {
+          works.removeAt(index);
+          filterWorks();
+          selectedIndex.value = -1;
+          Navigator.pop(Get.context!);
+          showCustomSnackBar('work_item_deleted_successfully'.tr,
+              isError: false);
+        },
+        onNoPressed: () {
+          Navigator.pop(Get.context!);
+        },
+        yesButtonText: "delete".tr,
+        noButtonText: "cancel".tr);
     update();
-
 
     // Get.dialog(
     //   AlertDialog(
@@ -412,26 +423,23 @@ class AddWorksController extends GetxController {
   void filterWorks() {
     if (searchQuery.value.isEmpty) {
       filteredWorks.assignAll(works);
-
     } else {
       filteredWorks.assignAll(
         works
             .where(
               (work) =>
                   work.code.toLowerCase().contains(
-                    searchQuery.value.toLowerCase(),
-                  ) ||
+                        searchQuery.value.toLowerCase(),
+                      ) ||
                   work.name.toLowerCase().contains(
-                    searchQuery.value.toLowerCase(),
-                  ),
+                        searchQuery.value.toLowerCase(),
+                      ),
             )
             .toList(),
       );
     }
     update();
   }
-
-
 
   void clearForm() {
     selectedCode.value = '';
@@ -488,7 +496,7 @@ class AddWorksController extends GetxController {
 
   void showDiscountDialog(BuildContext context) {
     TextEditingController discountController = TextEditingController(
-      text: discount.value==0.0?'':discount.value.toString(),
+      text: discount.value == 0.0 ? '' : discount.value.toString(),
     );
 
     showDialog(
@@ -537,10 +545,11 @@ class AddWorksController extends GetxController {
                       ),
                     ),
                     onPressed: () {
-                      discount.value = double.tryParse(discountController.text) ?? 0.0;
+                      discount.value =
+                          double.tryParse(discountController.text) ?? 0.0;
                       Navigator.of(context).pop();
-                      showCustomSnackBar('discount_updated_successfully'.tr,isError: false);
-
+                      showCustomSnackBar('discount_updated_successfully'.tr,
+                          isError: false);
                     },
                     child: CustomText(
                       text: 'save'.tr,
@@ -566,20 +575,33 @@ class AddWorksController extends GetxController {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
+        return Dialog(
           backgroundColor: Colors.white,
-          title: CustomText(text: 'edit_work'.tr),
-          content: SingleChildScrollView(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.85,
+            padding: EdgeInsets.all(24.w),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // Title
+                CustomText(
+                  text: 'edit_work'.tr,
+                  fontSize: 18.sp,
+                ),
+                SizedBox(height: 16.h),
+                // Content
                 Obx(
                   () => CustomDropdown<String>(
-
-                    value: selectedCode.value.isEmpty ? null : selectedCode.value,
+                    value: selectedCode.value.isEmpty
+                        ? null
+                        : selectedCode.value,
                     items: availableCodes,
                     hint: 'code'.tr,
-                    onChanged: (val) => selectedCode.value = val ?? '',
+                    onChanged: onCodeChanged,
                     height: 45,
                     width: double.infinity,
                     borderRadius: 24,
@@ -590,7 +612,7 @@ class AddWorksController extends GetxController {
                     itemStyle: const TextStyle(fontSize: 14),
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 Obx(
                   () => CustomDropdown<String>(
                     value: workName.value.isNotEmpty &&
@@ -599,7 +621,13 @@ class AddWorksController extends GetxController {
                         : null,
                     items: availableWorks.toSet().toList(),
                     hint: 'works'.tr,
-                    onChanged: (val) => workName.value = val ?? '',
+                    onChanged: (val) {
+                      if (val != null && availableWorks.contains(val)) {
+                        onWorkNameChanged(val);
+                      } else {
+                        onWorkNameChanged('');
+                      }
+                    },
                     height: 45,
                     width: double.infinity,
                     borderRadius: 24,
@@ -610,7 +638,7 @@ class AddWorksController extends GetxController {
                     itemStyle: const TextStyle(fontSize: 14),
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 CustomTextField(
                   textAlign: TextAlign.center,
                   initialValue: qty.value.toString(),
@@ -619,56 +647,65 @@ class AddWorksController extends GetxController {
                   onChanged: (val) => qty.value = int.tryParse(val) ?? 1,
                   height: 45,
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 CustomTextField(
                   textAlign: TextAlign.center,
                   initialValue: price.value.toString(),
                   hintText: 'price'.tr,
-
                   keyboardType: TextInputType.number,
-                  onChanged: (val) => price.value = double.tryParse(val) ?? 0.0,
+                  onChanged: (val) =>
+                      price.value = double.tryParse(val) ?? 0.0,
                   height: 45,
+                ),
+                SizedBox(height: 24.h),
+                // Actions
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.redTextFiled,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24.r),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: CustomText(
+                          text: 'cancel'.tr,
+                          color: AppColors.red,
+                          fontSize: 16.sp,
+                          overflow: TextOverflow.visible,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 16.w),
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24.r),
+                          ),
+                        ),
+                        onPressed: () {
+                          updateWork(index);
+                          Navigator.of(context).pop();
+                        },
+                        child: CustomText(
+                          text: 'save'.tr,
+                          color: Colors.white,
+                          fontSize: 16.sp,
+                          overflow: TextOverflow.visible,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.redTextFiled,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24.r),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: CustomText(text:'cancel'.tr, color: AppColors.red,fontSize: 16.sp,overflow: TextOverflow.visible,),
-                  ),
-                ),
-                SizedBox(width: 16.w),
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24.r),
-                      ),
-                    ),
-                    onPressed: () {
-                      updateWork(index);
-                      Navigator.of(context).pop();
-                    },
-                    child: CustomText(text:'save'.tr, color: Colors.white,fontSize: 16.sp,overflow: TextOverflow.visible,),
-                  ),
-                ),
-              ],
-            ),
-          ],
         );
       },
     );

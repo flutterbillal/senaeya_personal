@@ -30,7 +30,6 @@ class AddSparePartsScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.primary,
-
         appBar: CustomAppBar(
           title: 'add_spare_parts'.tr,
           titleColor: Colors.black,
@@ -114,7 +113,7 @@ class AddSparePartsScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 4.h),
-          
+
                 // Input Row: Code, Works
                 // Replace your existing "Input Row: Code, Works" section with this:
                 Row(
@@ -142,8 +141,9 @@ class AddSparePartsScreen extends StatelessWidget {
                               ),
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                  hintText: 'works'.tr,
-                                  hintStyle: const TextStyle(color: Colors.grey),
+                                  hintText: 'spare parts'.tr,
+                                  hintStyle:
+                                      const TextStyle(color: Colors.grey),
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 12,
@@ -154,8 +154,10 @@ class AddSparePartsScreen extends StatelessWidget {
                                     : null,
                                 enabled: controller.sparePartsAdded.value,
                                 style: const TextStyle(fontSize: 14),
-                                controller: TextEditingController(text: controller.workName.value)
-                                  ..selection = TextSelection.collapsed(offset: controller.workName.value.length),
+                                controller: TextEditingController(
+                                    text: controller.workName.value)
+                                  ..selection = TextSelection.collapsed(
+                                      offset: controller.workName.value.length),
                               ),
                             ),
                             if (controller.isSearchingSpare.value)
@@ -182,9 +184,9 @@ class AddSparePartsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-          
+
                 SizedBox(height: 6.h),
-          
+
                 Row(
                   children: [
                     Expanded(
@@ -249,7 +251,7 @@ class AddSparePartsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-          
+
                 SizedBox(height: 4.h),
                 // New/Used toggle
                 Obx(
@@ -353,7 +355,6 @@ class AddSparePartsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-          
                       Expanded(
                         flex: 2,
                         child: GestureDetector(
@@ -412,7 +413,6 @@ class AddSparePartsScreen extends StatelessWidget {
                       Obx(
                         () => CustomText(
                           text: controller.totalAmount.toStringAsFixed(2),
-          
                           fontSize: 18.w,
                           color: AppColors.red,
                           fontWeight: FontWeight.bold,
@@ -448,10 +448,18 @@ class AddSparePartsScreen extends StatelessWidget {
                               ? 'loading..'.tr
                               : 'next'.tr,
                           onTap: () {
-                           controller.isLoading.value?null: controller.submitSpareParts();
+                            controller.isLoading.value
+                                ? null
+                                : controller.submitSpareParts();
                           },
-                          textColor: (controller.works.isEmpty&&controller.sparePartsAdded.value == true)?Colors.white:Colors.white,
-                          backgroundColor: (controller.works.isEmpty&&controller.sparePartsAdded.value == true)?Colors.grey:AppColors.primary,
+                          textColor: (controller.works.isEmpty &&
+                                  controller.sparePartsAdded.value == true)
+                              ? Colors.white
+                              : Colors.white,
+                          backgroundColor: (controller.works.isEmpty &&
+                                  controller.sparePartsAdded.value == true)
+                              ? Colors.grey
+                              : AppColors.primary,
                         ),
                       ),
                     ],
@@ -464,6 +472,4 @@ class AddSparePartsScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

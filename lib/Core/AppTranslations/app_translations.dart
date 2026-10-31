@@ -15,9 +15,17 @@ class AppTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en': {
-          'A message has been sent to the customer to pick up the car':
+          'spare parts': 'spare parts',
+          'confirm_password': 'Confirm Password',
+          'new_password': 'New Password (Optional)',
+          'VAT Number (optional)': 'VAT Number (optional)',
+          'Customer name': 'Customer name',
+          'VIN Chassis number (17 characters)':
+              'VIN Chassis number (17 characters)',
+          'A new app update is available. Please update the app to continue.'
+                  'A message has been sent to the customer to pick up the car':
               'A message has been sent to the customer to pick up the car',
-          'no_cars_found':'No Cars Found',
+          'no_cars_found': 'No Cars Found',
           'The customer has been removed from the defaulters list':
               'The customer has been removed from the defaulters list',
           'The customer has been placed on the defaulters list':
@@ -57,7 +65,8 @@ class AppTranslations extends Translations {
               'Your subscription payment was successful.',
           'customer_updated_successfully': 'Customer updated successfully',
           'Search Country/Region': 'Search Country/Region',
-          'You must register your workshop first':'You must register your workshop first',
+          'You must register your workshop first':
+              'You must register your workshop first',
           'update': 'Update',
           'verified_phone_required': 'Verified phone required',
           "Your free trial period has ended We invite you to subscribe to the app's services":
@@ -231,7 +240,7 @@ class AppTranslations extends Translations {
           'phone_hint': 'Phone number',
           'password_hint': 'Password',
           'workshop_manager_reg': 'Workshop Manager Reg',
-          'name_hint': 'name',
+          'name_hint': 'workshop manager name',
           'check': 'Check',
           'email_hint': 'email',
           'username_hint': 'username',
@@ -249,26 +258,38 @@ class AppTranslations extends Translations {
           'invalid_otp': 'Invalid OTP',
           'error_verifying_otp': 'Error verifying OTP',
           'please_enable_user_option_first': 'Please enable user option first',
-          'you_can_only_add_one_additional_user': 'You can only add one additional user',
+          'you_can_only_add_one_additional_user':
+              'You can only add one additional user',
           'please_enter_your_name': 'Please enter your name',
           'please_enter_your_phone_number': 'Please enter your phone number',
           'please_verify_your_phone_number': 'Please verify your phone number',
           'please_enter_your_email': 'Please enter your email',
           'please_enter_password': 'Please enter password',
-          'password_must_be_at_least_8_characters': 'Password must be at least 8 characters',
+          'password_must_be_at_least_8_characters':
+              'Password must be at least 8 characters',
           'passwords_do_not_match': 'Passwords do not match',
-          'please_enter_phone_for_helper_user': 'Please enter phone for helper user',
-          'please_verify_phone_for_helper_user': 'Please verify phone for helper user',
-          'please_enter_password_for_helper_user': 'Please enter password for helper user',
-          'helper_user_password_must_be_at_least_8_characters': 'Helper user password must be at least 8 characters',
-          'helper_user_passwords_do_not_match': 'Helper user passwords do not match',
-          'please_agree_to_terms_and_conditions': 'Please agree to terms and conditions',
-          'please_enter_a_valid_email_address': 'Please enter a valid email address',
+          'please_enter_phone_for_helper_user':
+              'Please enter phone for helper user',
+          'please_verify_phone_for_helper_user':
+              'Please verify phone for helper user',
+          'please_enter_password_for_helper_user':
+              'Please enter password for helper user',
+          'helper_user_password_must_be_at_least_8_characters':
+              'Helper user password must be at least 8 characters',
+          'helper_user_passwords_do_not_match':
+              'Helper user passwords do not match',
+          'please_agree_to_terms_and_conditions':
+              'Please agree to terms and conditions',
+          'please_enter_a_valid_email_address':
+              'Please enter a valid email address',
           'failed_to_create_account': 'Failed to create account',
           'error_creating_account': 'Error creating account',
-          'password_must_be_8_chars_with_letter_and_number': 'Password must be at least 8 characters long and include at least one letter and one number',
-          'email_and_confirm_email_do_not_match': 'Email and Confirm Email do not match',
-          'password_and_confirm_password_do_not_match': 'Password and Confirm Password do not match',
+          'password_must_be_8_chars_with_letter_and_number':
+              'Password must be at least 8 characters long and include at least one letter and one number',
+          'email_and_confirm_email_do_not_match':
+              'Email and Confirm Email do not match',
+          'password_and_confirm_password_do_not_match':
+              'Password and Confirm Password do not match',
           'new_workshop_reg': 'New Workshop Registration',
           'workshop_info': 'Workshop Information',
           'workshop_name_in_board': 'Workshop name shown in Board',
@@ -278,9 +299,9 @@ class AppTranslations extends Translations {
           'unified_national_number': 'Unified National Number',
           'commercial_reg_number': 'Commercial Registration Number',
           'municipality_license_number': 'Municipality License Number',
-          'workshop_already_exists_with_mln': 'A workshop already exists with municipal license number {mln}',
-          'workshop_address':
-              'Workshop Address',
+          'workshop_already_exists_with_mln':
+              'A workshop already exists with municipal license number {mln}',
+          'workshop_address': 'Workshop Address',
           'tax_number_vat': 'Tax number - VAT',
           'bank_account_iban': 'Bank account number - iBan',
           'workshop_settings': 'Workshop Settings',
@@ -453,8 +474,10 @@ class AppTranslations extends Translations {
           'view_invoice': 'View invoice',
           'pay_invoice': 'Pay invoice',
           'searching_for': 'Searching for: {query}',
-          'duplicate_data_message': 'The following data are registered in other workshop:\n{fields}\n\nDo you want to continue?',
-          'commercial_registration_number_crn': 'Commercial Registration Number (CRN)',
+          'duplicate_data_message':
+              'The following data are registered in other workshop:\n{fields}\n\nDo you want to continue?',
+          'commercial_registration_number_crn':
+              'Commercial Registration Number (CRN)',
           'tax_vat_number': 'Tax/VAT Number',
           'unified_national_number_unn': 'Unified National Number (UNN)',
           'yes_continue': 'Yes, Continue',
@@ -574,15 +597,22 @@ class AppTranslations extends Translations {
           'location_selected_successfully': 'Location selected successfully!',
         },
         'ar': {
+          'spare parts': 'قطع غيار',
+          'confirm_password': 'تأكيد كلمة المرور',
+          'new_password': 'كلمة المرور الجديدة (اختياري)',
+          'VAT Number (optional)': 'رقم ضريبة القيمة المضافة (اختياري)',
+          'Customer name': 'اسم العميل',
+          'VIN Chassis number (17 characters)': 'رقم هيكل السيارة (17 حرف)',
+          'A new app update is available. Please update the app to continue.':
+              'تحديث جديد للتطبيق متاح. يرجى تحديث التطبيق للمتابعة.',
           'A message has been sent to the customer to pick up the car':
-             'تم إرسال رسالة إلى العميل لاستلام السيارة' ,
+              'تم إرسال رسالة إلى العميل لاستلام السيارة',
           'no_cars_found': 'لم يتم العثور على سيارات',
           'The customer has been removed from the defaulters list':
               'تمت إزالة العميل من قائمة المتعثرين',
           'The customer has been placed on the defaulters list':
               'تم وضع العميل في قائمة المتعثرين',
-          'Your subscription payment was cancelled.':
-              'تم إلغاء دفع اشتراكك.',
+          'Your subscription payment was cancelled.': 'تم إلغاء دفع اشتراكك.',
           'Payment Cancelled': 'تم إلغاء الدفع',
           'Payment Failed': 'فشل الدفع',
           'Your subscription payment was not successful.':
@@ -615,11 +645,10 @@ class AppTranslations extends Translations {
           'Take a new photo': 'التقاط صورة جديدة',
           'Choose from gallery': 'اختر من المعرض',
           'Payment Successful': 'تم الدفع بنجاح',
-          'Your subscription payment was successful.':
-              'تم دفع اشتراكك بنجاح.',
+          'Your subscription payment was successful.': 'تم دفع اشتراكك بنجاح.',
           'customer_updated_successfully': 'تم تحديث العميل بنجاح',
           'Search Country/Region': 'ابحث عن الدولة/المنطقة',
-          'You must register your workshop first':'يجب عليك تسجيل ورشتك أولاً',
+          'You must register your workshop first': 'يجب عليك تسجيل ورشتك أولاً',
           'update': 'تحديث',
           'verified_phone_required': 'مطلوب التحقق من الهاتف',
           "Your free trial period has ended We invite you to subscribe to the app's services":
@@ -793,7 +822,7 @@ class AppTranslations extends Translations {
           'phone_hint': 'رقم الجوال',
           'password_hint': 'كلمة المرور',
           'workshop_manager_reg': 'تسجيل مدير الورشة',
-          'name_hint': 'الاسم',
+          'name_hint': 'اسم مدير الورشة',
           'check': 'تحقق',
           'email_hint': ' البريد الإلكتروني',
           'username_hint': 'اسم المستخدم',
@@ -810,26 +839,38 @@ class AppTranslations extends Translations {
           'invalid_otp': 'رمز OTP غير صحيح',
           'error_verifying_otp': 'خطأ في التحقق من رمز OTP',
           'please_enable_user_option_first': 'الرجاء تفعيل خيار المستخدم أولاً',
-          'you_can_only_add_one_additional_user': 'يمكنك إضافة مستخدم إضافي واحد فقط',
+          'you_can_only_add_one_additional_user':
+              'يمكنك إضافة مستخدم إضافي واحد فقط',
           'please_enter_your_name': 'الرجاء إدخال اسمك',
           'please_enter_your_phone_number': 'الرجاء إدخال رقم هاتفك',
           'please_verify_your_phone_number': 'الرجاء التحقق من رقم هاتفك',
           'please_enter_your_email': 'الرجاء إدخال بريدك الإلكتروني',
           'please_enter_password': 'الرجاء إدخال كلمة المرور',
-          'password_must_be_at_least_8_characters': 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل',
+          'password_must_be_at_least_8_characters':
+              'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل',
           'passwords_do_not_match': 'كلمات المرور غير متطابقة',
-          'please_enter_phone_for_helper_user': 'الرجاء إدخال الهاتف للمستخدم المساعد',
-          'please_verify_phone_for_helper_user': 'الرجاء التحقق من هاتف المستخدم المساعد',
-          'please_enter_password_for_helper_user': 'الرجاء إدخال كلمة المرور للمستخدم المساعد',
-          'helper_user_password_must_be_at_least_8_characters': 'يجب أن تتكون كلمة مرور المستخدم المساعد من 8 أحرف على الأقل',
-          'helper_user_passwords_do_not_match': 'كلمات مرور المستخدم المساعد غير متطابقة',
-          'please_agree_to_terms_and_conditions': 'الرجاء الموافقة على الشروط والأحكام',
-          'please_enter_a_valid_email_address': 'الرجاء إدخال عنوان بريد إلكتروني صالح',
+          'please_enter_phone_for_helper_user':
+              'الرجاء إدخال الهاتف للمستخدم المساعد',
+          'please_verify_phone_for_helper_user':
+              'الرجاء التحقق من هاتف المستخدم المساعد',
+          'please_enter_password_for_helper_user':
+              'الرجاء إدخال كلمة المرور للمستخدم المساعد',
+          'helper_user_password_must_be_at_least_8_characters':
+              'يجب أن تتكون كلمة مرور المستخدم المساعد من 8 أحرف على الأقل',
+          'helper_user_passwords_do_not_match':
+              'كلمات مرور المستخدم المساعد غير متطابقة',
+          'please_agree_to_terms_and_conditions':
+              'الرجاء الموافقة على الشروط والأحكام',
+          'please_enter_a_valid_email_address':
+              'الرجاء إدخال عنوان بريد إلكتروني صالح',
           'failed_to_create_account': 'فشل إنشاء الحساب',
           'error_creating_account': 'خطأ في إنشاء الحساب',
-          'password_must_be_8_chars_with_letter_and_number': 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وتتضمن حرفًا واحدًا ورقمًا واحدًا على الأقل',
-          'email_and_confirm_email_do_not_match': 'البريد الإلكتروني وتأكيد البريد الإلكتروني غير متطابقين',
-          'password_and_confirm_password_do_not_match': 'كلمة المرور وتأكيد كلمة المرور غير متطابقين',
+          'password_must_be_8_chars_with_letter_and_number':
+              'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وتتضمن حرفًا واحدًا ورقمًا واحدًا على الأقل',
+          'email_and_confirm_email_do_not_match':
+              'البريد الإلكتروني وتأكيد البريد الإلكتروني غير متطابقين',
+          'password_and_confirm_password_do_not_match':
+              'كلمة المرور وتأكيد كلمة المرور غير متطابقين',
           'new_workshop_reg': 'تسجيل ورشة جديدة',
           'workshop_info': 'معلومات الورشة',
           'workshop_name_in_board': 'اسم الورشة في اللوحة',
@@ -839,7 +880,8 @@ class AppTranslations extends Translations {
           'unified_national_number': 'الرقم الوطني الموحد',
           'commercial_reg_number': 'رقم السجل التجاري',
           'municipality_license_number': 'رقم رخصة البلدية',
-          'workshop_already_exists_with_mln': 'توجد ورشة بالفعل برقم رخصة البلدية {mln}',
+          'workshop_already_exists_with_mln':
+              'توجد ورشة بالفعل برقم رخصة البلدية {mln}',
           'workshop_address': 'عنوان الورشة',
           'tax_number_vat': 'الرقم الضريبي (ضريبة القيمة المضافة)',
           'bank_account_iban': 'رقم حساب البنك (IBAN)',
@@ -1012,7 +1054,8 @@ class AppTranslations extends Translations {
           'view_invoice': 'عرض الفاتورة',
           'pay_invoice': 'دفع الفاتورة',
           'searching_for': 'جاري البحث عن: {query}',
-          'duplicate_data_message': 'البيانات التالية مسجلة في ورشة أخرى:\n{fields}\n\nهل تريد المتابعة؟',
+          'duplicate_data_message':
+              'البيانات التالية مسجلة في ورشة أخرى:\n{fields}\n\nهل تريد المتابعة؟',
           'commercial_registration_number_crn': 'رقم السجل التجاري (CRN)',
           'tax_vat_number': 'رقم الضريبة/ضريبة القيمة المضافة',
           'unified_national_number_unn': 'الرقم الوطني الموحد (UNN)',
@@ -1128,6 +1171,14 @@ class AppTranslations extends Translations {
           'location_selected_successfully': 'تم تحديد الموقع بنجاح!',
         },
         'bn': {
+          'spare parts': 'স্পেয়ার পার্টস',
+          'confirm_password': 'পাসওয়ার্ড নিশ্চিত করুন',
+          'new_password': 'নতুন পাসওয়ার্ড (ঐচ্ছিক)',
+          'VAT Number (optional)': 'ভ্যাট নম্বর (ঐচ্ছিক)',
+          'Customer name': 'গ্রাহকের নাম',
+          'VIN Chassis number (17 characters)': 'গাড়ির চেসিস নম্বর (১৭ অক্ষর)',
+          'A new app update is available. Please update the app to continue.':
+              'অ্যাপটির একটি নতুন আপডেট উপলব্ধ রয়েছে। অনুগ্রহ করে চালিয়ে যাওয়ার জন্য অ্যাপটি আপডেট করুন।',
           'A message has been sent to the customer to pick up the car':
               'গাড়িটি নেওয়ার জন্য গ্রাহককে একটি বার্তা পাঠানো হয়েছে।',
           'no_cars_found': 'কোনো গাড়ি পাওয়া যায়নি',
@@ -1143,12 +1194,14 @@ class AppTranslations extends Translations {
               'আপনার সাবস্ক্রিপশন পেমেন্ট সফল হয়নি।',
           'This Customer has unpaid invoice at another workshop':
               'এই গ্রাহকের অন্য একটি ওয়ার্কশপে অপরিশোধিত চালান রয়েছে',
-          'Invoice':'চালান',
-          "Car Added successfully to this Customer": 'এই গ্রাহকের কাছে গাড়ি সফলভাবে যোগ করা হয়েছে',
+          'Invoice': 'চালান',
+          "Car Added successfully to this Customer":
+              'এই গ্রাহকের কাছে গাড়ি সফলভাবে যোগ করা হয়েছে',
           'add_car': 'গাড়ি যোগ করুন',
           'End And Return': 'শেষ এবং ফিরে যান',
           'No invoice data available': 'কোনও চালান ডেটা উপলব্ধ নেই',
-          'Unable to verify payment. Please contact support.': 'পেমেন্ট যাচাই করা যাচ্ছে না। অনুগ্রহ করে সহায়তার সাথে যোগাযোগ করুন।',
+          'Unable to verify payment. Please contact support.':
+              'পেমেন্ট যাচাই করা যাচ্ছে না। অনুগ্রহ করে সহায়তার সাথে যোগাযোগ করুন।',
           'Complete Payment': 'পেমেন্ট সম্পূর্ণ করুন',
           'Payment Verification Failed': 'পেমেন্ট যাচাই ব্যর্থ হয়েছে',
           'Your subscription payment verification failed. Please try again or contact support.':
@@ -1156,7 +1209,8 @@ class AppTranslations extends Translations {
           'Create Workshop': 'ওয়ার্কশপ তৈরি করুন',
           'Password must be at least 8 characters long and include at least one letter and one number':
               'পাসওয়ার্ড কমপক্ষে 8 অক্ষরের হতে হবে এবং অন্তত একটি অক্ষর এবং একটি সংখ্যা থাকতে হবে',
-          'please_add_workshop_location': 'অনুগ্রহ করে ওয়ার্কশপের অবস্থান যোগ করুন',
+          'please_add_workshop_location':
+              'অনুগ্রহ করে ওয়ার্কশপের অবস্থান যোগ করুন',
           'Password must be at least 6 characters long and include at least one letter and one number':
               'পাসওয়ার্ড কমপক্ষে 6 অক্ষরের হতে হবে এবং অন্তত একটি অক্ষর এবং একটি সংখ্যা থাকতে হবে',
           'Password and Confirm Password do not match':
@@ -1173,7 +1227,8 @@ class AppTranslations extends Translations {
               'আপনার সাবস্ক্রিপশন পেমেন্ট সফল হয়েছে।',
           'customer_updated_successfully': 'গ্রাহক সফলভাবে আপডেট হয়েছে',
           'Search Country/Region': 'দেশ/অঞ্চল অনুসন্ধান করুন',
-          'You must register your workshop first': 'আপনাকে প্রথমে আপনার ওয়ার্কশপ নিবন্ধন করতে হবে',
+          'You must register your workshop first':
+              'আপনাকে প্রথমে আপনার ওয়ার্কশপ নিবন্ধন করতে হবে',
           'update': 'আপডেট',
           'verified_phone_required': 'ফোন যাচাই প্রয়োজন',
           "Your free trial period has ended We invite you to subscribe to the app's services":
@@ -1247,9 +1302,12 @@ class AppTranslations extends Translations {
               'চালিয়ে যেতে আপনাকে লগইন করতে হবে...',
           'iban_must_start_with_sa': 'আইবিএন অবশ্যই SA দিয়ে শুরু হতে হবে',
           'iban_must_be_24_characters': 'আইবিএন অবশ্যই 24 অক্ষরের হতে হবে',
-          'tax_number_must_start_with_3': 'ট্যাক্স নম্বর অবশ্যই 3 দিয়ে শুরু হতে হবে',
-          'tax_number_must_end_with_3': 'ট্যাক্স নম্বর অবশ্যই 3 দিয়ে শেষ হতে হবে',
-          'tax_number_must_be_15_digits': 'ট্যাক্স নম্বর অবশ্যই 15 ডিজিটের হতে হবে',
+          'tax_number_must_start_with_3':
+              'ট্যাক্স নম্বর অবশ্যই 3 দিয়ে শুরু হতে হবে',
+          'tax_number_must_end_with_3':
+              'ট্যাক্স নম্বর অবশ্যই 3 দিয়ে শেষ হতে হবে',
+          'tax_number_must_be_15_digits':
+              'ট্যাক্স নম্বর অবশ্যই 15 ডিজিটের হতে হবে',
           'spare_part_found': 'স্পেয়ার পার্ট পাওয়া গেছে',
           'edit_profile': 'প্রোফাইল সম্পাদনা করুন',
           'invoice': 'চালান',
@@ -1352,7 +1410,7 @@ class AppTranslations extends Translations {
           'phone_hint': 'ফোন নম্বর',
           'password_hint': 'পাসওয়ার্ড',
           'workshop_manager_reg': 'ওয়ার্কশপ ম্যানেজার নিবন্ধন',
-          'name_hint': 'নাম',
+          'name_hint': 'ওয়ার্কশপ ম্যানেজারের নাম',
           'check': 'চেক করুন',
           'email_hint': 'ইমেইল',
           'username_hint': 'ব্যবহারকারীর নাম',
@@ -1369,36 +1427,52 @@ class AppTranslations extends Translations {
           'error_sending_otp': 'OTP পাঠাতে ত্রুটি',
           'invalid_otp': 'অবৈধ OTP',
           'error_verifying_otp': 'OTP যাচাই করতে ত্রুটি',
-          'please_enable_user_option_first': 'অনুগ্রহ করে প্রথমে ব্যবহারকারী বিকল্প সক্রিয় করুন',
-          'you_can_only_add_one_additional_user': 'আপনি শুধুমাত্র একটি অতিরিক্ত ব্যবহারকারী যোগ করতে পারেন',
+          'please_enable_user_option_first':
+              'অনুগ্রহ করে প্রথমে ব্যবহারকারী বিকল্প সক্রিয় করুন',
+          'you_can_only_add_one_additional_user':
+              'আপনি শুধুমাত্র একটি অতিরিক্ত ব্যবহারকারী যোগ করতে পারেন',
           'please_enter_your_name': 'অনুগ্রহ করে আপনার নাম লিখুন',
           'please_enter_your_phone_number': 'অনুগ্রহ করে আপনার ফোন নম্বর লিখুন',
-          'please_verify_your_phone_number': 'অনুগ্রহ করে আপনার ফোন নম্বর যাচাই করুন',
+          'please_verify_your_phone_number':
+              'অনুগ্রহ করে আপনার ফোন নম্বর যাচাই করুন',
           'please_enter_your_email': 'অনুগ্রহ করে আপনার ইমেইল লিখুন',
           'please_enter_password': 'অনুগ্রহ করে পাসওয়ার্ড লিখুন',
-          'password_must_be_at_least_8_characters': 'পাসওয়ার্ড কমপক্ষে ৮টি অক্ষরের হতে হবে',
+          'password_must_be_at_least_8_characters':
+              'পাসওয়ার্ড কমপক্ষে ৮টি অক্ষরের হতে হবে',
           'passwords_do_not_match': 'পাসওয়ার্ড মিলছে না',
-          'please_enter_phone_for_helper_user': 'অনুগ্রহ করে সহায়ক ব্যবহারকারীর জন্য ফোন লিখুন',
-          'please_verify_phone_for_helper_user': 'অনুগ্রহ করে সহায়ক ব্যবহারকারীর ফোন যাচাই করুন',
-          'please_enter_password_for_helper_user': 'অনুগ্রহ করে সহায়ক ব্যবহারকারীর জন্য পাসওয়ার্ড লিখুন',
-          'helper_user_password_must_be_at_least_8_characters': 'সহায়ক ব্যবহারকারীর পাসওয়ার্ড কমপক্ষে ৮টি অক্ষরের হতে হবে',
-          'helper_user_passwords_do_not_match': 'সহায়ক ব্যবহারকারীর পাসওয়ার্ড মিলছে না',
-          'please_agree_to_terms_and_conditions': 'অনুগ্রহ করে শর্তাবলীতে সম্মতি দিন',
-          'please_enter_a_valid_email_address': 'অনুগ্রহ করে একটি বৈধ ইমেইল ঠিকানা লিখুন',
+          'please_enter_phone_for_helper_user':
+              'অনুগ্রহ করে সহায়ক ব্যবহারকারীর জন্য ফোন লিখুন',
+          'please_verify_phone_for_helper_user':
+              'অনুগ্রহ করে সহায়ক ব্যবহারকারীর ফোন যাচাই করুন',
+          'please_enter_password_for_helper_user':
+              'অনুগ্রহ করে সহায়ক ব্যবহারকারীর জন্য পাসওয়ার্ড লিখুন',
+          'helper_user_password_must_be_at_least_8_characters':
+              'সহায়ক ব্যবহারকারীর পাসওয়ার্ড কমপক্ষে ৮টি অক্ষরের হতে হবে',
+          'helper_user_passwords_do_not_match':
+              'সহায়ক ব্যবহারকারীর পাসওয়ার্ড মিলছে না',
+          'please_agree_to_terms_and_conditions':
+              'অনুগ্রহ করে শর্তাবলীতে সম্মতি দিন',
+          'please_enter_a_valid_email_address':
+              'অনুগ্রহ করে একটি বৈধ ইমেইল ঠিকানা লিখুন',
           'failed_to_create_account': 'অ্যাকাউন্ট তৈরি করতে ব্যর্থ',
           'error_creating_account': 'অ্যাকাউন্ট তৈরি করতে ত্রুটি',
-          'password_must_be_8_chars_with_letter_and_number': 'পাসওয়ার্ড কমপক্ষে ৮টি অক্ষরের হতে হবে এবং অন্তত একটি অক্ষর ও একটি সংখ্যা থাকতে হবে',
-          'email_and_confirm_email_do_not_match': 'ইমেইল এবং নিশ্চিত ইমেইল মিলছে না',
-          'password_and_confirm_password_do_not_match': 'পাসওয়ার্ড এবং নিশ্চিত পাসওয়ার্ড মিলছে না',
+          'password_must_be_8_chars_with_letter_and_number':
+              'পাসওয়ার্ড কমপক্ষে ৮টি অক্ষরের হতে হবে এবং অন্তত একটি অক্ষর ও একটি সংখ্যা থাকতে হবে',
+          'email_and_confirm_email_do_not_match':
+              'ইমেইল এবং নিশ্চিত ইমেইল মিলছে না',
+          'password_and_confirm_password_do_not_match':
+              'পাসওয়ার্ড এবং নিশ্চিত পাসওয়ার্ড মিলছে না',
           'new_workshop_reg': 'নতুন ওয়ার্কশপ নিবন্ধন',
           'workshop_info': 'ওয়ার্কশপের তথ্য',
           'workshop_name_in_board': 'বোর্ডে ওয়ার্কশপের নাম',
           'workshop_name_arabic': 'আরবীতে ওয়ার্কশপের নাম',
-          'Workshop name in the commercial register': 'বাণিজ্যিক রেজিস্ট্রারে ওয়ার্কশপের নাম',
+          'Workshop name in the commercial register':
+              'বাণিজ্যিক রেজিস্ট্রারে ওয়ার্কশপের নাম',
           'unified_national_number': 'একীভূত জাতীয় নম্বর',
           'commercial_reg_number': 'বাণিজ্যিক নিবন্ধন নম্বর',
           'municipality_license_number': 'পৌরসভার লাইসেন্স নম্বর',
-          'workshop_already_exists_with_mln': 'পৌরসভার লাইসেন্স নম্বর {mln} সহ একটি ওয়ার্কশপ ইতিমধ্যে বিদ্যমান',
+          'workshop_already_exists_with_mln':
+              'পৌরসভার লাইসেন্স নম্বর {mln} সহ একটি ওয়ার্কশপ ইতিমধ্যে বিদ্যমান',
           'workshop_address': 'ওয়ার্কশপের ঠিকানা',
           'tax_number_vat': 'ট্যাক্স নম্বর (ভ্যাট)',
           'bank_account_iban': 'ব্যাঙ্ক অ্যাকাউন্ট আইবিএন',
@@ -1581,7 +1655,8 @@ class AppTranslations extends Translations {
           'view_invoice': 'চালান দেখুন',
           'pay_invoice': 'চালান পরিশোধ করুন',
           'searching_for': 'এর জন্য অনুসন্ধান করা হচ্ছে: {query}',
-          'duplicate_data_message': 'নিম্নলিখিত ডেটা অন্য ওয়ার্কশপে নিবন্ধিত:\n{fields}\n\nআপনি কি চালিয়ে যেতে চান?',
+          'duplicate_data_message':
+              'নিম্নলিখিত ডেটা অন্য ওয়ার্কশপে নিবন্ধিত:\n{fields}\n\nআপনি কি চালিয়ে যেতে চান?',
           'commercial_registration_number_crn': 'বাণিজ্যিক নিবন্ধন নম্বর (CRN)',
           'tax_vat_number': 'ট্যাক্স/ভ্যাট নম্বর',
           'unified_national_number_unn': 'একীভূত জাতীয় নম্বর (UNN)',
@@ -1693,11 +1768,20 @@ class AppTranslations extends Translations {
           'types_of_cars_button': 'গাড়ির ধরন',
         },
         'hi': {
+          'spare parts': 'स्पेयर पार्ट्स',
+          'VAT Number (optional)': 'वैट नंबर (वैकल्पिक)',
+          'Customer name': 'ग्राहक का नाम',
+          'VIN Chassis number (17 characters)':
+              'गाड़ी का चेसिस नंबर (१७ अक्षर)',
+          'A new app update is available. Please update the app to continue.':
+              'ऐप का एक नया अपडेट उपलब्ध है। कृपया जारी रखने के लिए ऐप को अपडेट करें।',
           'A message has been sent to the customer to pick up the car':
               'ग्राहक को कार लेने के लिए संदेश भेज दिया गया है',
           'no_cars_found': 'कोई कार नहीं मिली',
-          'The customer has been removed from the defaulters list':'ग्राहक को डिफॉल्टर्स सूची से हटा दिया गया है',
-          'The customer has been placed on the defaulters list':'ग्राहक को डिफॉल्टर्स सूची में रखा गया है',
+          'The customer has been removed from the defaulters list':
+              'ग्राहक को डिफॉल्टर्स सूची से हटा दिया गया है',
+          'The customer has been placed on the defaulters list':
+              'ग्राहक को डिफॉल्टर्स सूची में रखा गया है',
           'Your subscription payment was cancelled.':
               'आपका सदस्यता भुगतान रद्द कर दिया गया है।',
           'Payment Cancelled': 'भुगतान रद्द किया गया',
@@ -1707,7 +1791,8 @@ class AppTranslations extends Translations {
           'This Customer has unpaid invoice at another workshop':
               'इस ग्राहक का एक अन्य कार्यशाला में बिना भुगतान किया गया चालान है',
           'Invoice': 'चालान',
-          "Car Added successfully to this Customer": 'इस ग्राहक के लिए कार सफलतापूर्वक जोड़ी गई',
+          "Car Added successfully to this Customer":
+              'इस ग्राहक के लिए कार सफलतापूर्वक जोड़ी गई',
           'add_car': 'कार जोड़ें',
           'End And Return': 'समाप्त करें और वापस जाएं',
           'No invoice data available': 'कोई चालान डेटा उपलब्ध नहीं है',
@@ -1719,9 +1804,12 @@ class AppTranslations extends Translations {
           'Password must be at least 8 characters long and include at least one letter and one number':
               'पासवर्ड कम से कम 8 अक्षरों का होना चाहिए और कम से कम एक अक्षर और एक संख्या शामिल होनी चाहिए',
           'please_add_workshop_location': 'कृपया कार्यशाला स्थान जोड़ें',
-          'Email and Confirm Email do not match': 'ईमेल और पुष्टि ईमेल मेल नहीं खाते',
-          'Password and Confirm Password do not match': 'पासवर्ड और पुष्टि पासवर्ड मेल नहीं खाते',
-          'Please enter a valid phone number.': 'कृपया एक वैध फोन नंबर दर्ज करें।',
+          'Email and Confirm Email do not match':
+              'ईमेल और पुष्टि ईमेल मेल नहीं खाते',
+          'Password and Confirm Password do not match':
+              'पासवर्ड और पुष्टि पासवर्ड मेल नहीं खाते',
+          'Please enter a valid phone number.':
+              'कृपया एक वैध फोन नंबर दर्ज करें।',
           'Password must be at least 6 characters long and include at least one letter and one number':
               'पासवर्ड कम से कम 6 अक्षरों का होना चाहिए और कम से कम एक अक्षर और एक संख्या शामिल होनी चाहिए',
           'Select Image Source': 'छवि स्रोत चुनें',
@@ -1731,10 +1819,12 @@ class AppTranslations extends Translations {
           'Take a new photo': 'एक नई फोटो लें',
           'Choose from gallery': 'गैलरी से चुनें',
           'Payment Successful': 'भुगतान सफल',
-          'Your subscription payment was successful.': 'आपका सदस्यता भुगतान सफल रहा।',
+          'Your subscription payment was successful.':
+              'आपका सदस्यता भुगतान सफल रहा।',
           'customer_updated_successfully': 'ग्राहक सफलतापूर्वक अपडेट हुआ',
           'Search Country/Region': 'देश/क्षेत्र खोजें',
-          'You must register your workshop first': 'आपको पहले अपनी कार्यशाला पंजीकृत करनी होगी',
+          'You must register your workshop first':
+              'आपको पहले अपनी कार्यशाला पंजीकृत करनी होगी',
           'update': 'अपडेट करें',
           'verified_phone_required': 'सत्यापित फोन नंबर आवश्यक है',
           "Your free trial period has ended We invite you to subscribe to the app's services":
@@ -1913,7 +2003,7 @@ class AppTranslations extends Translations {
           'phone_hint': 'फ़ोन नंबर',
           'password_hint': 'पासवर्ड',
           'workshop_manager_reg': 'कार्यशाला प्रबंधक पंजीकरण',
-          'name_hint': 'पूरा नाम',
+          'name_hint': 'कार्यशाला प्रबंधक का नाम',
           'check': 'जाँच करें',
           'email_hint': 'ईमेल',
           'username_hint': 'उपयोगकर्ता नाम',
@@ -1930,36 +2020,52 @@ class AppTranslations extends Translations {
           'error_sending_otp': 'OTP भेजने में त्रुटि',
           'invalid_otp': 'अमान्य OTP',
           'error_verifying_otp': 'OTP सत्यापित करने में त्रुटि',
-          'please_enable_user_option_first': 'कृपया पहले उपयोगकर्ता विकल्प सक्षम करें',
-          'you_can_only_add_one_additional_user': 'आप केवल एक अतिरिक्त उपयोगकर्ता जोड़ सकते हैं',
+          'please_enable_user_option_first':
+              'कृपया पहले उपयोगकर्ता विकल्प सक्षम करें',
+          'you_can_only_add_one_additional_user':
+              'आप केवल एक अतिरिक्त उपयोगकर्ता जोड़ सकते हैं',
           'please_enter_your_name': 'कृपया अपना नाम दर्ज करें',
           'please_enter_your_phone_number': 'कृपया अपना फोन नंबर दर्ज करें',
-          'please_verify_your_phone_number': 'कृपया अपना फोन नंबर सत्यापित करें',
+          'please_verify_your_phone_number':
+              'कृपया अपना फोन नंबर सत्यापित करें',
           'please_enter_your_email': 'कृपया अपना ईमेल दर्ज करें',
           'please_enter_password': 'कृपया पासवर्ड दर्ज करें',
-          'password_must_be_at_least_8_characters': 'पासवर्ड कम से कम 8 अक्षरों का होना चाहिए',
+          'password_must_be_at_least_8_characters':
+              'पासवर्ड कम से कम 8 अक्षरों का होना चाहिए',
           'passwords_do_not_match': 'पासवर्ड मेल नहीं खाते',
-          'please_enter_phone_for_helper_user': 'कृपया सहायक उपयोगकर्ता के लिए फोन दर्ज करें',
-          'please_verify_phone_for_helper_user': 'कृपया सहायक उपयोगकर्ता के फोन को सत्यापित करें',
-          'please_enter_password_for_helper_user': 'कृपया सहायक उपयोगकर्ता के लिए पासवर्ड दर्ज करें',
-          'helper_user_password_must_be_at_least_8_characters': 'सहायक उपयोगकर्ता का पासवर्ड कम से कम 8 अक्षरों का होना चाहिए',
-          'helper_user_passwords_do_not_match': 'सहायक उपयोगकर्ता के पासवर्ड मेल नहीं खाते',
-          'please_agree_to_terms_and_conditions': 'कृपया नियमों और शर्तों से सहमत हों',
-          'please_enter_a_valid_email_address': 'कृपया एक मान्य ईमेल पता दर्ज करें',
+          'please_enter_phone_for_helper_user':
+              'कृपया सहायक उपयोगकर्ता के लिए फोन दर्ज करें',
+          'please_verify_phone_for_helper_user':
+              'कृपया सहायक उपयोगकर्ता के फोन को सत्यापित करें',
+          'please_enter_password_for_helper_user':
+              'कृपया सहायक उपयोगकर्ता के लिए पासवर्ड दर्ज करें',
+          'helper_user_password_must_be_at_least_8_characters':
+              'सहायक उपयोगकर्ता का पासवर्ड कम से कम 8 अक्षरों का होना चाहिए',
+          'helper_user_passwords_do_not_match':
+              'सहायक उपयोगकर्ता के पासवर्ड मेल नहीं खाते',
+          'please_agree_to_terms_and_conditions':
+              'कृपया नियमों और शर्तों से सहमत हों',
+          'please_enter_a_valid_email_address':
+              'कृपया एक मान्य ईमेल पता दर्ज करें',
           'failed_to_create_account': 'खाता बनाने में विफल',
           'error_creating_account': 'खाता बनाने में त्रुटि',
-          'password_must_be_8_chars_with_letter_and_number': 'पासवर्ड कम से कम 8 अक्षरों का होना चाहिए और इसमें कम से कम एक अक्षर और एक संख्या होनी चाहिए',
-          'email_and_confirm_email_do_not_match': 'ईमेल और पुष्टि ईमेल मेल नहीं खाते',
-          'password_and_confirm_password_do_not_match': 'पासवर्ड और पुष्टि पासवर्ड मेल नहीं खाते',
+          'password_must_be_8_chars_with_letter_and_number':
+              'पासवर्ड कम से कम 8 अक्षरों का होना चाहिए और इसमें कम से कम एक अक्षर और एक संख्या होनी चाहिए',
+          'email_and_confirm_email_do_not_match':
+              'ईमेल और पुष्टि ईमेल मेल नहीं खाते',
+          'password_and_confirm_password_do_not_match':
+              'पासवर्ड और पुष्टि पासवर्ड मेल नहीं खाते',
           'new_workshop_reg': 'नई कार्यशाला पंजीकरण',
           'workshop_info': 'कार्यशाला की जानकारी',
           'workshop_name_in_board': 'बोर्ड में कार्यशाला का नाम',
           'workshop_name_arabic': 'कार्यशाला का नाम (अरबी)',
-          'Workshop name in the commercial register': 'वाणिज्यिक रजिस्टर में कार्यशाला का नाम',
+          'Workshop name in the commercial register':
+              'वाणिज्यिक रजिस्टर में कार्यशाला का नाम',
           'unified_national_number': 'एकीकृत राष्ट्रीय संख्या',
           'commercial_reg_number': 'वाणिज्यिक पंजीकरण संख्या',
           'municipality_license_number': 'नगर पालिका लाइसेंस संख्या',
-          'workshop_already_exists_with_mln': 'नगर पालिका लाइसेंस संख्या {mln} के साथ एक कार्यशाला पहले से मौजूद है',
+          'workshop_already_exists_with_mln':
+              'नगर पालिका लाइसेंस संख्या {mln} के साथ एक कार्यशाला पहले से मौजूद है',
           'workshop_address': 'कार्यशाला का पता',
           'tax_number_vat': 'कर संख्या (वैट)',
           'bank_account_iban': 'बैंक खाता आईबीएएन',
@@ -2140,8 +2246,10 @@ class AppTranslations extends Translations {
           'view_invoice': 'चालान देखें',
           'pay_invoice': 'चालान का भुगतान करें',
           'searching_for': 'के लिए खोज रहे हैं: {query}',
-          'duplicate_data_message': 'निम्नलिखित डेटा अन्य कार्यशाला में पंजीकृत है:\n{fields}\n\nक्या आप जारी रखना चाहते हैं?',
-          'commercial_registration_number_crn': 'वाणिज्यिक पंजीकरण संख्या (CRN)',
+          'duplicate_data_message':
+              'निम्नलिखित डेटा अन्य कार्यशाला में पंजीकृत है:\n{fields}\n\nक्या आप जारी रखना चाहते हैं?',
+          'commercial_registration_number_crn':
+              'वाणिज्यिक पंजीकरण संख्या (CRN)',
           'tax_vat_number': 'कर/वैट संख्या',
           'unified_national_number_unn': 'एकीकृत राष्ट्रीय संख्या (UNN)',
           'yes_continue': 'हां, जारी रखें',
@@ -2160,8 +2268,7 @@ class AppTranslations extends Translations {
           'amount_label': 'राशि',
           'select_date': 'तारीख चुनें',
           'delete_expense_title': 'खर्च हटाएँ',
-          'delete_expense_confirm':
-          'क्या आप वाकई "{desc}" को हटाना चाहते हैं?',
+          'delete_expense_confirm': 'क्या आप वाकई "{desc}" को हटाना चाहते हैं?',
           'items_label': 'आइटम',
           'date_label': 'तारीख',
           'expenses_item_label': 'खर्च का आइटम',
@@ -2173,7 +2280,6 @@ class AppTranslations extends Translations {
           'total_expenses_label': 'कुल खर्च',
           'all_months': 'सभी महीने',
           'currency_symbol': '₹',
-
           'month_january': 'जनवरी',
           'month_february': 'फरवरी',
           'month_march': 'मार्च',
@@ -2186,11 +2292,9 @@ class AppTranslations extends Translations {
           'month_october': 'अक्टूबर',
           'month_november': 'नवंबर',
           'month_december': 'दिसंबर',
-
           'profile_title': 'वर्कशॉप प्रोफ़ाइल',
           'workshop_manager_data': 'वर्कशॉप मैनेजर की जानकारी',
           'workshop_data': 'वर्कशॉप की जानकारी',
-
           'after_subscribe': 'सब्सक्राइब करने के बाद',
           'before_subscribe': 'सब्सक्राइब करने से पहले',
           'subscribed_to': 'आप सब्सक्राइब कर चुके हैं',
@@ -2200,7 +2304,6 @@ class AppTranslations extends Translations {
           'not_subscribed': 'आपने सब्सक्राइब नहीं किया है',
           'to_full_service': 'पूर्ण सेवा पैकेज के लिए',
           'subscribe_now': 'अभी सब्सक्राइब करें',
-
           'report_screen_title': 'रिपोर्ट्स',
           'daily_report': 'दैनिक रिपोर्ट',
           'weekly_report': 'साप्ताहिक रिपोर्ट',
@@ -2208,45 +2311,37 @@ class AppTranslations extends Translations {
           'three_month_report': '3 महीने की रिपोर्ट',
           'six_month_report': '6 महीने की रिपोर्ट',
           'annual_report': 'वार्षिक रिपोर्ट',
-
           'report_start_date': 'रिपोर्ट प्रारंभ तिथि',
           'day_label': 'दिन',
           'income': 'आय',
           'outlay': 'खर्च',
           'number_of_cars': 'कारों की संख्या',
-
           'generate_daily_report_directly': 'सीधे दैनिक रिपोर्ट बनाएँ',
           'report_language': 'रिपोर्ट की भाषा:',
           'report_release': 'रिपोर्ट जारी करें',
           'report_release_success': 'रिपोर्ट सफलतापूर्वक जारी हुई',
-
           'error_title': 'त्रुटि',
           'success_title': 'सफलता',
           'select_complete_date': 'कृपया पूरी तारीख चुनें',
           'report_generating': 'रिपोर्ट बनाई जा रही है...',
-
           'subscription': 'सब्सक्रिप्शन',
           'monthly': 'मासिक',
           'payment_annually': 'वार्षिक भुगतान',
           'annual': 'वार्षिक',
           'subscription_amount': 'सब्सक्रिप्शन राशि',
-
           'months_12': '12 महीने',
           'months_6_free': '6 महीने निःशुल्क',
           'unlimited_invoices_works': 'असीमित इनवॉइस और कार्य',
           'unlimited_car_registrations': 'असीमित कार पंजीकरण',
-
           'discount_code_hint': 'क्या आपके पास डिस्काउंट कोड है?',
           'summary_600_12x50': '600 = 12 × 50',
           'discount_10_percent': '10%',
           'total_540': '540.00',
           'total_amount_including_tax': 'कर सहित कुल राशि',
           'go_to_checkout': 'चेकआउट पर जाएँ',
-
           'monthly_with_value': '{value} / माह',
           'old_price': '{value}',
           'new_price': '{value}',
-
           'workshop_work_title': 'वर्कशॉप कार्य',
           'engine': 'इंजन',
           'gearbox': 'गियर बॉक्स',
@@ -2256,14 +2351,21 @@ class AppTranslations extends Translations {
           'air_conditioning': 'एयर कंडीशनिंग',
           'radiator_and_exhaust': 'रेडिएटर\nऔर एग्जॉस्ट',
           'glass_and_lights': 'ग्लास और लाइट्स',
-
           'edit_workshop_data': 'वर्कशॉप डेटा संपादित करें',
           'works_and_cars_title': 'कार्य और कारें',
           'workshop_work_button': 'वर्कशॉप कार्य',
           'types_of_cars_button': 'कारों के प्रकार',
-
         },
         'fil': {
+          'spare parts': 'mga piyesa',
+          'confirm_password': 'Kumpirmahin ang Password',
+          'new_password': 'Bagong Password (Opsyonal)',
+          'VAT Number (optional)': 'VAT Number (opsyonal)',
+          'Customer name': 'Pangalan ng Customer',
+          'VIN Chassis number (17 characters)':
+              'Ang chassis number ng kotse (17 character)',
+          'A new app update is available. Please update the app to continue.':
+              'Mayroong bagong update ang app. Mangyaring i-update ang app upang magpatuloy.',
           'A message has been sent to the customer to pick up the car':
               'Isang mensahe ang ipinadala sa customer upang kunin ang kotse',
           'The customer has been placed on the defaulters list':
@@ -2282,7 +2384,8 @@ class AppTranslations extends Translations {
           'End And Return': 'Wakas at Bumalik',
           'No invoice data available': 'Walang magagamit na data ng invoice',
           'Complete Payment': 'Kumpletuhin ang Pagbabayad',
-          'Payment Verification Failed': 'Nabigo ang Pagpapatunay ng Pagbabayad',
+          'Payment Verification Failed':
+              'Nabigo ang Pagpapatunay ng Pagbabayad',
           'Your payment verification has failed. Please try again.':
               'Nabigo ang iyong pagpapatunay ng pagbabayad. Pakisubukang muli.',
           'Create Account': 'Lumikha ng Account',
@@ -2309,12 +2412,14 @@ class AppTranslations extends Translations {
           'Payment Successful': 'Matagumpay na Pagbabayad',
           'Your subscription payment was successful.':
               'Matagumpay ang iyong pagbabayad sa subscription.',
-          'customer_updated_successfully': 'Matagumpay na na-update ang customer',
+          'customer_updated_successfully':
+              'Matagumpay na na-update ang customer',
           'Search Country/Region': 'Maghanap ng Bansa/Rehiyon',
           'You must register your workshop first':
               'Kailangan mong irehistro ang iyong workshop muna',
           'update': 'I-update',
-          'verified_phone_required': 'Kailangan ang na-verify na numero ng telepono',
+          'verified_phone_required':
+              'Kailangan ang na-verify na numero ng telepono',
           "Your free trial period has ended We invite you to subscribe to the app's services":
               "Ang iyong libreng panahon ng pagsubok ay nagtatapos. Inaanyayahan ka naming mag-subscribe sa mga serbisyo ng app",
           'Phone verified': 'Na-verify ang Telepono',
@@ -2395,9 +2500,11 @@ class AppTranslations extends Translations {
               'Kailangan mong mag-log in upang magpatuloy...',
           'iban_must_start_with_sa': 'Ang IBAN ay dapat magsimula sa SA',
           'iban_must_be_24_characters': 'Ang IBAN ay dapat na 24 karakter',
-          'tax_number_must_start_with_3': 'Ang tax number ay dapat magsimula sa 3',
+          'tax_number_must_start_with_3':
+              'Ang tax number ay dapat magsimula sa 3',
           'tax_number_must_end_with_3': 'Ang tax number ay dapat magtapos sa 3',
-          'tax_number_must_be_15_digits': 'Ang tax number ay dapat na 15 digits',
+          'tax_number_must_be_15_digits':
+              'Ang tax number ay dapat na 15 digits',
           'spare_part_found': 'Nahanap ang piyesa',
           'edit_profile': 'I-edit ang Profile',
           'invoice': 'Invoice',
@@ -2504,7 +2611,7 @@ class AppTranslations extends Translations {
           'phone_hint': 'Numero ng telepono',
           'password_hint': 'Password',
           'workshop_manager_reg': 'Pagpaparehistro ng Manager ng Workshop',
-          'name_hint': 'Buong Pangalan',
+          'name_hint': 'pangalan ng tagapamahala ng workshop',
           'check': 'Suriin',
           'email_hint': 'Email',
           'username_hint': 'username',
@@ -2516,32 +2623,48 @@ class AppTranslations extends Translations {
               'Dapat na nakarehistro ang data ng workshop',
           'register_now': 'Magrehistro ngayon',
           'register_later': 'Magrehistro sa ibang pagkakataon',
-          'please_enter_phone_number_signup': 'Pakipasok ang numero ng telepono',
+          'please_enter_phone_number_signup':
+              'Pakipasok ang numero ng telepono',
           'failed_to_send_otp': 'Nabigong magpadala ng OTP',
           'error_sending_otp': 'Error sa pagpapadala ng OTP',
           'invalid_otp': 'Di-wastong OTP',
           'error_verifying_otp': 'Error sa pag-verify ng OTP',
-          'please_enable_user_option_first': 'Pakiaktibo muna ang opsyon ng user',
-          'you_can_only_add_one_additional_user': 'Maaari ka lamang magdagdag ng isang karagdagang user',
+          'please_enable_user_option_first':
+              'Pakiaktibo muna ang opsyon ng user',
+          'you_can_only_add_one_additional_user':
+              'Maaari ka lamang magdagdag ng isang karagdagang user',
           'please_enter_your_name': 'Pakipasok ang iyong pangalan',
-          'please_enter_your_phone_number': 'Pakipasok ang iyong numero ng telepono',
-          'please_verify_your_phone_number': 'Paki-verify ang iyong numero ng telepono',
+          'please_enter_your_phone_number':
+              'Pakipasok ang iyong numero ng telepono',
+          'please_verify_your_phone_number':
+              'Paki-verify ang iyong numero ng telepono',
           'please_enter_your_email': 'Pakipasok ang iyong email',
           'please_enter_password': 'Pakipasok ang password',
-          'password_must_be_at_least_8_characters': 'Ang password ay dapat na hindi bababa sa 8 character',
+          'password_must_be_at_least_8_characters':
+              'Ang password ay dapat na hindi bababa sa 8 character',
           'passwords_do_not_match': 'Hindi nagtutugma ang mga password',
-          'please_enter_phone_for_helper_user': 'Pakipasok ang telepono para sa helper user',
-          'please_verify_phone_for_helper_user': 'Paki-verify ang telepono para sa helper user',
-          'please_enter_password_for_helper_user': 'Pakipasok ang password para sa helper user',
-          'helper_user_password_must_be_at_least_8_characters': 'Ang password ng helper user ay dapat na hindi bababa sa 8 character',
-          'helper_user_passwords_do_not_match': 'Hindi nagtutugma ang mga password ng helper user',
-          'please_agree_to_terms_and_conditions': 'Pakisang-ayon sa mga tuntunin at kundisyon',
-          'please_enter_a_valid_email_address': 'Pakipasok ang wastong email address',
+          'please_enter_phone_for_helper_user':
+              'Pakipasok ang telepono para sa helper user',
+          'please_verify_phone_for_helper_user':
+              'Paki-verify ang telepono para sa helper user',
+          'please_enter_password_for_helper_user':
+              'Pakipasok ang password para sa helper user',
+          'helper_user_password_must_be_at_least_8_characters':
+              'Ang password ng helper user ay dapat na hindi bababa sa 8 character',
+          'helper_user_passwords_do_not_match':
+              'Hindi nagtutugma ang mga password ng helper user',
+          'please_agree_to_terms_and_conditions':
+              'Pakisang-ayon sa mga tuntunin at kundisyon',
+          'please_enter_a_valid_email_address':
+              'Pakipasok ang wastong email address',
           'failed_to_create_account': 'Nabigong gumawa ng account',
           'error_creating_account': 'Error sa paggawa ng account',
-          'password_must_be_6_chars_with_letter_and_number': 'Ang password ay dapat na hindi bababa sa 6 character at maglaman ng hindi bababa sa isang letra at isang numero',
-          'email_and_confirm_email_do_not_match': 'Hindi nagtutugma ang Email at Kumpirmahin ang Email',
-          'password_and_confirm_password_do_not_match': 'Hindi nagtutugma ang Password at Kumpirmahin ang Password',
+          'password_must_be_6_chars_with_letter_and_number':
+              'Ang password ay dapat na hindi bababa sa 6 character at maglaman ng hindi bababa sa isang letra at isang numero',
+          'email_and_confirm_email_do_not_match':
+              'Hindi nagtutugma ang Email at Kumpirmahin ang Email',
+          'password_and_confirm_password_do_not_match':
+              'Hindi nagtutugma ang Password at Kumpirmahin ang Password',
           'new_workshop_reg': 'Bagong Pagpaparehistro ng Workshop',
           'workshop_info': 'Impormasyon ng Workshop',
           'workshop_name_in_board': 'Pangalan ng Workshop sa Board',
@@ -2551,7 +2674,8 @@ class AppTranslations extends Translations {
           'unified_national_number': 'Pinag-isang Pambansang Numero',
           'commercial_reg_number': 'Numero ng Pagpaparehistro ng Komersyal',
           'municipality_license_number': 'Numero ng Lisensya ng Munisipyo',
-          'workshop_already_exists_with_mln': 'May workshop na umiiral na may numero ng lisensya ng munisipyo {mln}',
+          'workshop_already_exists_with_mln':
+              'May workshop na umiiral na may numero ng lisensya ng munisipyo {mln}',
           'workshop_address': 'Address ng Workshop',
           'tax_number_vat': 'Numero ng Buwis (VAT)',
           'bank_account_iban': 'Bank Account IBAN',
@@ -2741,8 +2865,10 @@ class AppTranslations extends Translations {
           'view_invoice': 'Tingnan ang invoice',
           'pay_invoice': 'Bayaran ang invoice',
           'searching_for': 'Naghahanap ng: {query}',
-          'duplicate_data_message': 'Ang sumusunod na data ay nakarehistro sa ibang workshop:\n{fields}\n\nGusto mo bang magpatuloy?',
-          'commercial_registration_number_crn': 'Numero ng Komersyal na Rehistrasyon (CRN)',
+          'duplicate_data_message':
+              'Ang sumusunod na data ay nakarehistro sa ibang workshop:\n{fields}\n\nGusto mo bang magpatuloy?',
+          'commercial_registration_number_crn':
+              'Numero ng Komersyal na Rehistrasyon (CRN)',
           'tax_vat_number': 'Numero ng Buwis/VAT',
           'unified_national_number_unn': 'Pinag-isang Pambansang Numero (UNN)',
           'yes_continue': 'Oo, Magpatuloy',
@@ -2855,6 +2981,14 @@ class AppTranslations extends Translations {
           'types_of_cars_button': 'Mga Uri ng Sasakyan',
         },
         'ur': {
+          'spare parts': 'اسپیئر پارٹس',
+          'confirm_password': 'پاس ورڈ کی تصدیق کریں',
+          'new_password': 'نیا پاس ورڈ (اختیاری)',
+          'VAT Number (optional)': 'ویٹ نمبر (اختیاری)',
+          'Customer name': 'کسٹمر کا نام',
+          'VIN Chassis number (17 characters)': 'گاڑی کا چیسس نمبر (۱۷ حرف)',
+          'A new app update is available. Please update the app to continue.':
+              'ایپ کا ایک نیا اپ ڈیٹ دستیاب ہے۔ براہ کرم جاری رکھنے کے لیے ایپ کو اپ ڈیٹ کریں۔',
           'A message has been sent to the customer to pick up the car':
               'گاہک کو گاڑی لینے کا پیغام بھیجا گیا ہے',
           'no_cars_found': 'کوئی گاڑی نہیں ملی',
@@ -2898,9 +3032,11 @@ class AppTranslations extends Translations {
           'Take a new photo': 'نئی تصویر لیں',
           'Choose from gallery': 'گیلری سے منتخب کریں',
           'Payment Failed': 'ادائیگی ناکام',
-          'Your subscription payment failed. Please try again.':'آپ کی سبسکرپشن کی ادائیگی ناکام ہو گئی ہے۔ براہ کرم دوبارہ کوشش کریں۔',
+          'Your subscription payment failed. Please try again.':
+              'آپ کی سبسکرپشن کی ادائیگی ناکام ہو گئی ہے۔ براہ کرم دوبارہ کوشش کریں۔',
           'Payment Successful': 'ادائیگی کامیاب',
-          'Your subscription payment was successful.':'آپ کی سبسکرپشن کی ادائیگی کامیاب ہو گئی ہے۔',
+          'Your subscription payment was successful.':
+              'آپ کی سبسکرپشن کی ادائیگی کامیاب ہو گئی ہے۔',
           'customer_updated_successfully': 'گاہک کامیابی کے ساتھ اپ ڈیٹ ہو گیا',
           'Search Country/Region': 'ملک/علاقہ تلاش کریں',
           'You must register your workshop first':
@@ -3085,7 +3221,7 @@ class AppTranslations extends Translations {
           'phone_hint': 'فون نمبر',
           'password_hint': 'پاس ورڈ',
           'workshop_manager_reg': 'ورکشاپ منیجر رجسٹریشن',
-          'name_hint': 'پورا نام',
+          'name_hint': 'ورکشاپ منیجر کا نام',
           'check': 'چیک',
           'email_hint': 'ای میل',
           'username_hint': 'صارف نام',
@@ -3102,27 +3238,41 @@ class AppTranslations extends Translations {
           'error_sending_otp': 'OTP بھیجنے میں خرابی',
           'invalid_otp': 'غلط OTP',
           'error_verifying_otp': 'OTP کی تصدیق میں خرابی',
-          'please_enable_user_option_first': 'براہ کرم پہلے صارف آپشن کو فعال کریں',
-          'you_can_only_add_one_additional_user': 'آپ صرف ایک اضافی صارف شامل کر سکتے ہیں',
+          'please_enable_user_option_first':
+              'براہ کرم پہلے صارف آپشن کو فعال کریں',
+          'you_can_only_add_one_additional_user':
+              'آپ صرف ایک اضافی صارف شامل کر سکتے ہیں',
           'please_enter_your_name': 'براہ کرم اپنا نام درج کریں',
           'please_enter_your_phone_number': 'براہ کرم اپنا فون نمبر درج کریں',
-          'please_verify_your_phone_number': 'براہ کرم اپنے فون نمبر کی تصدیق کریں',
+          'please_verify_your_phone_number':
+              'براہ کرم اپنے فون نمبر کی تصدیق کریں',
           'please_enter_your_email': 'براہ کرم اپنا ای میل درج کریں',
           'please_enter_password': 'براہ کرم پاس ورڈ درج کریں',
-          'password_must_be_at_least_8_characters': 'پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے',
+          'password_must_be_at_least_8_characters':
+              'پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے',
           'passwords_do_not_match': 'پاس ورڈز میل نہیں کھاتے',
-          'please_enter_phone_for_helper_user': 'براہ کرم مددگار صارف کے لیے فون درج کریں',
-          'please_verify_phone_for_helper_user': 'براہ کرم مددگار صارف کے فون کی تصدیق کریں',
-          'please_enter_password_for_helper_user': 'براہ کرم مددگار صارف کے لیے پاس ورڈ درج کریں',
-          'helper_user_password_must_be_at_least_8_characters': 'مددگار صارف کا پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے',
-          'helper_user_passwords_do_not_match': 'مددگار صارف کے پاس ورڈز میل نہیں کھاتے',
-          'please_agree_to_terms_and_conditions': 'براہ کرم شرائط و ضوابط سے اتفاق کریں',
-          'please_enter_a_valid_email_address': 'براہ کرم ایک درست ای میل ایڈریس درج کریں',
+          'please_enter_phone_for_helper_user':
+              'براہ کرم مددگار صارف کے لیے فون درج کریں',
+          'please_verify_phone_for_helper_user':
+              'براہ کرم مددگار صارف کے فون کی تصدیق کریں',
+          'please_enter_password_for_helper_user':
+              'براہ کرم مددگار صارف کے لیے پاس ورڈ درج کریں',
+          'helper_user_password_must_be_at_least_8_characters':
+              'مددگار صارف کا پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے',
+          'helper_user_passwords_do_not_match':
+              'مددگار صارف کے پاس ورڈز میل نہیں کھاتے',
+          'please_agree_to_terms_and_conditions':
+              'براہ کرم شرائط و ضوابط سے اتفاق کریں',
+          'please_enter_a_valid_email_address':
+              'براہ کرم ایک درست ای میل ایڈریس درج کریں',
           'failed_to_create_account': 'اکاؤنٹ بنانے میں ناکام',
           'error_creating_account': 'اکاؤنٹ بنانے میں خرابی',
-          'password_must_be_8_chars_with_letter_and_number': 'پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے اور اس میں کم از کم ایک حرف اور ایک نمبر ہونا چاہیے',
-          'email_and_confirm_email_do_not_match': 'ای میل اور تصدیق ای میل میل نہیں کھاتے',
-          'password_and_confirm_password_do_not_match': 'پاس ورڈ اور تصدیق پاس ورڈ میل نہیں کھاتے',
+          'password_must_be_8_chars_with_letter_and_number':
+              'پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے اور اس میں کم از کم ایک حرف اور ایک نمبر ہونا چاہیے',
+          'email_and_confirm_email_do_not_match':
+              'ای میل اور تصدیق ای میل میل نہیں کھاتے',
+          'password_and_confirm_password_do_not_match':
+              'پاس ورڈ اور تصدیق پاس ورڈ میل نہیں کھاتے',
           'new_workshop_reg': 'نئی ورکشاپ کی رجسٹریشن',
           'workshop_info': 'ورکشاپ کی معلومات',
           'workshop_name_in_board': 'بورڈ میں ورکشاپ کا نام',
@@ -3132,7 +3282,8 @@ class AppTranslations extends Translations {
           'unified_national_number': 'متحدہ قومی نمبر',
           'commercial_reg_number': 'تجارتی رجسٹریشن نمبر',
           'municipality_license_number': 'میونسپلٹی لائسنس نمبر',
-          'workshop_already_exists_with_mln': 'میونسپلٹی لائسنس نمبر {mln} کے ساتھ ایک ورکشاپ پہلے سے موجود ہے',
+          'workshop_already_exists_with_mln':
+              'میونسپلٹی لائسنس نمبر {mln} کے ساتھ ایک ورکشاپ پہلے سے موجود ہے',
           'workshop_address': 'ورکشاپ کا پتہ',
           'tax_number_vat': 'ٹیکس نمبر (ویٹ)',
           'bank_account_iban': 'بینک اکاؤنٹ آئی بی اے این',
@@ -3313,7 +3464,8 @@ class AppTranslations extends Translations {
           'view_invoice': 'انوائس دیکھیں',
           'pay_invoice': 'انوائس ادا کریں',
           'searching_for': 'تلاش کر رہے ہیں: {query}',
-          'duplicate_data_message': 'درج ذیل ڈیٹا دوسرے ورکشاپ میں رجسٹرڈ ہے:\n{fields}\n\nکیا آپ جاری رکھنا چاہتے ہیں؟',
+          'duplicate_data_message':
+              'درج ذیل ڈیٹا دوسرے ورکشاپ میں رجسٹرڈ ہے:\n{fields}\n\nکیا آپ جاری رکھنا چاہتے ہیں؟',
           'commercial_registration_number_crn': 'تجارتی رجسٹریشن نمبر (CRN)',
           'tax_vat_number': 'ٹیکس/VAT نمبر',
           'unified_national_number_unn': 'متحدہ قومی نمبر (UNN)',

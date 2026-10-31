@@ -104,8 +104,8 @@ class SignupWorkshopController extends GetxController {
       mlnError.value = 'MLN is required'.tr;
       return false;
     }
-    if (value.length != 11) {
-      mlnError.value = 'MLN must be 11 digits'.tr;
+    if (value.length != 11 && value.length != 12) {
+      mlnError.value = 'MLN must be 11/12 digits'.tr;
       return false;
     }
     if (!value.startsWith('4')) {
@@ -171,8 +171,7 @@ class SignupWorkshopController extends GetxController {
     bool isTaxVATValid = validateTaxVAT(taxNumberController.text);
     bool isIBANValid = validateIBAN(ibanController.text);
 
-    isFormValid.value =
-        workshopNameController.text.isNotEmpty &&
+    isFormValid.value = workshopNameController.text.isNotEmpty &&
         workshopNameArabicController.text.isNotEmpty &&
         // workshopContact is optional or not present in the UI, so don't require it here
         isUNNValid &&
@@ -259,7 +258,7 @@ class SignupWorkshopController extends GetxController {
 
       final createWorkshopChecking = await _repo.checkingWorkshoisCreatedOrNot(
         mln: licenseNumberController.text.trim(),
-        crn: registrationNumberController.text.trim(),
+        crn: nationalNumberController.text.trim(),
         unn: nationalNumberController.text.trim(),
         tax: taxValue,
       );
@@ -278,10 +277,8 @@ class SignupWorkshopController extends GetxController {
 
           CustomAlert.showInfo(
             context: Get.context!,
-            message: 'workshop_already_exists_with_mln'.tr.replaceAll(
-              '{mln}',
-              mln
-            ),
+            message:
+                'workshop_already_exists_with_mln'.tr.replaceAll('{mln}', mln),
             onPressed: () {
               Get.back();
             },
@@ -290,8 +287,7 @@ class SignupWorkshopController extends GetxController {
         }
 
         // Check if any other field is duplicate
-        bool hasDuplicates =
-            data?.isExistWorkshopByCrn == true ||
+        bool hasDuplicates = data?.isExistWorkshopByCrn == true ||
             data?.isExistWorkshopByTax == true ||
             data?.isExistWorkshopByUnn == true;
 
@@ -308,10 +304,9 @@ class SignupWorkshopController extends GetxController {
             duplicateFields.add('unified_national_number_unn'.tr);
           }
 
-          String duplicateMessage = 'duplicate_data_message'.tr.replaceAll(
-            '{fields}',
-            duplicateFields.join(', ')
-          );
+          String duplicateMessage = 'duplicate_data_message'
+              .tr
+              .replaceAll('{fields}', duplicateFields.join(', '));
 
           CustomAlert.showConfirmation(
             context: Get.context!,
@@ -419,14 +414,18 @@ class SignupWorkshopController extends GetxController {
           GetWorkShop getWorkShop = GetWorkShop.fromRawJson(response.body);
           String workshopId = getWorkShop.data?.id ?? '';
           debugPrint('Workshop ID: $workshopId');
-         await SharePrefsHelper.setString(
+          await SharePrefsHelper.setString(
             SharedPreferenceValue.workshopId,
             workshopId,
           );
-          await SharePrefsHelper.setString(SharedPreferenceValue.role, 'WORKSHOP_OWNER',);
+          await SharePrefsHelper.setString(
+            SharedPreferenceValue.role,
+            'WORKSHOP_OWNER',
+          );
 
-
-          Get.offAllNamed(AppRoute.navScreen,);
+          Get.offAllNamed(
+            AppRoute.navScreen,
+          );
         } catch (parseError) {
           debugPrint('Parse error: $parseError');
           showCustomSnackBar('Failed to parse workshop data', isError: true);

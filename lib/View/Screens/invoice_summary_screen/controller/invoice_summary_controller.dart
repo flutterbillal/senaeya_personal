@@ -1,4 +1,5 @@
 import 'package:Senaeya/Core/AppRoute/app_route.dart';
+import 'package:Senaeya/Service/api_url.dart';
 import 'package:Senaeya/View/Screens/invoice_summary_screen/model/invoice_details_response.dart';
 import 'package:Senaeya/View/Screens/invoice_summary_screen/repo/invoice_summary_repo.dart';
 import 'package:Senaeya/View/Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
@@ -13,7 +14,6 @@ import '../../../Widgegts/custom_text/custom_text.dart';
 enum PayMethod { postpaid, transfer, card, cash }
 
 class InvoiceSummaryController extends GetxController {
-
   TextEditingController nameController = TextEditingController();
   TextEditingController idController = TextEditingController();
 
@@ -50,7 +50,6 @@ class InvoiceSummaryController extends GetxController {
   var customerName = ''.obs;
   var customerPhone = ''.obs;
 
-
   // Car info
   var carBrand = ''.obs;
   var carModel = ''.obs;
@@ -58,7 +57,6 @@ class InvoiceSummaryController extends GetxController {
   var carPlate = ''.obs;
   var carPlateType = ''.obs;
   var carPlateCountry = ''.obs;
-
 
   // Costs
   var sparePartsCost = 0.0.obs;
@@ -113,14 +111,20 @@ class InvoiceSummaryController extends GetxController {
         clientPhone = Get.arguments['clientPhone'] ?? '';
 
         // Receive Saudi plate information
-        saudiPlateEnglishText.value = Get.arguments['saudiPlateEnglishText'] ?? '';
-        saudiPlateArabicText.value = Get.arguments['saudiPlateArabicText'] ?? '';
-        inputEnglishPlateNumber.value = Get.arguments['inputEnglishPlateNumber'] ?? '';
-        inputArabicPlateNumber.value = Get.arguments['inputArabicPlateNumber'] ?? '';
-        symbolImageForSaudiUrl.value = Get.arguments['symbolImageForSaudi'] ?? '';
+        saudiPlateEnglishText.value =
+            Get.arguments['saudiPlateEnglishText'] ?? '';
+        saudiPlateArabicText.value =
+            Get.arguments['saudiPlateArabicText'] ?? '';
+        inputEnglishPlateNumber.value =
+            Get.arguments['inputEnglishPlateNumber'] ?? '';
+        inputArabicPlateNumber.value =
+            Get.arguments['inputArabicPlateNumber'] ?? '';
+        symbolImageForSaudiUrl.value =
+            Get.arguments['symbolImageForSaudi'] ?? '';
 
         // Receive international plate information
-        internationalPlateNumber.value = Get.arguments['internationalPlateNumber'] ?? '';
+        internationalPlateNumber.value =
+            Get.arguments['internationalPlateNumber'] ?? '';
         costOfWorks = Get.arguments['costOfWorks'] ?? 0.0;
         costOfSpareParts = Get.arguments['costOfSpareParts'] ?? 0.0;
 
@@ -159,29 +163,38 @@ class InvoiceSummaryController extends GetxController {
       }
     }
   }
-  Rxn<InvoiceDetailsModel>invoiceDetails = Rxn<InvoiceDetailsModel>();
+
+  Rxn<InvoiceDetailsModel> invoiceDetails = Rxn<InvoiceDetailsModel>();
 
   ///Get invoice by id
   RxBool isLoading = false.obs;
-  Future<void>getInvoiceById()async{
-    isLoading.value= true;
-    Response response  = await InvoiceSummaryRepo().getInvoiceById(invoiceId: invoiceId);
-    isLoading.value= false;
-    if(response.statusCode==200){
-      InvoiceDetailsModel invoice = InvoiceDetailsModel.fromJson(response.body['data']);
+  Future<void> getInvoiceById() async {
+    isLoading.value = true;
+    Response response =
+        await InvoiceSummaryRepo().getInvoiceById(invoiceId: invoiceId);
+    isLoading.value = false;
+    if (response.statusCode == 200) {
+      InvoiceDetailsModel invoice =
+          InvoiceDetailsModel.fromJson(response.body['data']);
       invoiceDetails.value = invoice;
-      sparePartsCost.value = ((invoice.totalCostOfSparePartsExcludingTax ?? 0)).toDouble();
-      workshopCost.value = ((invoice.totalCostOfWorkShopExcludingTax ?? 0)+(invoice.taxAmount??0)-(invoice.discount??0)).toDouble();
+      sparePartsCost.value =
+          ((invoice.totalCostOfSparePartsExcludingTax ?? 0)).toDouble();
+      workshopCost.value = ((invoice.totalCostOfWorkShopExcludingTax ?? 0) +
+              (invoice.taxAmount ?? 0) -
+              (invoice.discount ?? 0))
+          .toDouble();
       // Populate fields from invoice data
       _populateFieldsFromInvoice(invoice);
-    }else{
-      showCustomSnackBar(response.statusText??'Unknown error occurred');
+    } else {
+      showCustomSnackBar(response.statusText ?? 'Unknown error occurred');
     }
   }
 
-
   /// if slelect postpaid
-  void showYesNoDialog({required BuildContext context, required VoidCallback onYes,required String title}) {
+  void showYesNoDialog(
+      {required BuildContext context,
+      required VoidCallback onYes,
+      required String title}) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -245,7 +258,7 @@ class InvoiceSummaryController extends GetxController {
                         ),
                         onPressed: () {
                           onYes();
-                        Navigator.of(ctx).pop();
+                          Navigator.of(ctx).pop();
                         },
                         child: CustomText(
                           text: 'yes'.tr,
@@ -263,9 +276,10 @@ class InvoiceSummaryController extends GetxController {
       },
     );
   }
-  Future<void>onTapPostPaid()async{
+
+  Future<void> onTapPostPaid() async {
     // Validate date is selected
-    if(postpaidDateForServer.value.isEmpty){
+    if (postpaidDateForServer.value.isEmpty) {
       showCustomSnackBar('Please select payment date'.tr);
       return;
     }
@@ -274,22 +288,21 @@ class InvoiceSummaryController extends GetxController {
     Response response;
 
     // Check if creating new invoice or updating existing one
-    if(invoiceId.isEmpty) {
+    if (invoiceId.isEmpty) {
       // Create new invoice
       response = await InvoiceSummaryRepo().createInvoice(
-        clientName: clientName,
-
+          clientName: clientName,
           clientId: clientId,
           carId: clientCarId,
           paymentMethod: 'postpaid',
-          postPaymentDate: postpaidDateForServer.value, // Already in yyyy-MM-dd format
+          postPaymentDate:
+              postpaidDateForServer.value, // Already in yyyy-MM-dd format
           isCashRecieved: false,
           isReleased: false,
           worksList: workList,
           sparePartsList: sparePartsList,
           discount: discount,
-          cardApprovalCode: cardApprovalCode.value
-      );
+          cardApprovalCode: cardApprovalCode.value);
     } else {
       // Update existing invoice
       response = await InvoiceSummaryRepo().saveInvoice(
@@ -301,16 +314,19 @@ class InvoiceSummaryController extends GetxController {
         discount: discount,
         isCashRecieved: false,
         carId: clientCarId,
-        postPaymentDate: postpaidDateForServer.value, // Already in yyyy-MM-dd format
+        postPaymentDate:
+            postpaidDateForServer.value, // Already in yyyy-MM-dd format
         clientId: clientId,
       );
     }
 
     nextIsLoading.value = false;
-    if(response.statusCode==200){
-      releaseInvoice();
-    }else{
-      showCustomSnackBar(response.statusText??'Unknown error occurred');
+    if (response.statusCode == 200) {
+      String qrCode = response.body['data']['invoiceQRLink'] ?? '';
+      print("✅ Invoice created successfully");
+      releaseInvoice(qrLink: qrCode);
+    } else {
+      showCustomSnackBar(response.statusText ?? 'Unknown error occurred');
     }
   }
 
@@ -363,20 +379,24 @@ class InvoiceSummaryController extends GetxController {
   //   }
   // }
 
-
-  Future<void>onTapRelease({bool saveLoading  = false})async{
+  Future<void> onTapRelease({bool saveLoading = false}) async {
     if (payMethod.value == null) return;
 
-    saveLoading==false? nextIsLoading.value = true:saveIsLoading.value = true;
+    saveLoading == false
+        ? nextIsLoading.value = true
+        : saveIsLoading.value = true;
 
     // Determine if cash/transfer was received based on payment method
     bool isCashReceived = false;
     if (payMethod.value == PayMethod.cash && receiveCash.value == true) {
       isCashReceived = true;
-    } else if (payMethod.value == PayMethod.transfer && receiveTransfer.value == true) {
+    } else if (payMethod.value == PayMethod.transfer &&
+        receiveTransfer.value == true) {
       isCashReceived = true;
-    } else if (payMethod.value == PayMethod.card && cardApprovalCode.value.isNotEmpty) {
-      isCashReceived = true; // Card approval code entered means payment received
+    } else if (payMethod.value == PayMethod.card &&
+        cardApprovalCode.value.isNotEmpty) {
+      isCashReceived =
+          true; // Card approval code entered means payment received
     }
 
     Response saveResponse;
@@ -395,55 +415,57 @@ class InvoiceSummaryController extends GetxController {
       isReleased = true;
     }
 
-    if(invoiceId.isEmpty) {
+    if (invoiceId.isEmpty) {
       // Create new invoice
       saveResponse = await InvoiceSummaryRepo().createInvoice(
           clientId: clientId,
           carId: clientCarId,
           paymentMethod: payMethod.value!.name,
-          postPaymentDate: postpaidDateForServer.value.isNotEmpty ? postpaidDateForServer.value : '', // Use yyyy-MM-dd format or empty
+          postPaymentDate: postpaidDateForServer.value.isNotEmpty
+              ? postpaidDateForServer.value
+              : '', // Use yyyy-MM-dd format or empty
           isCashRecieved: isCashReceived,
           isReleased: isReleased,
           worksList: workList,
           sparePartsList: sparePartsList,
           discount: discount,
-          cardApprovalCode: cardApprovalCode.value, clientName: clientName
-      );
+          cardApprovalCode: cardApprovalCode.value,
+          clientName: clientName);
     } else {
-
       // Update existing invoice
       saveResponse = await InvoiceSummaryRepo().makeThePayment(
         paymentMethod: payMethod.value!.name,
         invoiceId: invoiceId,
-        cardApprovalCode: cardApprovalCode.value,isCashRecieved: isCashReceived,isRecievedTransfer: receiveTransfer.value,postPaymentDate: postpaidDate.value,
+        cardApprovalCode: cardApprovalCode.value,
+        isCashRecieved: isCashReceived,
+        isRecievedTransfer: receiveTransfer.value,
+        postPaymentDate: postpaidDate.value,
       );
     }
 
-    if(saveResponse.statusCode==200){
-
-
+    if (saveResponse.statusCode == 200) {
+      print("✅ Invoice created successfully");
       // Response response = await PreviousInvoicesRepo().payInvoice(invoiceId: invoiceId,paymentMethod: payMethod.value!.name,cardApprovalCode: cardApprovalCode.value);
       cardApprovalCode.value = '';
-      saveLoading==false? nextIsLoading.value = false:saveIsLoading.value = false;
+      saveLoading == false
+          ? nextIsLoading.value = false
+          : saveIsLoading.value = false;
       // if(response.statusCode==200){
-     if(canSaveInvoice){
-       saveInvoice();
-     }else{
-       releaseInvoice();
-     }
-      // }
-      // }
-
-    }
-    else{
-        showCustomSnackBar(saveResponse.statusText??'Unknown error occurred');
+      if (canSaveInvoice) {
+        saveInvoice();
+      } else {
+        releaseInvoice(
+            qrLink: saveResponse.body['data']['invoiceQRLink'] ?? '');
       }
-    saveLoading==false? nextIsLoading.value = false:saveIsLoading.value = false;
-
-
-
+      // }
+      // }
+    } else {
+      showCustomSnackBar(saveResponse.statusText ?? 'Unknown error occurred');
+    }
+    saveLoading == false
+        ? nextIsLoading.value = false
+        : saveIsLoading.value = false;
   }
-
 
   void _populateFieldsFromInvoice(InvoiceDetailsModel invoice) {
     // Populate client and car IDs
@@ -459,10 +481,13 @@ class InvoiceSummaryController extends GetxController {
     if (invoice.client?.clientId != null) {
       // User type: has nested clientId with name and contact
       customerName.value = invoice.client!.clientId!.name ?? 'N/A';
-      customerPhone.value = invoice.client!.clientId!.contact ?? invoice.client?.contact ?? 'N/A';
+      customerPhone.value =
+          invoice.client!.clientId!.contact ?? invoice.client?.contact ?? 'N/A';
     } else {
       // WorkShop type: has workShopNameAsClient and direct contact
-      customerName.value = invoice.client?.workShopNameAsClient ?? invoice.client?.contact ?? 'N/A';
+      customerName.value = invoice.client?.workShopNameAsClient ??
+          invoice.client?.contact ??
+          'N/A';
       customerPhone.value = invoice.client?.contact ?? 'N/A';
     }
     nameController.text = customerName.value;
@@ -473,10 +498,12 @@ class InvoiceSummaryController extends GetxController {
       // Handle brand - it's a dynamic type that could be a Map
       if (invoice.car!.brand != null) {
         if (invoice.car!.brand is Map<String, dynamic>) {
-          carBrand.value = (invoice.car!.brand as Map<String, dynamic>)['title'] ?? 'N/A';
+          carBrand.value =
+              (invoice.car!.brand as Map<String, dynamic>)['title'] ?? 'N/A';
           brandId = (invoice.car!.brand as Map<String, dynamic>)['_id'] ?? '';
           brandName = carBrand.value;
-          brandImage = (invoice.car!.brand as Map<String, dynamic>)['image'] ?? '';
+          brandImage =
+              (invoice.car!.brand as Map<String, dynamic>)['image'] ?? '';
         } else if (invoice.car!.brand is String) {
           carBrand.value = invoice.car!.brand as String;
           brandName = carBrand.value;
@@ -495,20 +522,27 @@ class InvoiceSummaryController extends GetxController {
       // Handle license plate
       if (invoice.car!.plateNumberForSaudi != null) {
         carPlate.value = invoice.car!.plateNumberForSaudi!.numberEnglish ?? '';
-        inputEnglishPlateNumber.value = invoice.car!.plateNumberForSaudi!.numberEnglish ?? '';
-        inputArabicPlateNumber.value = invoice.car!.plateNumberForSaudi!.numberArabic ?? '';
+        inputEnglishPlateNumber.value =
+            invoice.car!.plateNumberForSaudi!.numberEnglish ?? '';
+        inputArabicPlateNumber.value =
+            invoice.car!.plateNumberForSaudi!.numberArabic ?? '';
 
         if (invoice.car!.plateNumberForSaudi!.alphabetsCombinations != null &&
-            invoice.car!.plateNumberForSaudi!.alphabetsCombinations!.isNotEmpty) {
-          carPlateType.value = invoice.car!.plateNumberForSaudi!.alphabetsCombinations![0] ?? '';
-          saudiPlateEnglishText.value = invoice.car!.plateNumberForSaudi!.alphabetsCombinations![0] ?? '';
+            invoice
+                .car!.plateNumberForSaudi!.alphabetsCombinations!.isNotEmpty) {
+          carPlateType.value =
+              invoice.car!.plateNumberForSaudi!.alphabetsCombinations![0] ?? '';
+          saudiPlateEnglishText.value =
+              invoice.car!.plateNumberForSaudi!.alphabetsCombinations![0] ?? '';
         }
 
         if (invoice.car!.plateNumberForSaudi!.symbol?.image != null) {
-          symbolImageForSaudiUrl.value = invoice.car!.plateNumberForSaudi!.symbol!.image ?? '';
+          symbolImageForSaudiUrl.value =
+              invoice.car!.plateNumberForSaudi!.symbol!.image ?? '';
         }
       } else if (invoice.car!.plateNumberForInternational != null) {
-        internationalPlateNumber.value = invoice.car!.plateNumberForInternational ?? '';
+        internationalPlateNumber.value =
+            invoice.car!.plateNumberForInternational ?? '';
       }
     }
 
@@ -550,8 +584,10 @@ class InvoiceSummaryController extends GetxController {
         case 'postpaid':
           payMethod.value = PayMethod.postpaid;
           if (invoice.postPaymentDate != null) {
-            postpaidDate.value = '${invoice.postPaymentDate!.day.toString().padLeft(2, '0')}-${invoice.postPaymentDate!.month.toString().padLeft(2, '0')}-${invoice.postPaymentDate!.year}';
-            postpaidDateForServer.value = '${invoice.postPaymentDate!.year}-${invoice.postPaymentDate!.month.toString().padLeft(2, '0')}-${invoice.postPaymentDate!.day.toString().padLeft(2, '0')}'; // Convert to YYYY-MM-DD
+            postpaidDate.value =
+                '${invoice.postPaymentDate!.day.toString().padLeft(2, '0')}-${invoice.postPaymentDate!.month.toString().padLeft(2, '0')}-${invoice.postPaymentDate!.year}';
+            postpaidDateForServer.value =
+                '${invoice.postPaymentDate!.year}-${invoice.postPaymentDate!.month.toString().padLeft(2, '0')}-${invoice.postPaymentDate!.day.toString().padLeft(2, '0')}'; // Convert to YYYY-MM-DD
           }
           break;
         case 'transfer':
@@ -569,16 +605,33 @@ class InvoiceSummaryController extends GetxController {
     }
   }
 
-  void releaseInvoice(){
-    CustomAlert.showInfo(context: Get.context!, message: 'invoice_issued_message'.tr,onPressed: (){
-      Get.offAllNamed(AppRoute.navScreen);
-    });
+  void releaseInvoice({String qrLink = ''}) {
+    showDialog(
+      context: Get.context!,
+      barrierDismissible: false,
+      builder: (context) => PopScope(
+        canPop: false,
+        child: CustomAlertDialog(
+          image: qrLink.isNotEmpty
+              ? Image.network(ApiConstant.imageBaseUrl + qrLink)
+              : const SizedBox(),
+          message: 'invoice_issued_message'.tr,
+          onPressed: () {
+            Navigator.of(context).pop(); // Close dialog
+            Get.offAllNamed(AppRoute.navScreen);
+          },
+        ),
+      ),
+    );
   }
 
-  void saveInvoice(){
-    CustomAlert.showInfo(context: Get.context!, message: 'invoice_saved_message'.tr,onPressed: (){
-      Get.offAllNamed(AppRoute.navScreen);
-    });
+  void saveInvoice() {
+    CustomAlert.showInfo(
+        context: Get.context!,
+        message: 'invoice_saved_message'.tr,
+        onPressed: () {
+          Get.offAllNamed(AppRoute.navScreen);
+        });
   }
 
   void setPayMethod(PayMethod method) {
@@ -604,14 +657,12 @@ class InvoiceSummaryController extends GetxController {
     receiveTransfer.value = value;
   }
 
-
   void setPostpaidDate(String date, DateTime dateTime) {
     postpaidDate.value = date;
     // Convert to server format: YYYY-MM-DD
-    postpaidDateForServer.value = '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}';
+    postpaidDateForServer.value =
+        '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}';
   }
-
-
 
   // Validation for release button
   bool get canReleaseInvoice {
@@ -624,9 +675,11 @@ class InvoiceSummaryController extends GetxController {
       case PayMethod.transfer:
         return receiveTransfer.value == true;
       case PayMethod.card:
-        return cardApprovalCode.value.isNotEmpty && cardApprovalCode.value.length == 6;
+        return cardApprovalCode.value.isNotEmpty &&
+            cardApprovalCode.value.length == 6;
       case PayMethod.postpaid:
-        return postpaidDateForServer.value.isNotEmpty; // Can release if date is selected
+        return postpaidDateForServer
+            .value.isNotEmpty; // Can release if date is selected
     }
   }
 
@@ -639,7 +692,8 @@ class InvoiceSummaryController extends GetxController {
       case PayMethod.cash:
         return receiveCash.value == false; // Can save if cash not received yet
       case PayMethod.transfer:
-        return receiveTransfer.value == false; // Can save if transfer not received yet
+        return receiveTransfer.value ==
+            false; // Can save if transfer not received yet
       case PayMethod.card:
         return false; // Can save if approval code not entered
       case PayMethod.postpaid:
@@ -665,8 +719,10 @@ class InvoiceSummaryController extends GetxController {
     if (invoiceDetails.value?.car?.plateNumberForInternational != null &&
         invoiceDetails.value!.car!.plateNumberForInternational!.isNotEmpty) {
       return invoiceDetails.value!.car!.plateNumberForInternational!;
-    } else if (invoiceDetails.value?.car?.plateNumberForSaudi?.numberEnglish != null) {
-      return invoiceDetails.value!.car!.plateNumberForSaudi!.numberEnglish ?? '';
+    } else if (invoiceDetails.value?.car?.plateNumberForSaudi?.numberEnglish !=
+        null) {
+      return invoiceDetails.value!.car!.plateNumberForSaudi!.numberEnglish ??
+          '';
     }
 
     return 'N/A';
@@ -679,9 +735,12 @@ class InvoiceSummaryController extends GetxController {
     }
 
     // Fallback to invoice data
-    if (invoiceDetails.value?.car?.plateNumberForSaudi?.alphabetsCombinations != null &&
-        invoiceDetails.value!.car!.plateNumberForSaudi!.alphabetsCombinations!.isNotEmpty) {
-      return invoiceDetails.value!.car!.plateNumberForSaudi!.alphabetsCombinations![0];
+    if (invoiceDetails.value?.car?.plateNumberForSaudi?.alphabetsCombinations !=
+            null &&
+        invoiceDetails.value!.car!.plateNumberForSaudi!.alphabetsCombinations!
+            .isNotEmpty) {
+      return invoiceDetails
+          .value!.car!.plateNumberForSaudi!.alphabetsCombinations![0];
     }
 
     return '';
@@ -709,7 +768,8 @@ class InvoiceSummaryController extends GetxController {
 
     // Fallback to invoice data
     if (invoiceDetails.value?.car?.plateNumberForSaudi?.symbol?.image != null) {
-      return invoiceDetails.value!.car!.plateNumberForSaudi!.symbol!.image ?? '';
+      return invoiceDetails.value!.car!.plateNumberForSaudi!.symbol!.image ??
+          '';
     }
 
     return '';
@@ -723,7 +783,8 @@ class InvoiceSummaryController extends GetxController {
     // Fallback to invoice data
     if (invoiceDetails.value?.car?.plateNumberForSaudi != null &&
         invoiceDetails.value!.car!.plateNumberForSaudi!.numberEnglish != null &&
-        invoiceDetails.value!.car!.plateNumberForSaudi!.numberEnglish!.isNotEmpty) {
+        invoiceDetails
+            .value!.car!.plateNumberForSaudi!.numberEnglish!.isNotEmpty) {
       return true;
     }
 
@@ -744,4 +805,3 @@ class InvoiceSummaryController extends GetxController {
     return false;
   }
 }
-

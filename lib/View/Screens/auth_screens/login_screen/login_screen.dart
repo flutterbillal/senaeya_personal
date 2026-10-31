@@ -175,6 +175,8 @@ class LoginScreen extends StatelessWidget {
                                   child: TextButton(
                                     onPressed: () {
                                       Get.toNamed(AppRoute.signupScreen);
+                                      // Get.toNamed(
+                                      // AppRoute.signupWorkshopScreen);
                                     },
                                     child: CustomText(
                                       maxLines: 2,
@@ -194,19 +196,21 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Obx(()=>controller.isLoading.value? Positioned(
-                  top: 0,
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Center(
-                    child: Image.asset(
-                      AppImages.loading,
-                      width: 200.sp,
-                      height: 200.sp,
-                    ),
-                  ),
-                ):const SizedBox())
+                Obx(() => controller.isLoading.value
+                    ? Positioned(
+                        top: 0,
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Center(
+                          child: Image.asset(
+                            AppImages.loading,
+                            width: 200.sp,
+                            height: 200.sp,
+                          ),
+                        ),
+                      )
+                    : const SizedBox())
               ],
             ),
           );

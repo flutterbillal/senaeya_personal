@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Senaeya/Core/AppRoute/app_route.dart';
 import 'package:Senaeya/Service/api_url.dart';
 import 'package:Senaeya/Utils/ToastMsg/toast_message.dart';
@@ -7,6 +9,8 @@ import 'package:Senaeya/View/Widgets/common_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Senaeya/Helper/shared_prefe/shared_prefe.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../Service/api_client.dart';
 import '../../../Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
@@ -37,13 +41,12 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
-
-
     init ? null : initial();
     init = true;
     super.onInit();
   }
-  void showLoginAlertDialog(){
+
+  void showLoginAlertDialog() {
     CustomAlert.showInfo(
       context: Get.context!,
       message: 'You must log in to continue...'.tr,
@@ -53,15 +56,74 @@ class HomeController extends GetxController {
     );
   }
 
+  Future<void> fetchLatestVersion() async {
+    String latestVersionNumber = "1.0.5";
+    String iosLatestVersion = "1.0.5";
+    Response response = await ApiClient.getData(ApiConstant.appVersion);
+    if (response.statusCode == 200) {
+      latestVersionNumber = response.body['data']['androidVersion'] ?? "1.0.5";
+      iosLatestVersion = response.body['data']['iosVersion'] ?? "1.0.5";
+    }
+
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String currentVersionNumber = packageInfo.version;
+
+    if (Platform.isAndroid) {
+      if (latestVersionNumber != currentVersionNumber) {
+        showAppUpdateDialog();
+      }
+    } else if (Platform.isIOS) {
+      if (iosLatestVersion != currentVersionNumber) {
+        showAppUpdateDialog();
+      }
+    }
+  }
+
+  showAppUpdateDialog() {
+    showDialog(
+      context: Get.context!,
+      barrierDismissible: false,
+      builder: (context) => PopScope(
+        canPop: false,
+        child: CustomAlertDialog(
+          message:
+              'A new app update is available. Please update the app to continue.'
+                  .tr,
+          buttonText: 'Update'.tr,
+          onPressed: () async {
+            //playstore
+            //https://play.google.com/store/apps/details?id=com.fahadalfayez.senaeya
+            //huwawei
+            //https://appgallery.huawei.com/app/C116338049
+            //gelaxy
+            //https://galaxystore.samsung.com/detail/com.fahadalfayez.senaeya
+            if (Platform.isAndroid) {
+              await launchUrl(
+                Uri.parse(
+                    "https://play.google.com/store/apps/details?id=com.fahadalfayez.senaeya"),
+                mode: LaunchMode.externalApplication,
+              );
+            } else if (Platform.isIOS) {
+              await launchUrl(
+                Uri.parse("https://apps.apple.com/us/app/id6756404472"),
+                mode: LaunchMode.externalApplication,
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
 
   Future<void> initial() async {
+    // fetchLatestVersion();
     token = await SharePrefsHelper.getString(SharedPreferenceValue.token);
     workShopId = await SharePrefsHelper.getString(
       SharedPreferenceValue.workshopId,
     );
     // print("=========================$token");
     // print("=========================$workShopId");
-    if(workShopId.isNotEmpty){
+    if (workShopId.isNotEmpty) {
       final response = await EditWorkshopScreenRepo().getWorkshopData();
       if (response.statusCode == 200 && response.body['data'] != null) {
         final data = response.body['data'];
@@ -69,11 +131,9 @@ class HomeController extends GetxController {
         workShopName.value = data['workshopNameEnglish'] ?? '';
       }
     }
-  if(token.isNotEmpty){
-    await fetchProfile();
-  }
-
-
+    if (token.isNotEmpty) {
+      await fetchProfile();
+    }
   }
 
   /// Fetch profile data from API
@@ -173,10 +233,8 @@ class HomeController extends GetxController {
 
   Future<void> _saveSelectedIds() async {
     try {
-      final ids = selectedCountries
-          .map((e) => e.sId)
-          .whereType<String>()
-          .toList();
+      final ids =
+          selectedCountries.map((e) => e.sId).whereType<String>().toList();
       await SharePrefsHelper.setListOfString(_prefsKey, ids);
     } catch (e) {
       // ignore
@@ -193,7 +251,8 @@ class HomeController extends GetxController {
     workShopWorkIsLoading.value = false;
 
     if (response.statusCode == 200) {
-      WorkshopWorksModel commonListModel = WorkshopWorksModel.fromJson(response.body);
+      WorkshopWorksModel commonListModel =
+          WorkshopWorksModel.fromJson(response.body);
       workShopWorkList.clear();
       workShopWorkList.addAll(commonListModel.worksList ?? []);
       // After loading countries, apply any saved selection (by id)
@@ -207,9 +266,11 @@ class HomeController extends GetxController {
   Future<void> toggleWorkShopSelection(WorkItem item) async {
     if (item.sId == null) return;
 
-    final exists = selectedWorkShopWork.any((c) => c.workCategoryName == item.workCategoryName);
+    final exists = selectedWorkShopWork
+        .any((c) => c.workCategoryName == item.workCategoryName);
     if (exists) {
-      selectedWorkShopWork.removeWhere((c) => c.workCategoryName == item.workCategoryName);
+      selectedWorkShopWork
+          .removeWhere((c) => c.workCategoryName == item.workCategoryName);
     } else {
       selectedWorkShopWork.add(item);
     }
@@ -233,7 +294,8 @@ class HomeController extends GetxController {
       selectedWorkShopWork.clear();
       workshopList.clear();
       for (var item in workShopWorkList) {
-        if (item.workCategoryName != null && saved.contains(item.workCategoryName)) {
+        if (item.workCategoryName != null &&
+            saved.contains(item.workCategoryName)) {
           selectedWorkShopWork.add(item);
         }
       }
@@ -254,7 +316,6 @@ class HomeController extends GetxController {
     } catch (e) {
       // ignore
     }
-
   }
 
   Future<void> ensureCountriesLoaded() async {
@@ -269,7 +330,7 @@ class HomeController extends GetxController {
   // Card tap handlers
   void onAddCustomer() {
     // Ensure countries are loaded and selection is restored before navigating
-    if(workShopId.isEmpty){
+    if (workShopId.isEmpty) {
       CommonAlertDialog.showRegisterWorkshopDialog();
       return;
     }
@@ -289,12 +350,17 @@ class HomeController extends GetxController {
         "fromNewInvoice": true,
       },
     );
+    // Get.toNamed(
+    //   AppRoute.addWorksScreen,
+    // );
   }
 
-  void needSubscriptionDialog(){
+  void needSubscriptionDialog() {
     CustomAlert.showInfo(
       context: Get.context!,
-      message: "Your free trial period has ended We invite you to subscribe to the app's services".tr,
+      message:
+          "Your free trial period has ended We invite you to subscribe to the app's services"
+              .tr,
       onPressed: () {
         Navigator.pop(Get.context!);
         Get.find<NavigationController>().changeIndex(4);
@@ -302,38 +368,44 @@ class HomeController extends GetxController {
     );
   }
 
-  void onTapAddInvoice(){
-
-   token.isNotEmpty?workShopId.isEmpty?CommonAlertDialog.showRegisterWorkshopDialog(): onNewInvoice() :
-   showLoginAlertDialog();
+  void onTapAddInvoice() {
+    token.isNotEmpty
+        ? workShopId.isEmpty
+            ? CommonAlertDialog.showRegisterWorkshopDialog()
+            : onNewInvoice()
+        : showLoginAlertDialog();
   }
 
-  void onTapReport(){
-   token.isEmpty?showLoginAlertDialog(): workShopId.isEmpty?CommonAlertDialog.showRegisterWorkshopDialog(): onReports();
+  void onTapReport() {
+    token.isEmpty
+        ? showLoginAlertDialog()
+        : workShopId.isEmpty
+            ? CommonAlertDialog.showRegisterWorkshopDialog()
+            : onReports();
   }
 
-  RxBool checkingAuthorization=false.obs;
-  Future<bool>checkAuthorization({bool popOnUnAuthorized = false})async{
-    bool isAuthorized=false;
-   try{
-     checkingAuthorization = true.obs;
-     Response response=await GetCarsRepo().getAuthorized();
-     checkingAuthorization = false.obs;
-     if(response.statusCode==200){
-       isAuthorized=true;
-     }else{
-       isAuthorized=false;
-       if (popOnUnAuthorized) {
-           Get.back(closeOverlays: true);
-       }
-       needSubscriptionDialog();
-     }
-   }catch(e) {
-     isAuthorized = false;
-     showCustomSnackBar("Error: ${e.toString()}");
-     return isAuthorized;
-   }
-   return isAuthorized;
+  RxBool checkingAuthorization = false.obs;
+  Future<bool> checkAuthorization({bool popOnUnAuthorized = false}) async {
+    bool isAuthorized = false;
+    try {
+      checkingAuthorization = true.obs;
+      Response response = await GetCarsRepo().getAuthorized();
+      checkingAuthorization = false.obs;
+      if (response.statusCode == 200) {
+        isAuthorized = true;
+      } else {
+        isAuthorized = false;
+        if (popOnUnAuthorized) {
+          Get.back(closeOverlays: true);
+        }
+        needSubscriptionDialog();
+      }
+    } catch (e) {
+      isAuthorized = false;
+      showCustomSnackBar("Error: ${e.toString()}");
+      return isAuthorized;
+    }
+    return isAuthorized;
   }
 
   void onCustomers() {

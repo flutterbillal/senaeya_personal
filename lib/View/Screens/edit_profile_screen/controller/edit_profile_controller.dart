@@ -18,6 +18,7 @@ class EditProfileController extends GetxController {
   final HomeController _homeController = Get.find<HomeController>();
   // Main user fields
   RxBool enableUser = false.obs;
+  final confirmPasswordController = TextEditingController();
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
@@ -38,7 +39,6 @@ class EditProfileController extends GetxController {
 
   Future<void> sendPhoneNumber(String phoneNumber) async {
     try {
-
       Response response = await ApiClient.postData(
         ApiConstant.chekPhoneNumber,
         body: {"phoneNumber": phoneNumber},
@@ -48,7 +48,6 @@ class EditProfileController extends GetxController {
       } else {
         showCustomSnackBar("Failed to send OTP".tr);
       }
-
     } catch (e) {
       showCustomSnackBar("Error sending OTP: ${e.toString()}");
     }
@@ -72,7 +71,6 @@ class EditProfileController extends GetxController {
       return false;
     }
   }
-
 
   void verifiedPhone(String phone, {int? userIndex}) async {
     if (phone.isEmpty) {
@@ -119,9 +117,9 @@ class EditProfileController extends GetxController {
       },
     );
   }
+
   // Track if helper user already exists (has ID)
   var hasExistingHelper = false.obs;
-
 
   RxString profileImageUrl = "".obs;
 
@@ -313,10 +311,10 @@ class EditProfileController extends GetxController {
         showCustomSnackBar("Profile updated successfully", isError: false);
         Get.offAllNamed(AppRoute.navScreen);
       } else {
-       Map<String,dynamic> body1= jsonDecode(response.body);
+        Map<String, dynamic> body1 = jsonDecode(response.body);
         appLog('Profile update failed: ${body1['message']}');
         showCustomSnackBar(
-          "Failed to update profile: ${body1['message']?? response.statusText}",
+          "Failed to update profile: ${body1['message'] ?? response.statusText}",
           isError: true,
         );
       }
