@@ -1,4 +1,4 @@
-import 'package:Senaeya/View/Widgegts/custom_text/custom_text.dart';
+﻿import 'package:Senaeya/View/Widgegts/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
@@ -135,59 +135,77 @@ class _VinScannerScreenState extends State<VinScannerScreen>
     }
   }
 
-  void _processOCR(String text) {
-    if (_isProcessing || !mounted || _hasNavigated || _isLoading) return;
+  /// Extracts a clean 17-character VIN from raw OCR text by:
+  /// 1. Removing spaces between characters (e.g. "M R 0 H B 8..." -> "MR0HB8...")
+  /// 2. Stripping leading/trailing symbols (e.g. *VIN* -> VIN)
+  /// 3. Sliding a 17-char window over the cleaned string to find a valid VIN
+  String? _extractVIN(String rawText) {
+    final candidates = <String>{};
 
-    String cleaned = text.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
+    // Full text with all non-VIN chars removed
+    final fullCleaned =
+        rawText.toUpperCase().replaceAll(RegExp(r'[^A-HJ-NPR-Z0-9]'), '');
+    candidates.add(fullCleaned);
 
-    debugPrint('OCR detected text: $text');
-    debugPrint('OCR cleaned text: $cleaned');
-
-    if (cleaned.isEmpty || cleaned.length < 17 || cleaned.length > 20) {
-      debugPrint(
-          'Text rejected: length ${cleaned.length} outside acceptable range (17-20)');
-      return;
+    // Also try line-by-line (handles spaced-out VINs on one line)
+    for (final line in rawText.split(RegExp(r'[\n\r]+'))) {
+      final lineCleaned =
+          line.toUpperCase().replaceAll(RegExp(r'[^A-HJ-NPR-Z0-9]'), '');
+      if (lineCleaned.isNotEmpty) candidates.add(lineCleaned);
     }
 
-    if (cleaned.length >= 17) {
+    // Slide a 17-char window over each candidate
+    for (final cleaned in candidates) {
+      if (cleaned.length < 17) continue;
       for (int i = 0; i <= cleaned.length - 17; i++) {
-        String candidate = cleaned.substring(i, i + 17);
-        if (_isValidVIN(candidate)) {
-          if (candidate == _lastScannedText) return;
-          _lastScannedText = candidate;
-
-          debugPrint('Valid VIN found: $candidate');
-
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (mounted && !_hasNavigated) {
-              setState(() {
-                _isProcessing = true;
-                _hasNavigated = true;
-              });
-
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('VIN detected: $candidate'),
-                  backgroundColor: Colors.green,
-                  duration: const Duration(milliseconds: 500),
-                ),
-              );
-
-              debugPrint('Navigating back with VIN: $candidate');
-              Future.delayed(const Duration(milliseconds: 100), () {
-                if (mounted) {
-                  Navigator.of(context).pop(candidate);
-                }
-              });
-            }
-          });
-          return;
-        }
+        final candidate = cleaned.substring(i, i + 17);
+        if (_isValidVIN(candidate)) return candidate;
       }
     }
 
-    debugPrint(
-        'Text detected but no valid VIN (length: ${cleaned.length}): $cleaned');
+    return null;
+  }
+
+  void _processOCR(String text) {
+    if (_isProcessing || !mounted || _hasNavigated || _isLoading) return;
+
+    debugPrint('OCR raw text: $text');
+
+    final vin = _extractVIN(text);
+
+    if (vin == null) {
+      debugPrint('No valid VIN found in: $text');
+      return;
+    }
+
+    if (vin == _lastScannedText) return;
+    _lastScannedText = vin;
+
+    debugPrint('Valid VIN found: $vin');
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && !_hasNavigated) {
+        setState(() {
+          _isProcessing = true;
+          _hasNavigated = true;
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('VIN detected: $vin'),
+            backgroundColor: Colors.green,
+            duration: const Duration(milliseconds: 500),
+          ),
+        );
+
+        debugPrint('Navigating back with VIN: $vin');
+        Future.delayed(const Duration(milliseconds: 100), () {
+          if (mounted) {
+            Navigator.of(context).pop(vin);
+          }
+        });
+      }
+    });
   }
 
   // Toggle torch with loading state to prevent white screen

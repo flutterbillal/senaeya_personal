@@ -116,7 +116,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> initial() async {
-    // fetchLatestVersion();
+    fetchLatestVersion();
     token = await SharePrefsHelper.getString(SharedPreferenceValue.token);
     workShopId = await SharePrefsHelper.getString(
       SharedPreferenceValue.workshopId,

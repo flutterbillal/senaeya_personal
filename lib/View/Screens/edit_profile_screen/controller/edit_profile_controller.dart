@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 
 import 'package:Senaeya/Core/AppRoute/app_route.dart';
 import 'package:Senaeya/Service/api_client.dart';
@@ -96,7 +96,9 @@ class EditProfileController extends GetxController {
                 int.parse(code),
               );
               if (verified) {
-                // Check if this is for additional user or main user
+                if (userIndex != null) {
+                  additionalUserPhoneVerified[userIndex] = true;
+                }
                 Navigator.pop(Get.context!);
                 CustomAlert.showInfo(
                   context: Get.context!,
@@ -120,6 +122,8 @@ class EditProfileController extends GetxController {
 
   // Track if helper user already exists (has ID)
   var hasExistingHelper = false.obs;
+  var existingHelperUserCount = 0.obs;
+  var additionalUserPhoneVerified = <int, bool>{}.obs;
 
   RxString profileImageUrl = "".obs;
 
@@ -148,18 +152,22 @@ class EditProfileController extends GetxController {
             }
           }
 
-          // Check if helper user exists and has an ID
-          if (data.helperUserId != null && data.helperUserId!.id != null) {
-            // Helper user exists - show as read-only
+          // Check if helper users exist and populate up to 2
+          final helpers = data.helperUserList;
+          if (helpers.isNotEmpty) {
             hasExistingHelper.value = true;
+            existingHelperUserCount.value = helpers.length;
             enableUser.value = true;
-            additionalUsers.add({
-              'phone': TextEditingController(
-                text: data.helperUserId?.contact ?? '',
-              ),
-              'password': TextEditingController(),
-              'confirmPassword': TextEditingController(),
-            });
+            additionalUsers.clear();
+            for (var helper in helpers) {
+              additionalUsers.add({
+                'phone': TextEditingController(
+                  text: helper.contact ?? '',
+                ),
+                'password': TextEditingController(),
+                'confirmPassword': TextEditingController(),
+              });
+            }
           }
         }
       } else {
@@ -178,20 +186,15 @@ class EditProfileController extends GetxController {
     }
   }
 
-  // Add another user
+  // Add another user (max 2 additional users allowed)
   void addUser() {
     if (!enableUser.value) {
       showCustomSnackBar("Please enable user option first");
       return;
     }
 
-    if (hasExistingHelper.value) {
-      showCustomSnackBar("Helper user already exists");
-      return;
-    }
-
-    if (additionalUsers.isNotEmpty) {
-      showCustomSnackBar("You can only add one additional user");
+    if (additionalUsers.length >= 2) {
+      showCustomSnackBar("you_can_only_add_one_additional_user".tr);
       return;
     }
 
@@ -209,6 +212,7 @@ class EditProfileController extends GetxController {
       additionalUsers[index]['password']?.dispose();
       additionalUsers[index]['confirmPassword']?.dispose();
       additionalUsers.removeAt(index);
+      additionalUserPhoneVerified.remove(index);
     }
   }
 
@@ -280,19 +284,22 @@ class EditProfileController extends GetxController {
         profileData["password"] = passwordController.text;
       }
 
-      // Add helper user if enabled and exists
+      // Add helper user(s) if enabled and exists (supporting single or multiple helper users)
       if (enableUser.value && additionalUsers.isNotEmpty) {
-        final helperUser = additionalUsers[0];
-        Map<String, dynamic> helperData = {
-          "contact": helperUser['phone']!.text,
-        };
+        List<Map<String, dynamic>> helpersList = [];
+        for (var helperUser in additionalUsers) {
+          Map<String, dynamic> helperData = {
+            "contact": helperUser['phone']!.text.trim(),
+          };
+          if (helperUser['password']!.text.isNotEmpty) {
+            helperData["password"] = helperUser['password']!.text;
+          }
+          helpersList.add(helperData);
+        }
 
-        // Only include password if it's being changed
-        // if (helperUser['password']!.text.isNotEmpty) {
-        //   helperData["password"] = helperUser['password']!.text;
-        // }
-        //
-        // profileData["helperUserId"] = helperData;
+        // Send primary helper in helperUserId and all in helperUserIds for compatibility
+        profileData["helperUserId"] = helpersList.first;
+        profileData["helperUserIds"] = helpersList;
       }
 
       // Send as form-data with a single "data" field containing JSON string

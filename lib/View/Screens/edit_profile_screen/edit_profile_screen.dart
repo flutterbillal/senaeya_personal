@@ -1,4 +1,4 @@
-import 'package:Senaeya/Utils/AppColors/app_colors.dart';
+﻿import 'package:Senaeya/Utils/AppColors/app_colors.dart';
 import 'package:Senaeya/Utils/AppImg/app_img.dart';
 import 'package:Senaeya/View/Screens/edit_profile_screen/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
@@ -99,156 +99,159 @@ class EditProfileScreen extends StatelessWidget {
                                     obscureText: true,
                                   ),
                                   // Add a user section
-                                  // Padding(
-                                  //   padding: const EdgeInsets.all(8.0),
-                                  //   child: Row(
-                                  //     mainAxisAlignment:
-                                  //         MainAxisAlignment.spaceBetween,
-                                  //     children: [
-                                  //       Flexible(
-                                  //         child: Obx(
-                                  //           () => GestureDetector(
-                                  //             onTap: controller.enableUser.value
-                                  //                 ? controller.addUser
-                                  //                 : null,
-                                  //             child: Row(
-                                  //               children: [
-                                  //                 Icon(
-                                  //                   Icons.add,
-                                  //                   color:
-                                  //                       controller.enableUser.value
-                                  //                       ? const Color(0xFF0C5CA8)
-                                  //                       : Colors.grey,
-                                  //                 ),
-                                  //                 SizedBox(width: 4.w),
-                                  //                 Flexible(
-                                  //                   child: CustomText(
-                                  //                     text: 'add_user'.tr,
-                                  //                     color:
-                                  //                         controller.enableUser.value
-                                  //                         ? Colors.black
-                                  //                         : Colors.grey,
-                                  //                     maxLines: 2,
-                                  //
-                                  //                   ),
-                                  //                 ),
-                                  //               ],
-                                  //             ),
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //       SizedBox(width: 8.w),
-                                  //       Flexible(
-                                  //         child: Column(
-                                  //           children: [
-                                  //             Obx(
-                                  //               () => Transform.scale(
-                                  //                 scale: 0.8,
-                                  //                 child: Switch(
-                                  //                   value:
-                                  //                       controller.enableUser.value,
-                                  //                   onChanged:
-                                  //                       controller
-                                  //                           .hasExistingHelper
-                                  //                           .value
-                                  //                       ? null // Disable switch if helper exists
-                                  //                       : (val) {
-                                  //                           controller
-                                  //                                   .enableUser
-                                  //                                   .value =
-                                  //                               val;
-                                  //                           if (!val) {
-                                  //                             // Clear additional users when disabled
-                                  //                             controller
-                                  //                                 .additionalUsers
-                                  //                                 .clear();
-                                  //                           }
-                                  //                         },
-                                  //                   activeThumbColor: Colors.white,
-                                  //                   activeTrackColor:
-                                  //                       AppColors.primary,
-                                  //                 ),
-                                  //               ),
-                                  //             ),
-                                  //             CustomText(
-                                  //               maxLines: 2,
-                                  //               text: "Enable/Disable User".tr,
-                                  //               fontSize: 10.sp,
-                                  //               textAlign: TextAlign.center,
-                                  //             ),
-                                  //           ],
-                                  //         ),
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  // SizedBox(height: 12.h),
-                                  // Additional user (single user only)
-                                  // Obx(
-                                  //   () => controller.additionalUsers.isNotEmpty
-                                  //       ? Column(
-                                  //           children: [
-                                  //             SizedBox(height: 8.h),
-                                  //             Row(
-                                  //               mainAxisAlignment:
-                                  //                   MainAxisAlignment
-                                  //                       .spaceBetween,
-                                  //               children: [
-                                  //                 CustomText(
-                                  //                   text: 'Additional User',
-                                  //                   fontSize: 14.w,
-                                  //                   fontWeight: FontWeight.bold,
-                                  //                 ),
-                                  //                 // Only show delete button if helper doesn't exist yet
-                                  //                 if (!controller
-                                  //                     .hasExistingHelper
-                                  //                     .value)
-                                  //                   IconButton(
-                                  //                     icon: const Icon(
-                                  //                       Icons.delete,
-                                  //                       color: Colors.red,
-                                  //                     ),
-                                  //                     onPressed: () => controller
-                                  //                         .removeUser(0),
-                                  //                   ),
-                                  //               ],
-                                  //             ),
-                                  //             CustomTextFieldWithButton(
-                                  //               controller: controller
-                                  //                   .additionalUsers[0]['phone']!,
-                                  //               hintText: '+966 5xxxxxxxxx',
-                                  //               prefix: '+9665',
-                                  //               keyboardType: TextInputType.phone,
-                                  //               onButtonTap: () {
-                                  //                 controller.verifiedPhone(
-                                  //                   controller
-                                  //                       .additionalUsers[0]['phone']
-                                  //                       ?.text ??
-                                  //                       '',
-                                  //                 );
-                                  //               },
-                                  //             ),
-                                  //
-                                  //             CustomTextFormField(
-                                  //               controller: controller
-                                  //                   .additionalUsers[0]['password']!,
-                                  //               hintText:
-                                  //                   'new_password'.tr,
-                                  //               icon: AppIcon.lock,
-                                  //               obscureText: true,
-                                  //             ),
-                                  //             CustomTextFormField(
-                                  //               controller: controller
-                                  //                   .additionalUsers[0]['confirmPassword']!,
-                                  //               hintText: 'confirm_password'.tr,
-                                  //               icon: AppIcon.lock,
-                                  //               obscureText: true,
-                                  //             ),
-                                  //           ],
-                                  //         )
-                                  //       : const SizedBox.shrink(),
-                                  // ),
-                                  // SizedBox(height: 40.h),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Obx(
+                                            () => GestureDetector(
+                                              onTap: controller.enableUser.value
+                                                  ? controller.addUser
+                                                  : null,
+                                              child: Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.add,
+                                                    color: controller
+                                                            .enableUser.value
+                                                        ? const Color(
+                                                            0xFF0C5CA8)
+                                                        : Colors.grey,
+                                                  ),
+                                                  SizedBox(width: 4.w),
+                                                  Flexible(
+                                                    child: CustomText(
+                                                      text: 'add_user'.tr,
+                                                      color: controller
+                                                              .enableUser.value
+                                                          ? Colors.black
+                                                          : Colors.grey,
+                                                      maxLines: 2,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: 8.w),
+                                        Flexible(
+                                          child: Column(
+                                            children: [
+                                              Obx(
+                                                () => Transform.scale(
+                                                  scale: 0.8,
+                                                  child: Switch(
+                                                    value: controller
+                                                        .enableUser.value,
+                                                    onChanged: controller
+                                                            .hasExistingHelper
+                                                            .value
+                                                        ? null // Disable switch if helper exists
+                                                        : (val) {
+                                                            controller
+                                                                .enableUser
+                                                                .value = val;
+                                                            if (!val) {
+                                                              // Clear additional users when disabled
+                                                              controller
+                                                                  .additionalUsers
+                                                                  .clear();
+                                                            }
+                                                          },
+                                                    activeThumbColor:
+                                                        Colors.white,
+                                                    activeTrackColor:
+                                                        AppColors.primary,
+                                                  ),
+                                                ),
+                                              ),
+                                              CustomText(
+                                                maxLines: 2,
+                                                text: "Enable/Disable User".tr,
+                                                fontSize: 10.sp,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 12.h),
+                                  // Additional users (up to 2 users)
+                                  Obx(
+                                    () => controller.additionalUsers.isNotEmpty
+                                        ? Column(
+                                            children: List.generate(
+                                              controller.additionalUsers.length,
+                                              (index) {
+                                                final isExisting = index < controller.existingHelperUserCount.value;
+                                                return Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(height: 12.h),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        CustomText(
+                                                          text: controller.additionalUsers.length > 1
+                                                              ? '${'Additional User'.tr} ${index + 1}'
+                                                              : 'Additional User'.tr,
+                                                          fontSize: 14.w,
+                                                          fontWeight: FontWeight.bold,
+                                                        ),
+                                                        // Only show delete button if not an existing saved helper
+                                                        if (!isExisting)
+                                                          IconButton(
+                                                            icon: const Icon(
+                                                              Icons.delete,
+                                                              color: Colors.red,
+                                                            ),
+                                                            onPressed: () =>
+                                                                controller.removeUser(index),
+                                                          ),
+                                                      ],
+                                                    ),
+                                                    CustomTextFieldWithButton(
+                                                      controller: controller
+                                                          .additionalUsers[index]['phone']!,
+                                                      hintText: '+966 5xxxxxxxxx',
+                                                      prefix: '+9665',
+                                                      keyboardType: TextInputType.phone,
+                                                      onButtonTap: () {
+                                                        controller.verifiedPhone(
+                                                          controller.additionalUsers[index]['phone']?.text ?? '',
+                                                          userIndex: index,
+                                                        );
+                                                      },
+                                                    ),
+                                                    CustomTextFormField(
+                                                      controller: controller
+                                                          .additionalUsers[index]['password']!,
+                                                      hintText: 'new_password'.tr,
+                                                      icon: AppIcon.lock,
+                                                      obscureText: true,
+                                                    ),
+                                                    CustomTextFormField(
+                                                      controller: controller
+                                                          .additionalUsers[index]['confirmPassword']!,
+                                                      hintText: 'confirm_password'.tr,
+                                                      icon: AppIcon.lock,
+                                                      obscureText: true,
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            ),
+                                          )
+                                        : const SizedBox.shrink(),
+                                  ),
+                                  SizedBox(height: 40.h),
                                   Center(
                                     child: Obx(
                                       () => controller.isSaving.value

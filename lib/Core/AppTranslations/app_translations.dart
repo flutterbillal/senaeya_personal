@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+﻿import 'package:get/get.dart';
 
 /*'Change engine oil'.tr,
 'Change the engine oil filter'.tr,
@@ -36,8 +36,8 @@ class AppTranslations extends Translations {
           'Payment Failed': 'Payment Failed',
           'Your subscription payment was not successful.':
               'Your subscription payment was not successful.',
-          'This Customer has unpaid invoice at another workshop':
-              'This Customer has unpaid invoice at another workshop',
+          'This Customer has %s unpaid invoice at another workshop':
+              'This Customer has %s unpaid invoice at another workshop',
           'Car Added successfully to this Customer':
               'Car Added successfully to this Customer',
           'add_car': 'Add Car',
@@ -259,7 +259,8 @@ class AppTranslations extends Translations {
           'error_verifying_otp': 'Error verifying OTP',
           'please_enable_user_option_first': 'Please enable user option first',
           'you_can_only_add_one_additional_user':
-              'You can only add one additional user',
+              'You can only add up to two additional users',
+          'Additional User': 'Additional User',
           'please_enter_your_name': 'Please enter your name',
           'please_enter_your_phone_number': 'Please enter your phone number',
           'please_verify_your_phone_number': 'Please verify your phone number',
@@ -617,8 +618,8 @@ class AppTranslations extends Translations {
           'Payment Failed': 'فشل الدفع',
           'Your subscription payment was not successful.':
               'لم يكن دفع اشتراكك ناجحًا.',
-          'This Customer has unpaid invoice at another workshop':
-              'هذا العميل لديه فاتورة غير مدفوعة في ورشة أخرى',
+          'This Customer has %s unpaid invoice at another workshop':
+              'هذا العميل لديه %s فاتورة غير مدفوعة في ورشة أخرى',
           'Invoice': 'الفاتورة',
           'Car Added successfully to this Customer':
               'تمت إضافة السيارة بنجاح إلى هذا العميل',
@@ -840,7 +841,8 @@ class AppTranslations extends Translations {
           'error_verifying_otp': 'خطأ في التحقق من رمز OTP',
           'please_enable_user_option_first': 'الرجاء تفعيل خيار المستخدم أولاً',
           'you_can_only_add_one_additional_user':
-              'يمكنك إضافة مستخدم إضافي واحد فقط',
+              'يمكنك إضافة ما يصل إلى مستخدمين إضافيين فقط',
+          'Additional User': 'مستخدم إضافي',
           'please_enter_your_name': 'الرجاء إدخال اسمك',
           'please_enter_your_phone_number': 'الرجاء إدخال رقم هاتفك',
           'please_verify_your_phone_number': 'الرجاء التحقق من رقم هاتفك',
@@ -1192,8 +1194,8 @@ class AppTranslations extends Translations {
           'Payment Failed': 'পেমেন্ট ব্যর্থ হয়েছে',
           'Your subscription payment was not successful.':
               'আপনার সাবস্ক্রিপশন পেমেন্ট সফল হয়নি।',
-          'This Customer has unpaid invoice at another workshop':
-              'এই গ্রাহকের অন্য একটি ওয়ার্কশপে অপরিশোধিত চালান রয়েছে',
+          'This Customer has %s unpaid invoice at another workshop':
+              'এই গ্রাহকের অন্য একটি ওয়ার্কশপে %s টি অপরিশোধিত চালান রয়েছে',
           'Invoice': 'চালান',
           "Car Added successfully to this Customer":
               'এই গ্রাহকের কাছে গাড়ি সফলভাবে যোগ করা হয়েছে',
@@ -1430,7 +1432,8 @@ class AppTranslations extends Translations {
           'please_enable_user_option_first':
               'অনুগ্রহ করে প্রথমে ব্যবহারকারী বিকল্প সক্রিয় করুন',
           'you_can_only_add_one_additional_user':
-              'আপনি শুধুমাত্র একটি অতিরিক্ত ব্যবহারকারী যোগ করতে পারেন',
+              'আপনি সর্বোচ্চ দুটি অতিরিক্ত ব্যবহারকারী যোগ করতে পারেন',
+          'Additional User': 'অতিরিক্ত ব্যবহারকারী',
           'please_enter_your_name': 'অনুগ্রহ করে আপনার নাম লিখুন',
           'please_enter_your_phone_number': 'অনুগ্রহ করে আপনার ফোন নম্বর লিখুন',
           'please_verify_your_phone_number':
@@ -1788,8 +1791,8 @@ class AppTranslations extends Translations {
           'Payment Failed': 'भुगतान विफल',
           'Your subscription payment was not successful. Please try again.':
               'आपका सदस्यता भुगतान सफल नहीं हुआ। कृपया पुनः प्रयास करें।',
-          'This Customer has unpaid invoice at another workshop':
-              'इस ग्राहक का एक अन्य कार्यशाला में बिना भुगतान किया गया चालान है',
+          'This Customer has %s unpaid invoice at another workshop':
+              'इस ग्राहक के %s अन्य कार्यशाला में बिना भुगतान किए चालान हैं',
           'Invoice': 'चालान',
           "Car Added successfully to this Customer":
               'इस ग्राहक के लिए कार सफलतापूर्वक जोड़ी गई',
@@ -2023,7 +2026,8 @@ class AppTranslations extends Translations {
           'please_enable_user_option_first':
               'कृपया पहले उपयोगकर्ता विकल्प सक्षम करें',
           'you_can_only_add_one_additional_user':
-              'आप केवल एक अतिरिक्त उपयोगकर्ता जोड़ सकते हैं',
+              'आप केवल अधिकतम दो अतिरिक्त उपयोगकर्ता जोड़ सकते हैं',
+          'Additional User': 'अतिरिक्त उपयोगकर्ता',
           'please_enter_your_name': 'कृपया अपना नाम दर्ज करें',
           'please_enter_your_phone_number': 'कृपया अपना फोन नंबर दर्ज करें',
           'please_verify_your_phone_number':
@@ -2375,8 +2379,8 @@ class AppTranslations extends Translations {
           'Your subscription payment was cancelled.':
               'Nakansela ang iyong pagbabayad sa subscription.',
           'Payment Cancelled': 'Nakansela ang Pagbabayad',
-          'This Customer has unpaid invoice at another workshop':
-              'Ang Customer na ito ay may hindi nabayarang invoice sa ibang workshop',
+          'This Customer has %s unpaid invoice at another workshop':
+              'Ang Customer na ito ay may %s hindi nabayarang invoice sa ibang workshop',
           'Invoice': 'Invoice',
           'add_car': 'Magdagdag ng Kotse',
           'Car Added successfully to this Customer':
@@ -2632,7 +2636,8 @@ class AppTranslations extends Translations {
           'please_enable_user_option_first':
               'Pakiaktibo muna ang opsyon ng user',
           'you_can_only_add_one_additional_user':
-              'Maaari ka lamang magdagdag ng isang karagdagang user',
+              'Maaari ka lamang magdagdag ng hanggang dalawang karagdagang user',
+          'Additional User': 'Karagdagang User',
           'please_enter_your_name': 'Pakipasok ang iyong pangalan',
           'please_enter_your_phone_number':
               'Pakipasok ang iyong numero ng telepono',
@@ -3001,8 +3006,8 @@ class AppTranslations extends Translations {
           'Payment Cancelled': 'ادائیگی منسوخ ہوگئی',
           'Your subscription payment was not successful.':
               'آپ کی سبسکرپشن کی ادائیگی کامیاب نہیں ہوئی۔',
-          'This Customer has unpaid invoice at another workshop':
-              'اس صارف کے پاس دوسرے ورکشاپ میں غیر ادا شدہ انوائس ہے',
+          'This Customer has %s unpaid invoice at another workshop':
+              'اس صارف کے پاس دوسرے ورکشاپ میں %s غیر ادا شدہ انوائس ہیں',
           'Invoice': 'انوائس',
           'message_sent_successfully':
               'آپ کا پیغام کامیابی کے ساتھ بھیج دیا گیا ہے',
@@ -3241,7 +3246,8 @@ class AppTranslations extends Translations {
           'please_enable_user_option_first':
               'براہ کرم پہلے صارف آپشن کو فعال کریں',
           'you_can_only_add_one_additional_user':
-              'آپ صرف ایک اضافی صارف شامل کر سکتے ہیں',
+              'آپ زیادہ سے زیادہ دو اضافی صارف شامل کر سکتے ہیں',
+          'Additional User': 'اضافی صارف',
           'please_enter_your_name': 'براہ کرم اپنا نام درج کریں',
           'please_enter_your_phone_number': 'براہ کرم اپنا فون نمبر درج کریں',
           'please_verify_your_phone_number':

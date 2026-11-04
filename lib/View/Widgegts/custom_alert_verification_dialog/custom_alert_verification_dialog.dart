@@ -1,12 +1,13 @@
-import 'package:Senaeya/View/Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
+﻿import 'package:Senaeya/View/Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
 import 'package:Senaeya/View/Widgegts/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:get/get.dart';
+
 import '../../../Utils/AppColors/app_colors.dart';
 import 'verification_controller.dart';
 
-class CustomAlertVerificationDialog extends StatelessWidget {
+class CustomAlertVerificationDialog extends StatefulWidget {
   final TextEditingController? otpContrller;
   final String? phoneNumber;
   final Function(String)? onVerificationComplete;
@@ -21,14 +22,59 @@ class CustomAlertVerificationDialog extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final controller = Get.put(VerificationController());
+  State<CustomAlertVerificationDialog> createState() =>
+      _CustomAlertVerificationDialogState();
+}
 
+class _CustomAlertVerificationDialogState
+    extends State<CustomAlertVerificationDialog> {
+  late final VerificationController controller;
+  late final TextEditingController _otpController;
+  late final FocusNode _otpFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = Get.isRegistered<VerificationController>()
+        ? Get.find<VerificationController>()
+        : Get.put(VerificationController());
+
+    _otpController = widget.otpContrller ?? TextEditingController();
+    _otpFocusNode = FocusNode();
+
+    // Keep the keyboard focused when the dialog opens.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _otpFocusNode.requestFocus();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _otpFocusNode.dispose();
+
+    // Dispose only the controller created by this widget.
+    if (widget.otpContrller == null) {
+      _otpController.dispose();
+    }
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        insetPadding: const EdgeInsets.symmetric(
+          horizontal: 24,
+          vertical: 24,
+        ),
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(24),
@@ -39,29 +85,31 @@ class CustomAlertVerificationDialog extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Title
-                 CustomText(
+                CustomText(
                   text: 'OTP Code'.tr,
                   fontSize: 20,
                   color: Colors.black,
                 ),
                 const SizedBox(height: 16),
-
-                // Description
                 CustomText(
-                  text:
-                      'Enter the activation code sent to\nthe customer\'s mobile via WhatsApp'.tr,
+                  text: 'Enter the activation code sent to\n'
+                          'the customer\'s mobile via WhatsApp'
+                      .tr,
                   textAlign: TextAlign.center,
                   fontSize: 14,
                   color: Colors.grey[600]!,
                 ),
                 const SizedBox(height: 32),
-
-                // Pin Code Field
                 PinCodeTextField(
-                  keyboardType: TextInputType.number,
                   appContext: context,
                   length: 4,
+                  keyboardType: TextInputType.number,
+                  controller: _otpController,
+                  focusNode: _otpFocusNode,
+                  autoFocus: true,
+                  autoDismissKeyboard: false,
+                  enablePinAutofill: false,
+                  autoDisposeControllers: false,
                   obscureText: false,
                   animationType: AnimationType.fade,
                   pinTheme: PinTheme(
@@ -70,15 +118,14 @@ class CustomAlertVerificationDialog extends StatelessWidget {
                     fieldHeight: 50,
                     fieldWidth: 50,
                     activeFillColor: Colors.white,
-                    inactiveFillColor: Colors.grey[100],
+                    inactiveFillColor: Colors.grey[100]!,
                     selectedFillColor: Colors.white,
                     activeColor: AppColors.primary,
-                    inactiveColor: Colors.grey[300],
+                    inactiveColor: Colors.grey[300]!,
                     selectedColor: AppColors.primary,
                     borderWidth: 2,
                   ),
-                  controller: otpContrller,
-                  animationDuration: const Duration(milliseconds: 300),
+                  animationDuration: const Duration(milliseconds: 150),
                   backgroundColor: Colors.transparent,
                   enableActiveFill: true,
                   onCompleted: (value) {
@@ -86,11 +133,14 @@ class CustomAlertVerificationDialog extends StatelessWidget {
                   },
                   onChanged: (value) {
                     controller.updateCode(value);
+
+                    // Restore focus if it was lost while typing.
+                    if (mounted && !_otpFocusNode.hasFocus) {
+                      _otpFocusNode.requestFocus();
+                    }
                   },
                 ),
                 const SizedBox(height: 32),
-
-                // Activation Button
                 Obx(
                   () => SizedBox(
                     width: double.infinity,
@@ -98,23 +148,21 @@ class CustomAlertVerificationDialog extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: controller.isCodeComplete
                           ? () {
-                              if (onVerificationComplete != null) {
-                                onVerificationComplete!(
-                                  controller.currentText.value,
-                                );
-                              }
-
+                              widget.onVerificationComplete?.call(
+                                controller.currentText.value,
+                              );
                             }
                           : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF1976D2),
+                        disabledBackgroundColor: Colors.grey[300],
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
                         elevation: 0,
                       ),
-                      child:  CustomText(
+                      child: CustomText(
                         text: 'activation'.tr,
                         fontSize: 16,
                         color: Colors.white,
@@ -124,22 +172,20 @@ class CustomAlertVerificationDialog extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-
-                // Problem and Resend Section
-                 CustomText(
+                CustomText(
                   text: 'You have a problem?'.tr,
                   fontSize: 14,
                   color: Colors.black87,
                 ),
                 const SizedBox(height: 8),
-
-                // Countdown and Resend
                 Obx(
                   () => Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        controller.formatTime(controller.countdown.value),
+                        controller.formatTime(
+                          controller.countdown.value,
+                        ),
                         style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black87,
@@ -149,10 +195,9 @@ class CustomAlertVerificationDialog extends StatelessWidget {
                       GestureDetector(
                         onTap: controller.canResend
                             ? () {
-                                if (onResendCode != null) {
-                                  onResendCode!();
-                                }
+                                widget.onResendCode?.call();
                                 controller.startCountdown();
+                                _otpFocusNode.requestFocus();
                               }
                             : null,
                         child: CustomText(

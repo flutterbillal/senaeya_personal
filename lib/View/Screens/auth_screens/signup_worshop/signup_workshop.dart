@@ -1,4 +1,4 @@
-import 'package:Senaeya/Utils/AppImg/app_img.dart';
+﻿import 'package:Senaeya/Utils/AppImg/app_img.dart';
 import 'package:Senaeya/View/Screens/auth_screens/signup_worshop/controller/signup_workshop_controller.dart';
 import 'package:Senaeya/utils/AppColors/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -243,7 +243,10 @@ class SignupWorkshopScreen extends StatelessWidget {
                                   );
                                 }),
                               ],
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.numberWithOptions(
+                                decimal: false,
+                                signed: false,
+                              ),
                             ),
                             const Positioned(
                                 top: 4,

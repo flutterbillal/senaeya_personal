@@ -1,4 +1,4 @@
-import 'package:Senaeya/Core/AppRoute/app_route.dart';
+﻿import 'package:Senaeya/Core/AppRoute/app_route.dart';
 import 'package:Senaeya/Helper/shared_prefe/shared_prefe.dart';
 import 'package:Senaeya/Service/api_url.dart';
 import 'package:Senaeya/Utils/AppImg/app_img.dart';
@@ -32,7 +32,7 @@ class AddCustomerScreenController extends GetxController {
   RxList<String> plateLetters = ['', '', ''].obs;
   List<CommonItemModel> selectedCountryList = <CommonItemModel>[];
   RxString selectedCarSymbolId = ''.obs;
-  RxString createCarClientId= ''.obs;
+  RxString createCarClientId = ''.obs;
   final List<Map<String, String>> letterOptions = [
     {'en': 'A', 'ar': 'ا'},
     {'en': 'B', 'ar': 'ب'},
@@ -72,14 +72,13 @@ class AddCustomerScreenController extends GetxController {
     initial();
   }
 
-  Future<void> initial() async
-  {
-    
+  Future<void> initial() async {
     if (Get.isRegistered<HomeController>()) {
       HomeController homeController = Get.find<HomeController>();
 
       if (isFromNewInvoice) {
-        isAuth = await homeController.checkAuthorization(popOnUnAuthorized: true);
+        isAuth =
+            await homeController.checkAuthorization(popOnUnAuthorized: true);
         if (!isAuth) {
           isLoading.value = false;
           return;
@@ -88,7 +87,8 @@ class AddCustomerScreenController extends GetxController {
 
       await homeController.ensureCountriesLoaded();
       selectedCountryList = homeController.selectedCountries.toList();
-      print("selectedCountyList========================${selectedCountryList.length}");
+      print(
+          "selectedCountyList========================${selectedCountryList.length}");
     } else {
       selectedCountryList = Get.arguments['countries'] ?? [];
     }
@@ -365,7 +365,7 @@ class AddCustomerScreenController extends GetxController {
     // Validate that the brand title exists in the unique carBrands list
     if (!carBrands.contains(matchedBrand.title)) {
       // print(
-          // "====> Warning: Brand '${matchedBrand.title}' not found in carBrands list");
+      // "====> Warning: Brand '${matchedBrand.title}' not found in carBrands list");
       // print("====> Available brands: ${carBrands.join(', ')}");
 
       // Add the brand to the list if it's from a valid API response
@@ -1039,25 +1039,24 @@ class AddCustomerScreenController extends GetxController {
         print("==========================${clientId.value}");
 
         response = await AddCustomerRepo().addCustomerForUser(
-          name: nameController.text.trim().isNotEmpty ?nameController.text.trim(): name.value,
-          contact: phone.value,
-          vin: vin.value.isNotEmpty ? vin.value : vinController.text.trim(),
-          brandId: brandId.value,
-          modelId: modelId.value,
-          year: year.value,
-          plateNumber: null,
-          alphabetCombination: alphabetCombinationList,
-          symbolId: selectedCarSymbolId.value,
-          documentNumber: documentsNumberController.text.trim(),
-          arabicText: _convertToArabicNumerals(saudiPlateNumber.value),
-          englishText: saudiPlateNumber.value,
-          symbol: selectedCarSymbolId.value,
-          clientCarId: clientCarId.value,
-          clientId: clientId.value,
-           isUpdate: clientId.value.isEmpty?false:true
-
-
-        );
+            name: nameController.text.trim().isNotEmpty
+                ? nameController.text.trim()
+                : name.value,
+            contact: phone.value,
+            vin: vin.value.isNotEmpty ? vin.value : vinController.text.trim(),
+            brandId: brandId.value,
+            modelId: modelId.value,
+            year: year.value,
+            plateNumber: null,
+            alphabetCombination: alphabetCombinationList,
+            symbolId: selectedCarSymbolId.value,
+            documentNumber: documentsNumberController.text.trim(),
+            arabicText: _convertToArabicNumerals(saudiPlateNumber.value),
+            englishText: saudiPlateNumber.value,
+            symbol: selectedCarSymbolId.value,
+            clientCarId: clientCarId.value,
+            clientId: clientId.value,
+            isUpdate: clientId.value.isEmpty ? false : true);
       } else {
         // print("===========plateCode:$plateCode");
         // International plate
@@ -1068,22 +1067,22 @@ class AddCustomerScreenController extends GetxController {
         }
 
         response = await AddCustomerRepo().addCustomerForUser(
-          name: name.value.isNotEmpty ? name.value : nameController.text.trim(),
-          contact: phone.value,
-          vin: vin.value.isNotEmpty ? vin.value : vinController.text.trim(),
-          brandId: brandId.value,
-          modelId: modelId.value,
-          year: year.value,
-          plateNumber: carPlateController.text.trim(),
-          alphabetCombination: null,
-          symbolId: null,
-          documentNumber: documentsNumberController.text.trim(),
-          arabicText: null,
-          englishText: null,
-          symbol: null,
-          clientCarId: '',
-          clientId: ''
-        );
+            name:
+                name.value.isNotEmpty ? name.value : nameController.text.trim(),
+            contact: phone.value,
+            vin: vin.value.isNotEmpty ? vin.value : vinController.text.trim(),
+            brandId: brandId.value,
+            modelId: modelId.value,
+            year: year.value,
+            plateNumber: carPlateController.text.trim(),
+            alphabetCombination: null,
+            symbolId: null,
+            documentNumber: documentsNumberController.text.trim(),
+            arabicText: null,
+            englishText: null,
+            symbol: null,
+            clientCarId: '',
+            clientId: '');
       }
 
       addIsLoading.value = false;
@@ -1210,15 +1209,15 @@ class AddCustomerScreenController extends GetxController {
   void onAddition() {
     CustomAlert.showInfo(
       context: Get.context!,
-      message: clientId.isNotEmpty?'customer_updated_successfully'.tr:'customer_added_message'.tr,
+      message: clientId.isNotEmpty
+          ? 'customer_updated_successfully'.tr
+          : 'customer_added_message'.tr,
       onPressed: () {
         Get.back();
         Get.back();
       },
     );
   }
-
-
 
   bool isValidSaudiMobile(String phone) {
     // Remove country code if presentPeople
@@ -1266,7 +1265,9 @@ class AddCustomerScreenController extends GetxController {
   void searchCustomerByCar() {
     CustomAlert.showInfo(
       context: Get.context!,
-      message: "The Car is Not Registered\nat the workshop,\nPlease complete the data entry".tr,
+      message:
+          "The Car is Not Registered\nat the workshop,\nPlease complete the data entry"
+              .tr,
     );
   }
 
@@ -1281,7 +1282,8 @@ class AddCustomerScreenController extends GetxController {
   String workPhone = '';
   String workShopName = '';
   String workShopDocumentId = '';
-  RxString workShopCountryCode = 'SA'.obs; // Default to Saudi Arabia for workshop
+  RxString workShopCountryCode =
+      'SA'.obs; // Default to Saudi Arabia for workshop
 
   void setWorkShopName(String value) {
     workShopName = value;
@@ -1354,10 +1356,12 @@ class AddCustomerScreenController extends GetxController {
     }
 
     print("====== phoneVerified.value: ${phoneVerified.value} ======");
-    print("====== verifiedPhoneNumber.value: ${verifiedPhoneNumber.value} ======");
+    print(
+        "====== verifiedPhoneNumber.value: ${verifiedPhoneNumber.value} ======");
     print("====== phone.value: ${phone.value} ======");
     print("====== phoneController.text: ${phoneController.text} ======");
-    print("====== selectedCountryCode.value: ${selectedCountryCode.value} ======");
+    print(
+        "====== selectedCountryCode.value: ${selectedCountryCode.value} ======");
     print("====== brand.value: ${brand.value} ======");
     print("====== model.value: ${model.value} ======");
 
@@ -1471,14 +1475,13 @@ class AddCustomerScreenController extends GetxController {
     Get.toNamed(AppRoute.addWorksScreen, arguments: arguments);
   }
 
-
-  Future<void>getIsTaxExist()async{
+  Future<void> getIsTaxExist() async {
     Response response = await AddCustomerRepo().isTaxAvailable();
     if (response.statusCode == 200) {
-      if(response.body['data']==true){
-        isTaxAvailable=true;
-      }else{
-        isTaxAvailable=false;
+      if (response.body['data'] == true) {
+        isTaxAvailable = true;
+      } else {
+        isTaxAvailable = false;
       }
     }
   }
@@ -1550,8 +1553,11 @@ class AddCustomerScreenController extends GetxController {
     // Default to Saudi Arabia if not found
     return '+966';
   }
+
   bool isCustomerBlockList = false;
-  void verifiedPhone(String phone, {int? userIndex,bool isCanAddCustomer = false}) async {
+  int unpaidInvoiceCount = 0;
+  void verifiedPhone(String phone,
+      {int? userIndex, bool isCanAddCustomer = false}) async {
     createCarClientId.value = '';
     print("Phone =====================$phone");
     if (phone.isEmpty) {
@@ -1559,75 +1565,77 @@ class AddCustomerScreenController extends GetxController {
       return;
     }
 
-
     // Get the full phone number with country code
     String fullPhoneNumber = getFullPhoneNumber(phone);
     print("====== Full phone number for verification: $fullPhoneNumber ======");
 
     // Send OTP with full phone number
 
-   bool isSuccess= await sendPhoneNumber(fullPhoneNumber);
+    bool isSuccess = await sendPhoneNumber(fullPhoneNumber);
 
-    if(isCanAddCustomer){
-       getCustomerListByPhone();
+    if (isCanAddCustomer) {
+      getCustomerListByPhone();
     }
-if(isSuccess){
-  CustomAlert.showInfo(
-    context: Get.context!,
-    message: 'otp_sent_customer_message'.tr,
-    onPressed: () {
-      Navigator.pop(Get.context!);
-      Get.dialog(
-        CustomAlertVerificationDialog(
-          phoneNumber: fullPhoneNumber,
-          onVerificationComplete: (code) async {
-            // Verify OTP with full phone number
-            bool verified = await verifyPhoneNumber(
-              fullPhoneNumber,
-              int.parse(code),
-            );
-            appLog("verified===============$verified");
-            if (verified) {
-              // Check if this is for additional user or main user
-              if (userIndex != null) {
-                // Additional user verification
-                additionalUserPhoneVerified[userIndex] = true;
-                update(); // Trigger UI update
-              } else {
-                // Main user verification
-                isMainPhoneVerified.value = true;
-                phoneVerified.value = true;
-                verifiedPhoneNumber.value = fullPhoneNumber; // Store full phone number
-              }
-              Navigator.pop(Get.context!);
-              CustomAlert.showInfo(
-                context: Get.context!,
-                message: 'Activation Successful'.tr,
-              );
-            }
-          },
-          onResendCode: () async {
-            // Resend OTP with full phone number
-            await sendPhoneNumber(fullPhoneNumber);
-            CustomAlert.showInfo(
-              context: Get.context!,
-              message: 'otp_sent_user_message'.tr,
-            );
-          },
-        ),
+    if (isSuccess) {
+      CustomAlert.showInfo(
+        context: Get.context!,
+        message: 'otp_sent_customer_message'.tr,
+        onPressed: () {
+          Navigator.pop(Get.context!);
+          Get.dialog(
+            CustomAlertVerificationDialog(
+              phoneNumber: fullPhoneNumber,
+              onVerificationComplete: (code) async {
+                // Verify OTP with full phone number
+                bool verified = await verifyPhoneNumber(
+                  fullPhoneNumber,
+                  int.parse(code),
+                );
+                appLog("verified===============$verified");
+                if (verified) {
+                  // Check if this is for additional user or main user
+                  if (userIndex != null) {
+                    // Additional user verification
+                    additionalUserPhoneVerified[userIndex] = true;
+                    update(); // Trigger UI update
+                  } else {
+                    // Main user verification
+                    isMainPhoneVerified.value = true;
+                    phoneVerified.value = true;
+                    verifiedPhoneNumber.value =
+                        fullPhoneNumber; // Store full phone number
+                  }
+                  Navigator.pop(Get.context!);
+                  CustomAlert.showInfo(
+                    context: Get.context!,
+                    message: 'Activation Successful'.tr,
+                  );
+                }
+              },
+              onResendCode: () async {
+                // Resend OTP with full phone number
+                await sendPhoneNumber(fullPhoneNumber);
+                CustomAlert.showInfo(
+                  context: Get.context!,
+                  message: 'otp_sent_user_message'.tr,
+                );
+              },
+            ),
+          );
+        },
       );
-    },
-  );
-  if(isCustomerBlockList){
-    CustomAlert.showInfo(
-      context: Get.context!,
-      image: SvgPicture.asset(AppIcon.warning,),
-
-      message: 'This Customer has unpaid invoice at another workshop'.tr,
-    );
-  }
-}
-
+      if (isCustomerBlockList) {
+        CustomAlert.showInfo(
+          context: Get.context!,
+          image: SvgPicture.asset(
+            AppIcon.warning,
+          ),
+          message:
+              'This Customer has %s unpaid invoice at another workshop'
+                  .trArgs([unpaidInvoiceCount.toString()]),
+        );
+      }
+    }
   }
 
   Future<void> getCustomerListByPhone() async {
@@ -1648,8 +1656,9 @@ if(isSuccess){
     if (response.statusCode == 200) {
       var responseData = response.body;
 
-      if (responseData['data'] != null && responseData['data'] is List && (responseData['data'] as List).isNotEmpty) {
-
+      if (responseData['data'] != null &&
+          responseData['data'] is List &&
+          (responseData['data'] as List).isNotEmpty) {
         final dataList = responseData['data'] as List?;
         if (dataList == null || dataList.isEmpty) return;
 
@@ -1665,14 +1674,15 @@ if(isSuccess){
 
         createCarClientId.value = clientData?['_id'] ?? '';
         appLog('Customer found with ID: ${createCarClientId.value}');
-
       }
     }
   }
 
   Future<bool> sendPhoneNumber(String phoneNumber) async {
-    bool  isSuccess = false;
+    bool isSuccess = false;
     isCustomerBlockList = false;
+    unpaidInvoiceCount = 0;
+
     try {
       isVerified(true);
       Response response = await ApiClient.postData(
@@ -1681,7 +1691,10 @@ if(isSuccess){
       );
       if (response.statusCode == 200) {
         isSuccess = true;
-        isCustomerBlockList = response.body['data']['isAlreadyBlocked']??false;
+        unpaidInvoiceCount = response.body['data']['unpaidInvoicesCount'] ?? 0;
+        isCustomerBlockList =
+            response.body['data']['isAlreadyBlocked'] ?? false;
+
         appLog(response.body.toString());
         showCustomSnackBar("OTP sent successfully".tr, isError: false);
         return isSuccess;
@@ -1721,7 +1734,6 @@ if(isSuccess){
     }
   }
 
-
   ///Create Customer car
   // dart
   Future<void> createCustomerCar() async {
@@ -1732,7 +1744,7 @@ if(isSuccess){
       if (letter.isNotEmpty) {
         // Find matching option for this letter
         var matchedOption = letterOptions.firstWhere(
-              (option) => option['ar'] == letter || option['en'] == letter,
+          (option) => option['ar'] == letter || option['en'] == letter,
           orElse: () => {'en': '', 'ar': ''},
         );
 
@@ -1759,16 +1771,18 @@ if(isSuccess){
       arabicText: _convertToArabicNumerals(saudiPlateNumber.value),
       englishText: saudiPlateNumber.value,
       symbol: selectedCarSymbolId.value,
-      plateNumberForInternational:  carPlateController.text.trim(),
+      plateNumberForInternational: carPlateController.text.trim(),
     );
     addIsLoading.value = false;
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       onCrateCar();
     } else {
-      showCustomSnackBar(response.statusText ?? 'error_message'.tr, isError: true);
+      showCustomSnackBar(response.statusText ?? 'error_message'.tr,
+          isError: true);
     }
   }
+
   void onCrateCar() {
     CustomAlert.showInfo(
       context: Get.context!,
@@ -1779,8 +1793,6 @@ if(isSuccess){
       },
     );
   }
-
-
 
   ///vin
 

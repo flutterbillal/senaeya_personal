@@ -368,15 +368,15 @@ class UserManagement extends StatelessWidget {
               SizedBox(width: 8.w),
               Expanded(
                 flex: 2,
-                child: CustomDropdownField(
-                  value: controller.year.value,
-                  items: controller.yearOptions,
-                  hintText: 'year'.tr,
-                  onChanged: controller.isFromNewInvoice
-                      ? null
-                      : (val) => controller.setYear(val!),
-                  isRequired: true,
-                ),
+                child: Obx(() => CustomDropdownField(
+                      value: controller.year.value,
+                      items: controller.yearOptions,
+                      hintText: 'year'.tr,
+                      onChanged: controller.isFromNewInvoice
+                          ? null
+                          : (val) => controller.setYear(val!),
+                      isRequired: true,
+                    )),
               ),
             ],
           ),

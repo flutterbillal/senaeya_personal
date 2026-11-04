@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 
 class ProfileModel {
     bool? success;
@@ -60,7 +60,13 @@ class Data {
     bool? verified;
     bool? isDeleted;
     String? stripeCustomerId;
-    HelperUserId? helperUserId;
+    dynamic helperUserId; // HelperUserId, List<HelperUserId>, or HelperUserId?
+    List<HelperUserId> get helperUserList {
+      if (helperUserId == null) return [];
+      if (helperUserId is List<HelperUserId>) return helperUserId as List<HelperUserId>;
+      if (helperUserId is HelperUserId) return [helperUserId as HelperUserId];
+      return [];
+    }
     DateTime? createdAt;
     DateTime? updatedAt;
     int? v;
@@ -97,7 +103,13 @@ class Data {
         verified: json["verified"],
         isDeleted: json["isDeleted"],
         stripeCustomerId: json["stripeCustomerId"],
-        helperUserId: json["helperUserId"] == null ? null : HelperUserId.fromJson(json["helperUserId"]),
+        helperUserId: json["helperUserId"] == null
+            ? (json["helperUserIds"] != null && json["helperUserIds"] is List
+                ? (json["helperUserIds"] as List).map((x) => HelperUserId.fromJson(x)).toList()
+                : null)
+            : (json["helperUserId"] is List
+                ? (json["helperUserId"] as List).map((x) => HelperUserId.fromJson(x)).toList()
+                : HelperUserId.fromJson(json["helperUserId"])),
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
         v: json["__v"],
@@ -114,7 +126,9 @@ class Data {
         "verified": verified,
         "isDeleted": isDeleted,
         "stripeCustomerId": stripeCustomerId,
-        "helperUserId": helperUserId?.toJson(),
+        "helperUserId": helperUserId is List
+            ? (helperUserId as List<HelperUserId>).map((x) => x.toJson()).toList()
+            : (helperUserId is HelperUserId ? (helperUserId as HelperUserId).toJson() : null),
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,

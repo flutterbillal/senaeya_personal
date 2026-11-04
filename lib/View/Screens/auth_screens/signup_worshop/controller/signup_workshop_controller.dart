@@ -166,7 +166,7 @@ class SignupWorkshopController extends GetxController {
 
   void validateForm() {
     bool isUNNValid = validateUNN(nationalNumberController.text);
-    bool isCRNValid = validateCRN(registrationNumberController.text);
+    // bool isCRNValid = validateCRN(registrationNumberController.text);
     bool isMLNValid = validateMLN(licenseNumberController.text);
     bool isTaxVATValid = validateTaxVAT(taxNumberController.text);
     bool isIBANValid = validateIBAN(ibanController.text);
@@ -175,7 +175,7 @@ class SignupWorkshopController extends GetxController {
         workshopNameArabicController.text.isNotEmpty &&
         // workshopContact is optional or not present in the UI, so don't require it here
         isUNNValid &&
-        isCRNValid &&
+        // isCRNValid &&
         isMLNValid &&
         addressController.text.isNotEmpty &&
         isTaxVATValid &&
