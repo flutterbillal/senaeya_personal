@@ -272,16 +272,16 @@ class SignupScreenController extends GetxController {
       isCreatingAccount(true);
 
       // Validate email format
-      final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-      if (!emailRegex.hasMatch(emailController.text.trim())) {
-        isCreatingAccount(false);
-        showCustomSnackBar("please_enter_a_valid_email_address".tr);
-        return;
-      }
+      // final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+      // if (!emailRegex.hasMatch(emailController.text.trim())) {
+      //   isCreatingAccount(false);
+      //   showCustomSnackBar("please_enter_a_valid_email_address".tr);
+      //   return;
+      // }
 
       // Build base body
       Map<String, dynamic> body = {
-        "email": emailController.text.trim(),
+        // "email": emailController.text.trim(),
         "password": passwordController.text,
         "contact": workshopPhoneNumber.trim(),
         "name": nameController.text.trim(),
@@ -334,7 +334,8 @@ class SignupScreenController extends GetxController {
 
         String value = response.body['data']['accessToken'];
         await SharePrefsHelper.setString(SharedPreferenceValue.token, value);
-        await SharePrefsHelper.setString(SharedPreferenceValue.role, "WORKSHOP_OWNER");
+        await SharePrefsHelper.setString(
+            SharedPreferenceValue.role, "WORKSHOP_OWNER");
         appLog("Token saved: $value");
 
         // Show success dialog
@@ -380,7 +381,8 @@ class SignupScreenController extends GetxController {
       showCustomSnackBar("error_creating_account".tr);
     }
   }
-  GlobalKey<FormState>formKey=GlobalKey<FormState>();
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   // Password validation: at least 8 chars, one letter, one number
   bool isPasswordValidFunc(String password) {
@@ -393,26 +395,29 @@ class SignupScreenController extends GetxController {
   // Overall form validation
   bool get isFormValid {
     return nameController.text.trim().isNotEmpty &&
-      phoneController.text.trim().isNotEmpty &&
-      emailController.text.trim().isNotEmpty &&
-      confirmEmailController.text.trim().isNotEmpty &&
-      // emailController.text.trim() == confirmEmailController.text.trim() &&
-      passwordController.text.isNotEmpty &&
-      confirmPasswordController.text.isNotEmpty &&
-      // passwordController.text == confirmPasswordController.text &&
-      // isPasswordValidFunc(passwordController.text) &&
-      isTermsAgreed.value;
+        phoneController.text.trim().isNotEmpty &&
+        // emailController.text.trim().isNotEmpty &&
+        // confirmEmailController.text.trim().isNotEmpty &&
+        // emailController.text.trim() == confirmEmailController.text.trim() &&
+        passwordController.text.isNotEmpty &&
+        confirmPasswordController.text.isNotEmpty &&
+        // passwordController.text == confirmPasswordController.text &&
+        // isPasswordValidFunc(passwordController.text) &&
+        isTermsAgreed.value;
   }
 
   // Call this on field change
   void validateFields() {
     isNameValid.value = nameController.text.trim().isNotEmpty;
-    isPhoneValid.value = workshopPhoneNumber.isNotEmpty && isMainPhoneVerified.value;
+    isPhoneValid.value =
+        workshopPhoneNumber.isNotEmpty && isMainPhoneVerified.value;
     isEmailValid.value = emailController.text.trim().isNotEmpty &&
-      confirmEmailController.text.trim().isNotEmpty &&
-      emailController.text.trim() == confirmEmailController.text.trim();
+        confirmEmailController.text.trim().isNotEmpty &&
+        emailController.text.trim() == confirmEmailController.text.trim();
     isPasswordValid.value = isPasswordValidFunc(passwordController.text);
-    isConfirmPasswordValid.value = passwordController.text == confirmPasswordController.text && confirmPasswordController.text.isNotEmpty;
+    isConfirmPasswordValid.value =
+        passwordController.text == confirmPasswordController.text &&
+            confirmPasswordController.text.isNotEmpty;
     update();
   }
 
@@ -422,16 +427,20 @@ class SignupScreenController extends GetxController {
     //   return;
     // }
     // print("object");
-   if(confirmEmailController.text!=emailController.text){
-     showCustomSnackBar("Email and Confirm Email do not match".tr);
-     return;
-   }else if(confirmPasswordController.text!=passwordController.text){
-     showCustomSnackBar("Password and Confirm Password do not match".tr);
-     return;
-   }else if( !isPasswordValidFunc(passwordController.text)){
-      showCustomSnackBar("Password must be at least 8 characters long and include at least one letter and one number".tr);
+    // if (confirmEmailController.text != emailController.text) {
+    //   showCustomSnackBar("Email and Confirm Email do not match".tr);
+    //   return;
+    // }
+    // else
+    if (confirmPasswordController.text != passwordController.text) {
+      showCustomSnackBar("Password and Confirm Password do not match".tr);
       return;
-   }
+    } else if (!isPasswordValidFunc(passwordController.text)) {
+      showCustomSnackBar(
+          "Password must be at least 8 characters long and include at least one letter and one number"
+              .tr);
+      return;
+    }
     createAccount();
   }
 

@@ -200,7 +200,7 @@ class SignupWorkshopController extends GetxController {
   Future<void> addLocation() async {
     // Check if location services are enabled
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
+    if (serviceEnabled) {
       showCustomSnackBar('location_services_disabled'.tr, isError: true);
       return;
     }
@@ -387,7 +387,7 @@ class SignupWorkshopController extends GetxController {
         workshopNameArabic: workshopNameArabicController.text.trim(),
         contact: workshopContact.text.trim(),
         unn: nationalNumberController.text.trim(),
-        crn: registrationNumberController.text.trim(),
+        crn: nationalNumberController.text.trim(),
         mln: licenseNumberController.text.trim(),
         address: addressController.text.trim(),
         taxVatNumber: taxVatNumber,
@@ -432,7 +432,7 @@ class SignupWorkshopController extends GetxController {
         }
       } else {
         showCustomSnackBar(
-          response.statusText ?? 'failed_to_register_workshop'.tr,
+          response.body['message'] ?? 'failed_to_register_workshop'.tr,
           isError: true,
         );
       }
