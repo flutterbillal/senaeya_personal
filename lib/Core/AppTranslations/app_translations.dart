@@ -261,6 +261,8 @@ class AppTranslations extends Translations {
           'you_can_only_add_one_additional_user':
               'You can only add up to two additional users',
           'Additional User': 'Additional User',
+          'Additional user added successfully': 'Additional user added successfully',
+          'Additional user deleted successfully': 'Additional user deleted successfully',
           'please_enter_your_name': 'Please enter your name',
           'please_enter_your_phone_number': 'Please enter your phone number',
           'please_verify_your_phone_number': 'Please verify your phone number',
@@ -843,6 +845,8 @@ class AppTranslations extends Translations {
           'you_can_only_add_one_additional_user':
               'يمكنك إضافة ما يصل إلى مستخدمين إضافيين فقط',
           'Additional User': 'مستخدم إضافي',
+          'Additional user added successfully': 'تمت إضافة المستخدم الإضافي بنجاح',
+          'Additional user deleted successfully': 'تم حذف المستخدم الإضافي بنجاح',
           'please_enter_your_name': 'الرجاء إدخال اسمك',
           'please_enter_your_phone_number': 'الرجاء إدخال رقم هاتفك',
           'please_verify_your_phone_number': 'الرجاء التحقق من رقم هاتفك',
@@ -1434,6 +1438,8 @@ class AppTranslations extends Translations {
           'you_can_only_add_one_additional_user':
               'আপনি সর্বোচ্চ দুটি অতিরিক্ত ব্যবহারকারী যোগ করতে পারেন',
           'Additional User': 'অতিরিক্ত ব্যবহারকারী',
+          'Additional user added successfully': 'অতিরিক্ত ব্যবহারকারী সফলভাবে যোগ করা হয়েছে',
+          'Additional user deleted successfully': 'অতিরিক্ত ব্যবহারকারী সফলভাবে মুছে ফেলা হয়েছে',
           'please_enter_your_name': 'অনুগ্রহ করে আপনার নাম লিখুন',
           'please_enter_your_phone_number': 'অনুগ্রহ করে আপনার ফোন নম্বর লিখুন',
           'please_verify_your_phone_number':
@@ -2028,6 +2034,8 @@ class AppTranslations extends Translations {
           'you_can_only_add_one_additional_user':
               'आप केवल अधिकतम दो अतिरिक्त उपयोगकर्ता जोड़ सकते हैं',
           'Additional User': 'अतिरिक्त उपयोगकर्ता',
+          'Additional user added successfully': 'अतिरिक्त उपयोगकर्ता सफलतापूर्वक जोड़ा गया',
+          'Additional user deleted successfully': 'अतिरिक्त उपयोगकर्ता सफलतापूर्वक हटा दिया गया',
           'please_enter_your_name': 'कृपया अपना नाम दर्ज करें',
           'please_enter_your_phone_number': 'कृपया अपना फोन नंबर दर्ज करें',
           'please_verify_your_phone_number':
@@ -2638,6 +2646,8 @@ class AppTranslations extends Translations {
           'you_can_only_add_one_additional_user':
               'Maaari ka lamang magdagdag ng hanggang dalawang karagdagang user',
           'Additional User': 'Karagdagang User',
+          'Additional user added successfully': 'Matagumpay na naidagdag ang karagdagang user',
+          'Additional user deleted successfully': 'Matagumpay na natanggal ang karagdagang user',
           'please_enter_your_name': 'Pakipasok ang iyong pangalan',
           'please_enter_your_phone_number':
               'Pakipasok ang iyong numero ng telepono',
@@ -3248,6 +3258,8 @@ class AppTranslations extends Translations {
           'you_can_only_add_one_additional_user':
               'آپ زیادہ سے زیادہ دو اضافی صارف شامل کر سکتے ہیں',
           'Additional User': 'اضافی صارف',
+          'Additional user added successfully': 'اضافی صارف کامیابی کے ساتھ شامل کر دیا گیا',
+          'Additional user deleted successfully': 'اضافی صارف کامیابی کے ساتھ حذف کر دیا گیا',
           'please_enter_your_name': 'براہ کرم اپنا نام درج کریں',
           'please_enter_your_phone_number': 'براہ کرم اپنا فون نمبر درج کریں',
           'please_verify_your_phone_number':

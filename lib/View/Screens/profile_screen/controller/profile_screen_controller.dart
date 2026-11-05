@@ -45,37 +45,47 @@ class ProfileScreenController extends GetxController {
     initial();
     _loadProfileFromHomeController();
   }
-  Future<void>initial()async{
-    workshopId = await SharePrefsHelper.getString(SharedPreferenceValue.workshopId);
+
+  Future<void> initial() async {
+    workshopId =
+        await SharePrefsHelper.getString(SharedPreferenceValue.workshopId);
     getSubscriptionByWorkshop();
   }
+
   Rxn<SubsriptionItem> currentSubscription = Rxn<SubsriptionItem>();
 
-Future<void>getSubscriptionByWorkshop() async {
-  subscriptionIsLoading.value = true;
-  try {
-    Response response = await ProfileRepo().getSubscriptionByWorkshopId(workshopId: workshopId);
-    if (response.statusCode == 200) {
-      appLog('Subscription Response: ${response.body}');
-      SubscriptionDetailsModel subscriptionDetailsModel = SubscriptionDetailsModel.fromJson(response.body);
-      if (subscriptionDetailsModel.subsriptionItem != null) {
-        appLog('Current Subscription: ${subscriptionDetailsModel.subsriptionItem?.sId}');
-        appLog('Current Subscription: ${subscriptionDetailsModel.subsriptionItem?.price}');
-        currentSubscription.value = subscriptionDetailsModel.subsriptionItem;
-        appLog('Current Subscription: ${subscriptionDetailsModel.subsriptionItem?.sId}');
-        appLog('Current Subscription: ${subscriptionDetailsModel.subsriptionItem?.price}');
+  Future<void> getSubscriptionByWorkshop() async {
+    subscriptionIsLoading.value = true;
+    try {
+      Response response = await ProfileRepo()
+          .getSubscriptionByWorkshopId(workshopId: workshopId);
+      if (response.statusCode == 200) {
+        appLog('Subscription Response: ${response.body}');
+        SubscriptionDetailsModel subscriptionDetailsModel =
+            SubscriptionDetailsModel.fromJson(response.body);
+        if (subscriptionDetailsModel.subsriptionItem != null) {
+          appLog(
+              'Current Subscription: ${subscriptionDetailsModel.subsriptionItem?.sId}');
+          appLog(
+              'Current Subscription: ${subscriptionDetailsModel.subsriptionItem?.price}');
+          currentSubscription.value = subscriptionDetailsModel.subsriptionItem;
+          appLog(
+              'Current Subscription: ${subscriptionDetailsModel.subsriptionItem?.sId}');
+          appLog(
+              'Current Subscription: ${subscriptionDetailsModel.subsriptionItem?.price}');
+        } else {
+          currentSubscription.value = null;
+        }
       } else {
         currentSubscription.value = null;
       }
-    } else {
+    } catch (e) {
       currentSubscription.value = null;
+    } finally {
+      subscriptionIsLoading.value = false;
     }
-  } catch (e) {
-    currentSubscription.value = null;
-  } finally {
-    subscriptionIsLoading.value = false;
   }
-}
+
   void exitApp() {
     _showLogoutDialog(Get.context!);
   }
@@ -161,13 +171,13 @@ Future<void>getSubscriptionByWorkshop() async {
       },
     );
   }
+
   Future<void> onLogOut() async {
     Get.delete<HomeController>();
     Get.deleteAll();
     await SharePrefsHelper.clearData();
     Navigator.pop(Get.context!);
     Get.offAllNamed(AppRoute.navScreen);
-
   }
 
   /// Load profile data from HomeController
@@ -422,9 +432,10 @@ Future<void>getSubscriptionByWorkshop() async {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-               CustomText(
-               text:  'Select Image Source'.tr,
-                fontSize: 18, fontWeight: FontWeight.bold,
+              CustomText(
+                text: 'Select Image Source'.tr,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
               const SizedBox(height: 20),
               ListTile(

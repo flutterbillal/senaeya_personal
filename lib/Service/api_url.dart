@@ -75,4 +75,5 @@ class ApiConstant {
   static getDiscountByCupon(var id) => "/coupon/try/$id";
 
   static const appVersion = "/settings/app-version";
+  static const additionalUser = "/users/helper-user";
 }

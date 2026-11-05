@@ -35,7 +35,6 @@ class CustomerInvoiceCard extends StatelessWidget {
     this.carBrand = "",
     this.carModel = "",
     this.carYear = "",
-
     this.carNumber = "",
     this.invoiceAmount = "",
     this.invoiceDate = "",
@@ -50,17 +49,16 @@ class CustomerInvoiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // Calculate if invoice is older than 5 days
     bool hasNotAvailableDay = true;
-    final car = invoice?.car??'';
+    final car = invoice?.car ?? '';
     final DateTime now = DateTime.now();
 
     if (invoice?.postPaymentDate != null) {
       final DateTime postDate = invoice!.postPaymentDate!;
 
-
       if (now.isBefore(postDate)) {
         hasNotAvailableDay = false;
       }
-    }else{
+    } else {
       // If no post payment date, check createdAt date
       final DateTime createDate = invoice!.createdAt!;
       if ((now.difference(createDate).inDays < 10)) {
@@ -70,16 +68,15 @@ class CustomerInvoiceCard extends StatelessWidget {
     // print("===================hasNotAvailAbleDate:$hasNotAvailableDay");
 
     // Show warning if invoice is "release_invoice" or "pay_invoice" AND older than 5 days
-    bool warningView =
-        (invoiceStatus == "release_invoice".tr ||
+    bool warningView = (invoiceStatus == "release_invoice".tr ||
             invoiceStatus == "pay_invoice".tr) &&
-            hasNotAvailableDay;
+        hasNotAvailableDay;
 
     Color invoiceColor = invoiceStatus == "view_invoice".tr
         ? Colors.green
         : invoiceStatus == "pay_invoice".tr
-        ? Colors.orange
-        : AppColors.red;
+            ? Colors.orange
+            : AppColors.red;
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Stack(
@@ -119,9 +116,12 @@ class CustomerInvoiceCard extends StatelessWidget {
                           },
                           context: context,
                           title: "The customer has an overdue invoice".tr,
-                          yesButtonText: "Add or Remove from the defaulters list".tr,
+                          yesButtonText:
+                              "Add or Remove from the defaulters list".tr,
                           noButtonText: "Give the customer extra time".tr,
-                          message: "Do you want to place the customer\non the defaulters list?".tr,
+                          message:
+                              "Do you want to place the customer\non the defaulters list?"
+                                  .tr,
                         );
                       },
                       child: SvgPicture.asset(
@@ -144,66 +144,84 @@ class CustomerInvoiceCard extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                car.toString().isNotEmpty? Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          // Removed CircleAvatar from here since it's now positioned at top-left
-                                          Image.network(
-                                            "${ApiConstant.imageBaseUrl}${invoice?.car?.brand?.image ?? ''}",
-                                            width: 26.w,
-                                            height: 26.w,
-                                          ),
-                                          SizedBox(width: 6.w),
-                                          // Brand name
-                                          Expanded(
-                                            child: CustomText(
-                                              text:
-                                              invoice?.car?.brand?.title ?? '',
-                                              color: Colors.white,
-                                              fontSize: 18.sp,
-                                              fontWeight: FontWeight.bold,
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
+                                car.toString().isNotEmpty
+                                    ? Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                // Removed CircleAvatar from here since it's now positioned at top-left
+                                                Image.network(
+                                                  "${ApiConstant.imageBaseUrl}${invoice?.car?.brand?.image ?? ''}",
+                                                  width: 26.w,
+                                                  height: 26.w,
+                                                ),
+                                                SizedBox(width: 6.w),
+                                                // Brand name
+                                                Expanded(
+                                                  child: CustomText(
+                                                    text: invoice?.car?.brand
+                                                            ?.title ??
+                                                        '',
+                                                    color: Colors.white,
+                                                    fontSize: 18.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 8.h),
-                                      // Car model and year row
-                                      Row(
-                                        children: [
-                                          Flexible(
-                                            child: CustomText(
-                                              text:
-                                              invoice?.car?.model?.title ?? '',
-                                              color: Colors.white,
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.w600,
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 2,
+                                            SizedBox(height: 8.h),
+                                            // Car model and year row
+                                            Row(
+                                              children: [
+                                                Flexible(
+                                                  child: CustomText(
+                                                    text: invoice?.car?.model
+                                                            ?.title ??
+                                                        '',
+                                                    color: Colors.white,
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 8.w),
+                                                CustomText(
+                                                  text:
+                                                      invoice?.car?.year ?? '',
+                                                  color: Colors.white,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                                SizedBox(
+                                                  width: 4.w,
+                                                )
+                                              ],
                                             ),
-                                          ),
-                                          SizedBox(width: 8.w),
-                                          CustomText(
-                                            text: invoice?.car?.year ?? '',
+                                          ],
+                                        ),
+                                      )
+                                    : Column(
+                                        children: [
+                                          const CustomText(
+                                            text: "Workshop",
                                             color: Colors.white,
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600,
                                           ),
-                                          SizedBox(width: 4.w,)
+                                          CustomText(
+                                            text: invoice?.client
+                                                    ?.workShopNameAsClient ??
+                                                '',
+                                            color: Colors.white,
+                                          ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                ):Column(
-                                  children: [
-                                    const CustomText(text: "Workshop",color: Colors.white,),
-                                    CustomText(text: invoice?.client?.workShopNameAsClient??'',color: Colors.white,),
-                                  ],
-                                ),
                               ],
                             ),
                             SizedBox(height: 16.h),
@@ -218,7 +236,7 @@ class CustomerInvoiceCard extends StatelessWidget {
                                   child: CustomText(
                                     maxLines: 2,
                                     text:
-                                    " ${invoice?.finalCost ?? 0}  inv. amount",
+                                        " ${invoice?.finalCost ?? 0}  inv. amount",
                                     color: Colors.white,
                                     fontSize: 14.w,
                                     fontWeight: FontWeight.w700,
@@ -229,36 +247,36 @@ class CustomerInvoiceCard extends StatelessWidget {
                             ),
                             SizedBox(height: 4.h),
                             (invoiceStatus != "view_invoice".tr &&
-                                invoice?.postPaymentDate != null &&
-                                invoice!.postPaymentDate
-                                    .toString()
-                                    .isNotEmpty)
+                                    invoice?.postPaymentDate != null &&
+                                    invoice!.postPaymentDate
+                                        .toString()
+                                        .isNotEmpty)
                                 ? Row(
-                              children: [
-                                Flexible(
-                                  child: CustomText(
-                                    text:
-                                    FormateDateTime.convertToDueDateFormat(
-                                      (invoice!.postPaymentDate),
-                                    ),
-                                    color: Colors.white,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                                SizedBox(width: 4.w),
-                                Flexible(
-                                  child: CustomText(
-                                    text: "Due Date",
-                                    color: Colors.white,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                              ],
-                            )
+                                    children: [
+                                      Flexible(
+                                        child: CustomText(
+                                          text: FormateDateTime
+                                              .convertToDueDateFormat(
+                                            (invoice!.postPaymentDate),
+                                          ),
+                                          color: Colors.white,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                      SizedBox(width: 4.w),
+                                      Flexible(
+                                        child: CustomText(
+                                          text: "Due Date",
+                                          color: Colors.white,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  )
                                 : SizedBox(),
                             SizedBox(height: 4.h),
 
@@ -266,11 +284,11 @@ class CustomerInvoiceCard extends StatelessWidget {
                               text: FormateDateTime.formatDateTime(
                                 invoiceStatus != "view_invoice".tr
                                     ? (invoice?.createdAt != null
-                                    ? invoice!.createdAt
-                                    : DateTime.now())
+                                        ? invoice!.createdAt
+                                        : DateTime.now())
                                     : (invoice?.payment?.createdAt != null
-                                    ? invoice!.payment!.createdAt
-                                    : DateTime.now()),
+                                        ? invoice!.payment!.createdAt
+                                        : DateTime.now()),
                               ),
                               color: Colors.white,
                               fontSize: 14.sp,
@@ -291,7 +309,8 @@ class CustomerInvoiceCard extends StatelessWidget {
                             onTap: () {
                               if (isLoading) return; // Prevent tap when loading
                               if (invoiceStatus == "view_invoice".tr) {
-                                final Uri url = Uri.parse("https://report.senaeya.net/invoice/${invoice?.id??''}?providerWorkShopId=${invoice?.providerWorkShopId??''}");
+                                final Uri url = Uri.parse(
+                                    "https://report-v2.senaeya.net/invoice/${invoice?.id ?? ''}?providerWorkShopId=${invoice?.providerWorkShopId ?? ''}");
                                 _launchUrl(url);
                                 // Get.toNamed(
                                 //   AppRoute.pdfDownLoadSceen,
@@ -300,7 +319,10 @@ class CustomerInvoiceCard extends StatelessWidget {
                                 //   },
                                 // );
                               } else {
-                                Get.toNamed(AppRoute.invoiceSummaryScreen,arguments: {"invoiceId":invoice?.id??''});
+                                Get.toNamed(AppRoute.invoiceSummaryScreen,
+                                    arguments: {
+                                      "invoiceId": invoice?.id ?? ''
+                                    });
                               }
                             },
                             child: Container(
@@ -312,53 +334,49 @@ class CustomerInvoiceCard extends StatelessWidget {
                               ),
                               child: isLoading
                                   ? Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment:
-                                MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 20.w,
-                                    height: 20.w,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      valueColor:
-                                      AlwaysStoppedAnimation<Color>(
-                                        invoiceColor,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 4.h),
-                                  CustomText(
-                                    text: "Processing...".tr,
-                                    fontWeight: FontWeight.w600,
-                                    color: invoiceColor,
-                                    fontSize: 12.sp,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              )
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: 20.w,
+                                          height: 20.w,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              invoiceColor,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 4.h),
+                                        CustomText(
+                                          text: "Processing...".tr,
+                                          fontWeight: FontWeight.w600,
+                                          color: invoiceColor,
+                                          fontSize: 12.sp,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    )
                                   : CustomText(
-                                text: invoiceStatus,
-                                fontWeight: FontWeight.w700,
-                                color: invoiceColor,
-                                fontSize: 14.sp,
-                                overflow: TextOverflow.visible,
-                                textAlign: TextAlign.center,
-                              ),
+                                      text: invoiceStatus,
+                                      fontWeight: FontWeight.w700,
+                                      color: invoiceColor,
+                                      fontSize: 14.sp,
+                                      overflow: TextOverflow.visible,
+                                      textAlign: TextAlign.center,
+                                    ),
                             ),
                           ),
                           SizedBox(height: 10.h),
-
-                          if ((car.toString().isNotEmpty)&&(invoice
-                              ?.car
-                              ?.plateNumberForInternational
-                              ?.isNotEmpty !=
-                              null &&
-                              invoice
-                                  ?.car
-                                  ?.plateNumberForInternational
-                                  ?.isNotEmpty ==
-                                  true))
+                          if ((car.toString().isNotEmpty) &&
+                              (invoice?.car?.plateNumberForInternational
+                                          ?.isNotEmpty !=
+                                      null &&
+                                  invoice?.car?.plateNumberForInternational
+                                          ?.isNotEmpty ==
+                                      true))
                             Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -367,44 +385,29 @@ class CustomerInvoiceCard extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: CustomText(
-                                  text:
-                                  invoice
-                                      ?.car
-                                      ?.plateNumberForInternational ??
+                                  text: invoice
+                                          ?.car?.plateNumberForInternational ??
                                       '',
                                 ),
                               ),
                             ),
-                          if ((car.toString().isNotEmpty)&&(invoice
-                              ?.car
-                              ?.plateNumberForInternational
-                              ?.isNotEmpty ==
-                              null ||
-                              invoice
-                                  ?.car
-                                  ?.plateNumberForInternational
-                                  .isNotEmpty ==
-                                  false))
+                          if ((car.toString().isNotEmpty) &&
+                              (invoice?.car?.plateNumberForInternational
+                                          ?.isNotEmpty ==
+                                      null ||
+                                  invoice?.car?.plateNumberForInternational
+                                          .isNotEmpty ==
+                                      false))
                             SaudiLicensePlate(
                               width: 120.w,
-                              saudiCarPlateImage:
-                              invoice
-                                  ?.car
-                                  ?.plateNumberForSaudi
-                                  ?.symbol
-                                  ?.image ??
+                              saudiCarPlateImage: invoice?.car
+                                      ?.plateNumberForSaudi?.symbol?.image ??
                                   '',
-                              plateNumber:
-                              invoice
-                                  ?.car
-                                  ?.plateNumberForSaudi
-                                  ?.numberEnglish ??
+                              plateNumber: invoice?.car?.plateNumberForSaudi
+                                      ?.numberEnglish ??
                                   '',
-                              plateLetters:
-                              invoice
-                                  ?.car
-                                  ?.plateNumberForSaudi
-                                  ?.alphabetsCombinations?[0] ??
+                              plateLetters: invoice?.car?.plateNumberForSaudi
+                                      ?.alphabetsCombinations?[0] ??
                                   '',
                               borderColor: Colors.black,
                               textColor: Colors.black,
@@ -421,6 +424,7 @@ class CustomerInvoiceCard extends StatelessWidget {
       ),
     );
   }
+
   Future<void> _launchUrl(Uri url) async {
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');

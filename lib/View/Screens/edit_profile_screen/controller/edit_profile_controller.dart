@@ -5,6 +5,7 @@ import 'package:Senaeya/Service/api_client.dart';
 import 'package:Senaeya/Service/api_url.dart';
 import 'package:Senaeya/Utils/AppLog/app_log.dart';
 import 'package:Senaeya/Utils/ToastMsg/toast_message.dart';
+import 'package:Senaeya/View/Screens/edit_profile_screen/models/additional_user_model.dart';
 import 'package:Senaeya/View/Screens/home_screen/controller/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,8 @@ import '../models/profile_screen_model.dart';
 class EditProfileController extends GetxController {
   // Get HomeController instance
   final HomeController _homeController = Get.find<HomeController>();
+
   // Main user fields
-  RxBool enableUser = false.obs;
   final confirmPasswordController = TextEditingController();
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
@@ -25,17 +26,191 @@ class EditProfileController extends GetxController {
   final passwordController = TextEditingController();
   Rxn<ProfileModel> profilemodelData = Rxn<ProfileModel>();
 
-  // Additional user fields (for dynamic user addition)
-  var additionalUsers = <Map<String, TextEditingController>>[].obs;
+  // Additional user controllers for adding new user
+  final newHelperPhoneController = TextEditingController();
+  final newHelperPasswordController = TextEditingController();
+  final newHelperConfirmPasswordController = TextEditingController();
+  var isNewHelperPhoneVerified = false.obs;
+
+  // Additional user list fetched from backend
+  var additionalUsersList = <AdditionalUserModel>[].obs;
+  var isFetchingAdditionalUsers = false.obs;
+  var isAddingAdditionalUser = false.obs;
+  var isDeletingUser = false.obs;
+
+  // Toggle for showing the "Add User" form
+  var showAddUserForm = false.obs;
 
   var isLoading = false.obs;
   var isSaving = false.obs;
+  RxString profileImageUrl = "".obs;
 
   @override
   void onInit() {
     super.onInit();
+    getAdditionalUser();
     fetchProfile();
   }
+
+  // ==================== ADDITIONAL USER APIS ====================
+
+  /// Fetch additional / helper users
+  Future<void> getAdditionalUser() async {
+    try {
+      isFetchingAdditionalUsers(true);
+      Response response = await ApiClient.getData(ApiConstant.additionalUser);
+      if (response.statusCode == 200) {
+        additionalUsersList.clear();
+        final List<dynamic> data = response.body["data"] ?? [];
+        final List<AdditionalUserModel> list = data
+            .map((e) => AdditionalUserModel.fromJson(Map<String, dynamic>.from(e)))
+            .toList()
+            .cast<AdditionalUserModel>();
+        additionalUsersList.assignAll(list);
+        appLog("Additional user list count: ${additionalUsersList.length}");
+        update();
+      } else {
+        showCustomSnackBar(response.statusText ?? "Something went wrong");
+      }
+    } catch (e) {
+      appLog("Error fetching additional users: $e");
+    } finally {
+      isFetchingAdditionalUsers(false);
+    }
+  }
+
+  /// Add new additional user
+  Future<void> addAdditionalUser() async {
+    String phone = newHelperPhoneController.text.trim();
+    String password = newHelperPasswordController.text;
+    String confirmPassword = newHelperConfirmPasswordController.text;
+
+    if (phone.isEmpty) {
+      showCustomSnackBar("Please enter phone number".tr);
+      return;
+    }
+
+    if (password.isEmpty) {
+      showCustomSnackBar("please_enter_password_for_helper_user".tr);
+      return;
+    }
+
+    if (password.length < 8) {
+      showCustomSnackBar("helper_user_password_must_be_at_least_8_characters".tr);
+      return;
+    }
+
+    if (password != confirmPassword) {
+      showCustomSnackBar("helper_user_passwords_do_not_match".tr);
+      return;
+    }
+
+    try {
+      isAddingAdditionalUser(true);
+      Response response = await ApiClient.postData(
+        ApiConstant.additionalUser,
+        body: {
+          "contact": phone,
+          "password": password,
+          "confirmPassword": confirmPassword,
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        showCustomSnackBar("Additional user added successfully".tr, isError: false);
+        // Clear input controllers
+        newHelperPhoneController.clear();
+        newHelperPasswordController.clear();
+        newHelperConfirmPasswordController.clear();
+        isNewHelperPhoneVerified.value = false;
+        showAddUserForm.value = false;
+
+        // Refresh additional user list
+        await getAdditionalUser();
+      } else {
+        Map<String, dynamic>? resBody;
+        if (response.body is Map) {
+          resBody = response.body;
+        } else if (response.body is String) {
+          try {
+            resBody = jsonDecode(response.body);
+          } catch (_) {}
+        }
+        showCustomSnackBar(
+          resBody?['message'] ?? response.statusText ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      showCustomSnackBar("Error adding additional user: ${e.toString()}");
+    } finally {
+      isAddingAdditionalUser(false);
+    }
+  }
+
+  /// Enable / Disable an additional user with optimistic UI and undo on error
+  Future<void> enableDesableAdditionalUser({
+    required String id,
+    required bool status,
+  }) async {
+    final index = additionalUsersList.indexWhere((u) => u.sId == id);
+    if (index == -1) return;
+
+    final String originalStatus = additionalUsersList[index].status ?? 'active';
+    final String newStatus = status ? "active" : "blocked";
+
+    // Optimistically update UI
+    additionalUsersList[index].status = newStatus;
+    additionalUsersList.refresh();
+
+    try {
+      Response response = await ApiClient.patchData(
+        "${ApiConstant.additionalUser}/status/$id",
+        body: {"status": newStatus},
+      );
+
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        // Rollback UI change
+        additionalUsersList[index].status = originalStatus;
+        additionalUsersList.refresh();
+        showCustomSnackBar(response.statusText ?? "Failed to update user status");
+      }
+    } catch (e) {
+      // Rollback UI change
+      additionalUsersList[index].status = originalStatus;
+      additionalUsersList.refresh();
+      showCustomSnackBar("Error updating user status: ${e.toString()}");
+    }
+  }
+
+  /// Delete an additional user
+  Future<void> deleteAdditionalUser({required String id}) async {
+    final index = additionalUsersList.indexWhere((u) => u.sId == id);
+    if (index == -1) return;
+
+    final removedUser = additionalUsersList[index];
+
+    // Optimistically remove from UI
+    additionalUsersList.removeAt(index);
+
+    try {
+      Response response = await ApiClient.deleteData(
+        "${ApiConstant.additionalUser}/$id",
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        showCustomSnackBar("Additional user deleted successfully".tr, isError: false);
+      } else {
+        // Rollback UI
+        additionalUsersList.insert(index, removedUser);
+        showCustomSnackBar(response.statusText ?? "Something went wrong");
+      }
+    } catch (e) {
+      additionalUsersList.insert(index, removedUser);
+      showCustomSnackBar("Error deleting user: ${e.toString()}");
+    }
+  }
+
+  // ==================== PHONE OTP VERIFICATION ====================
 
   Future<void> sendPhoneNumber(String phoneNumber) async {
     try {
@@ -72,13 +247,12 @@ class EditProfileController extends GetxController {
     }
   }
 
-  void verifiedPhone(String phone, {int? userIndex}) async {
+  void verifiedPhone(String phone) async {
     if (phone.isEmpty) {
       showCustomSnackBar("Please enter phone number".tr);
       return;
     }
 
-    // Send OTP
     await sendPhoneNumber(phone);
 
     CustomAlert.showInfo(
@@ -90,15 +264,12 @@ class EditProfileController extends GetxController {
           CustomAlertVerificationDialog(
             phoneNumber: phone,
             onVerificationComplete: (code) async {
-              // Verify OTP
               bool verified = await verifyPhoneNumber(
                 phone,
                 int.parse(code),
               );
               if (verified) {
-                if (userIndex != null) {
-                  additionalUserPhoneVerified[userIndex] = true;
-                }
+                isNewHelperPhoneVerified.value = true;
                 Navigator.pop(Get.context!);
                 CustomAlert.showInfo(
                   context: Get.context!,
@@ -107,7 +278,6 @@ class EditProfileController extends GetxController {
               }
             },
             onResendCode: () async {
-              // Resend OTP
               await sendPhoneNumber(phone);
               CustomAlert.showInfo(
                 context: Get.context!,
@@ -120,12 +290,7 @@ class EditProfileController extends GetxController {
     );
   }
 
-  // Track if helper user already exists (has ID)
-  var hasExistingHelper = false.obs;
-  var existingHelperUserCount = 0.obs;
-  var additionalUserPhoneVerified = <int, bool>{}.obs;
-
-  RxString profileImageUrl = "".obs;
+  // ==================== PROFILE FETCH & UPDATE ====================
 
   Future<void> fetchProfile() async {
     try {
@@ -134,39 +299,18 @@ class EditProfileController extends GetxController {
       if (response.statusCode == 200) {
         profilemodelData.value = ProfileModel.fromJson(response.body);
 
-        // Populate fields with existing data
         final data = profilemodelData.value?.data;
         if (data != null) {
           nameController.text = data.name ?? '';
           phoneController.text = data.contact ?? '';
           emailController.text = data.email ?? '';
 
-          // Set profile image URL if available
           if (data.image != null && data.image!.isNotEmpty) {
             String imagePath = data.image!;
-            // If the image path doesn't start with http, prepend the image base URL
             if (!imagePath.startsWith('http')) {
               profileImageUrl.value = ApiConstant.imageBaseUrl + imagePath;
             } else {
               profileImageUrl.value = imagePath;
-            }
-          }
-
-          // Check if helper users exist and populate up to 2
-          final helpers = data.helperUserList;
-          if (helpers.isNotEmpty) {
-            hasExistingHelper.value = true;
-            existingHelperUserCount.value = helpers.length;
-            enableUser.value = true;
-            additionalUsers.clear();
-            for (var helper in helpers) {
-              additionalUsers.add({
-                'phone': TextEditingController(
-                  text: helper.contact ?? '',
-                ),
-                'password': TextEditingController(),
-                'confirmPassword': TextEditingController(),
-              });
             }
           }
         }
@@ -186,37 +330,6 @@ class EditProfileController extends GetxController {
     }
   }
 
-  // Add another user (max 2 additional users allowed)
-  void addUser() {
-    if (!enableUser.value) {
-      showCustomSnackBar("Please enable user option first");
-      return;
-    }
-
-    if (additionalUsers.length >= 2) {
-      showCustomSnackBar("you_can_only_add_one_additional_user".tr);
-      return;
-    }
-
-    additionalUsers.add({
-      'phone': TextEditingController(),
-      'password': TextEditingController(),
-      'confirmPassword': TextEditingController(),
-    });
-  }
-
-  // Remove user
-  void removeUser(int index) {
-    if (index < additionalUsers.length) {
-      additionalUsers[index]['phone']?.dispose();
-      additionalUsers[index]['password']?.dispose();
-      additionalUsers[index]['confirmPassword']?.dispose();
-      additionalUsers.removeAt(index);
-      additionalUserPhoneVerified.remove(index);
-    }
-  }
-
-  // Validate form
   bool validateForm() {
     if (nameController.text.isEmpty) {
       showCustomSnackBar("Please enter your name");
@@ -228,7 +341,6 @@ class EditProfileController extends GetxController {
       return false;
     }
 
-    // Only validate password if it's being changed
     if (passwordController.text.isNotEmpty) {
       if (passwordController.text.length < 8) {
         showCustomSnackBar("Password must be at least 8 characters");
@@ -236,37 +348,10 @@ class EditProfileController extends GetxController {
       }
     }
 
-    // Validate additional user if enabled
-    if (enableUser.value && additionalUsers.isNotEmpty) {
-      for (int i = 0; i < additionalUsers.length; i++) {
-        final user = additionalUsers[i];
-
-        // if (user['phone']!.text.isEmpty) {
-        //   showCustomSnackBar("Please enter phone for additional user");
-        //   return false;
-        // }
-
-        // Only validate password if it's being changed
-        if (user['password']!.text.isNotEmpty) {
-          if (user['password']!.text.length < 8) {
-            showCustomSnackBar(
-              "Additional user password must be at least 8 characters",
-            );
-            return false;
-          }
-
-          if (user['password']!.text != user['confirmPassword']!.text) {
-            showCustomSnackBar("Additional user passwords do not match");
-            return false;
-          }
-        }
-      }
-    }
-
     return true;
   }
 
-  // Update profile
+  /// Update main workshop owner profile ONLY (additional users are managed independently via their own APIs)
   Future<void> updateProfile() async {
     if (!validateForm()) return;
 
@@ -279,30 +364,10 @@ class EditProfileController extends GetxController {
         "contact": phoneController.text.trim(),
       };
 
-      // Only include password if it's being changed
       if (passwordController.text.isNotEmpty) {
         profileData["password"] = passwordController.text;
       }
 
-      // Add helper user(s) if enabled and exists (supporting single or multiple helper users)
-      if (enableUser.value && additionalUsers.isNotEmpty) {
-        List<Map<String, dynamic>> helpersList = [];
-        for (var helperUser in additionalUsers) {
-          Map<String, dynamic> helperData = {
-            "contact": helperUser['phone']!.text.trim(),
-          };
-          if (helperUser['password']!.text.isNotEmpty) {
-            helperData["password"] = helperUser['password']!.text;
-          }
-          helpersList.add(helperData);
-        }
-
-        // Send primary helper in helperUserId and all in helperUserIds for compatibility
-        profileData["helperUserId"] = helpersList.first;
-        profileData["helperUserIds"] = helpersList;
-      }
-
-      // Send as form-data with a single "data" field containing JSON string
       Map<String, String> body = {"data": jsonEncode(profileData)};
 
       Response response = await ApiClient.patchMultipartData(
@@ -312,9 +377,7 @@ class EditProfileController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // Update HomeController with new profile data
         await _syncProfileToHomeController();
-
         showCustomSnackBar("Profile updated successfully", isError: false);
         Get.offAllNamed(AppRoute.navScreen);
       } else {
@@ -335,15 +398,11 @@ class EditProfileController extends GetxController {
     }
   }
 
-  // Sync profile data to HomeController
   Future<void> _syncProfileToHomeController() async {
     try {
-      // Fetch fresh profile data
       Response response = await ApiClient.getData(ApiConstant.getProfile);
       if (response.statusCode == 200) {
         ProfileModel updatedProfile = ProfileModel.fromJson(response.body);
-
-        // Update HomeController with fresh data
         _homeController.profileData.value = updatedProfile;
 
         if (updatedProfile.data?.name != null) {
@@ -366,7 +425,6 @@ class EditProfileController extends GetxController {
     }
   }
 
-  // Submit
   void submit() {
     updateProfile();
   }
@@ -377,11 +435,10 @@ class EditProfileController extends GetxController {
     phoneController.dispose();
     emailController.dispose();
     passwordController.dispose();
-    for (var user in additionalUsers) {
-      user['phone']?.dispose();
-      user['password']?.dispose();
-      user['confirmPassword']?.dispose();
-    }
+    confirmPasswordController.dispose();
+    newHelperPhoneController.dispose();
+    newHelperPasswordController.dispose();
+    newHelperConfirmPasswordController.dispose();
     super.onClose();
   }
 }
