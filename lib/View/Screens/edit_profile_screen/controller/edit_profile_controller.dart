@@ -31,6 +31,12 @@ class EditProfileController extends GetxController {
   final newHelperPasswordController = TextEditingController();
   final newHelperConfirmPasswordController = TextEditingController();
   var isNewHelperPhoneVerified = false.obs;
+  var verifiedHelperPhoneNumber = ''.obs;
+
+  // Controllers for changing specific additional user password
+  final changeHelperPasswordController = TextEditingController();
+  final changeHelperConfirmPasswordController = TextEditingController();
+  var isChangingHelperPassword = false.obs;
 
   // Additional user list fetched from backend
   var additionalUsersList = <AdditionalUserModel>[].obs;
@@ -54,6 +60,62 @@ class EditProfileController extends GetxController {
 
   // ==================== ADDITIONAL USER APIS ====================
 
+  /// Change password for a specific additional user
+  Future<bool> chagePasswordSpecifiqAdditionalUser({
+    required String newPassword,
+    required String confirmPassword,
+    required String id,
+  }) async {
+    if (newPassword.isEmpty) {
+      showCustomSnackBar("please_enter_password_for_helper_user".tr);
+      return false;
+    }
+    if (newPassword.length < 8) {
+      showCustomSnackBar("helper_user_password_must_be_at_least_8_characters".tr);
+      return false;
+    }
+    if (newPassword != confirmPassword) {
+      showCustomSnackBar("helper_user_passwords_do_not_match".tr);
+      return false;
+    }
+
+    try {
+      isChangingHelperPassword(true);
+      Response response = await ApiClient.patchData(
+        "${ApiConstant.additionalUser}/change-password/$id",
+        body: {
+          "password": newPassword,
+          "confirmPassword": confirmPassword,
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        showCustomSnackBar("Password Changed Successfully".tr, isError: false);
+        changeHelperPasswordController.clear();
+        changeHelperConfirmPasswordController.clear();
+        return true;
+      } else {
+        Map<String, dynamic>? resBody;
+        if (response.body is Map) {
+          resBody = response.body;
+        } else if (response.body is String) {
+          try {
+            resBody = jsonDecode(response.body);
+          } catch (_) {}
+        }
+        showCustomSnackBar(
+          resBody?['message'] ?? response.statusText ?? "Something went wrong",
+        );
+        return false;
+      }
+    } catch (e) {
+      showCustomSnackBar("Error changing password: ${e.toString()}");
+      return false;
+    } finally {
+      isChangingHelperPassword(false);
+    }
+  }
+
   /// Fetch additional / helper users
   Future<void> getAdditionalUser() async {
     try {
@@ -63,7 +125,8 @@ class EditProfileController extends GetxController {
         additionalUsersList.clear();
         final List<dynamic> data = response.body["data"] ?? [];
         final List<AdditionalUserModel> list = data
-            .map((e) => AdditionalUserModel.fromJson(Map<String, dynamic>.from(e)))
+            .map((e) =>
+                AdditionalUserModel.fromJson(Map<String, dynamic>.from(e)))
             .toList()
             .cast<AdditionalUserModel>();
         additionalUsersList.assignAll(list);
@@ -87,6 +150,11 @@ class EditProfileController extends GetxController {
 
     if (phone.isEmpty) {
       showCustomSnackBar("Please enter phone number".tr);
+      return;
+    }
+
+    if (!isNewHelperPhoneVerified.value || verifiedHelperPhoneNumber.value != phone) {
+      showCustomSnackBar("please_verify_phone_for_helper_user".tr);
       return;
     }
 
@@ -123,6 +191,7 @@ class EditProfileController extends GetxController {
         newHelperPasswordController.clear();
         newHelperConfirmPasswordController.clear();
         isNewHelperPhoneVerified.value = false;
+        verifiedHelperPhoneNumber.value = '';
         showAddUserForm.value = false;
 
         // Refresh additional user list
@@ -270,6 +339,7 @@ class EditProfileController extends GetxController {
               );
               if (verified) {
                 isNewHelperPhoneVerified.value = true;
+                verifiedHelperPhoneNumber.value = phone;
                 Navigator.pop(Get.context!);
                 CustomAlert.showInfo(
                   context: Get.context!,
@@ -439,6 +509,8 @@ class EditProfileController extends GetxController {
     newHelperPhoneController.dispose();
     newHelperPasswordController.dispose();
     newHelperConfirmPasswordController.dispose();
+    changeHelperPasswordController.dispose();
+    changeHelperConfirmPasswordController.dispose();
     super.onClose();
   }
 }

@@ -1,4 +1,4 @@
-import 'package:Senaeya/Helper/shared_prefe/shared_prefe.dart';
+﻿import 'package:Senaeya/Helper/shared_prefe/shared_prefe.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:Senaeya/Service/socket_service.dart';
@@ -36,7 +36,7 @@ class NavigationController extends GetxController {
   void restrictedForOwner(){
     CustomAlert.showInfo(
       context: Get.context!,
-      message: 'Only owner can access profile'.tr,
+      message: 'Sorry... this service is restricted to the workshop manager only,'.tr,
       onPressed: () {
         Navigator.pop(Get.context!);
       },

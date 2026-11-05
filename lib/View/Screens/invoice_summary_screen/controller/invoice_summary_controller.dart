@@ -455,7 +455,7 @@ class InvoiceSummaryController extends GetxController {
         saveInvoice();
       } else {
         releaseInvoice(
-            qrLink: saveResponse.body['data']['invoiceQRLink'] ?? '');
+            qrLink: saveResponse.body['data']['webInvoiceQRLink'] ?? '');
       }
       // }
       // }

@@ -379,9 +379,11 @@ class HomeController extends GetxController {
   void onTapReport() {
     token.isEmpty
         ? showLoginAlertDialog()
-        : workShopId.isEmpty
-            ? CommonAlertDialog.showRegisterWorkshopDialog()
-            : onReports();
+        : Get.find<NavigationController>().role != 'WORKSHOP_OWNER'
+            ? Get.find<NavigationController>().restrictedForOwner()
+            : workShopId.isEmpty
+                ? CommonAlertDialog.showRegisterWorkshopDialog()
+                : onReports();
   }
 
   RxBool checkingAuthorization = false.obs;

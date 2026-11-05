@@ -130,7 +130,7 @@ class AppTranslations extends Translations {
           'Activation Successful': 'Activation Successful',
           'Failed to send OTP': 'Failed to send OTP',
           'OTP sent successfully': 'OTP sent successfully',
-          'Only owner can access profile': 'Only owner can access profile',
+          'Sorry... this service is restricted to the workshop manager only,': 'Sorry... this service is restricted to the workshop manager only,',
           'You must log in first with your mobile number':
               'You must log in first with your mobile number',
           'confirm_password_hint': 'Confirm Password',
@@ -263,6 +263,10 @@ class AppTranslations extends Translations {
           'Additional User': 'Additional User',
           'Additional user added successfully': 'Additional user added successfully',
           'Additional user deleted successfully': 'Additional user deleted successfully',
+          'are_you_sure_delete_additional_user': 'Are you sure you want to delete this additional user?',
+          'Password Changed Successfully': 'Password Changed Successfully',
+          'Change Password': 'Change Password',
+          'change_password_for_user': 'Change password for this user',
           'please_enter_your_name': 'Please enter your name',
           'please_enter_your_phone_number': 'Please enter your phone number',
           'please_verify_your_phone_number': 'Please verify your phone number',
@@ -714,8 +718,8 @@ class AppTranslations extends Translations {
           'Failed to send OTP': 'فشل في إرسال رمز التحقق',
           'OTP sent successfully': 'تم إرسال رمز التحقق بنجاح',
           'please_fill_all_fields': 'يرجى ملء جميع الحقول',
-          'Only owner can access profile':
-              'يمكن للمالك فقط الوصول إلى الملف الشخصي',
+          'Sorry... this service is restricted to the workshop manager only,':
+              'عذراً... هذه الخدمة مقتصرة على مدير الورشة فقط،',
           'You must log in first with your mobile number':
               'يجب عليك تسجيل الدخول أولاً برقم جوالك',
           'confirm_password_hint': 'تأكيد كلمة المرور',
@@ -847,6 +851,10 @@ class AppTranslations extends Translations {
           'Additional User': 'مستخدم إضافي',
           'Additional user added successfully': 'تمت إضافة المستخدم الإضافي بنجاح',
           'Additional user deleted successfully': 'تم حذف المستخدم الإضافي بنجاح',
+          'are_you_sure_delete_additional_user': 'هل أنت متأكد من رغبتك في حذف هذا المستخدم الإضافي؟',
+          'Password Changed Successfully': 'تم تغيير كلمة المرور بنجاح',
+          'Change Password': 'تغيير كلمة المرور',
+          'change_password_for_user': 'تغيير كلمة المرور لهذا المستخدم',
           'please_enter_your_name': 'الرجاء إدخال اسمك',
           'please_enter_your_phone_number': 'الرجاء إدخال رقم هاتفك',
           'please_verify_your_phone_number': 'الرجاء التحقق من رقم هاتفك',
@@ -1298,8 +1306,8 @@ class AppTranslations extends Translations {
           'Failed to send OTP': 'ওটিপি পাঠাতে ব্যর্থ হয়েছে',
           'OTP sent successfully': 'ওটিপি সফলভাবে পাঠানো হয়েছে',
           'please_fill_all_fields': 'অনুগ্রহ করে সমস্ত ক্ষেত্র পূরণ করুন',
-          'Only owner can access profile':
-              'শুধুমাত্র মালিকই প্রোফাইলে প্রবেশ করতে পারেন',
+          'Sorry... this service is restricted to the workshop manager only,':
+              'দুঃখিত... এই সেবা শুধুমাত্র ওয়ার্কশপ ম্যানেজারের জন্য সীমাবদ্ধ,',
           'You must log in first with your mobile number':
               'আপনাকে প্রথমে আপনার মোবাইল নম্বর দিয়ে লগইন করতে হবে',
           'confirm_password_hint': 'পাসওয়ার্ড নিশ্চিত করুন',
@@ -1440,6 +1448,10 @@ class AppTranslations extends Translations {
           'Additional User': 'অতিরিক্ত ব্যবহারকারী',
           'Additional user added successfully': 'অতিরিক্ত ব্যবহারকারী সফলভাবে যোগ করা হয়েছে',
           'Additional user deleted successfully': 'অতিরিক্ত ব্যবহারকারী সফলভাবে মুছে ফেলা হয়েছে',
+          'are_you_sure_delete_additional_user': 'আপনি কি নিশ্চিত যে আপনি এই অতিরিক্ত ব্যবহারকারীকে মুছে ফেলতে চান?',
+          'Password Changed Successfully': 'পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে',
+          'Change Password': 'পাসওয়ার্ড পরিবর্তন করুন',
+          'change_password_for_user': 'এই ব্যবহারকারীর পাসওয়ার্ড পরিবর্তন করুন',
           'please_enter_your_name': 'অনুগ্রহ করে আপনার নাম লিখুন',
           'please_enter_your_phone_number': 'অনুগ্রহ করে আপনার ফোন নম্বর লিখুন',
           'please_verify_your_phone_number':
@@ -1899,8 +1911,8 @@ class AppTranslations extends Translations {
           'Failed to send OTP': 'ओटीपी भेजने में विफल',
           'OTP sent successfully': 'ओटीपी सफलतापूर्वक भेजा गया',
           'please_fill_all_fields': 'कृपया सभी फ़ील्ड भरें',
-          'Only owner can access profile':
-              'केवल मालिक ही प्रोफ़ाइल तक पहुँच सकता है',
+          'Sorry... this service is restricted to the workshop manager only,':
+              'क्षमा करें... यह सेवा केवल कार्यशाला प्रबंधक तक ही सीमित है,',
           'You must log in first with your mobile number':
               'आपको पहले अपने मोबाइल नंबर से लॉगिन करना होगा',
           'confirm_password_hint': 'पासवर्ड की पुष्टि करें',
@@ -2036,6 +2048,10 @@ class AppTranslations extends Translations {
           'Additional User': 'अतिरिक्त उपयोगकर्ता',
           'Additional user added successfully': 'अतिरिक्त उपयोगकर्ता सफलतापूर्वक जोड़ा गया',
           'Additional user deleted successfully': 'अतिरिक्त उपयोगकर्ता सफलतापूर्वक हटा दिया गया',
+          'are_you_sure_delete_additional_user': 'क्या आप वाकई इस अतिरिक्त उपयोगकर्ता को हटाना चाहते हैं?',
+          'Password Changed Successfully': 'पासवर्ड सफलतापूर्वक बदल दिया गया',
+          'Change Password': 'पासवर्ड बदलें',
+          'change_password_for_user': 'इस उपयोगकर्ता का पासवर्ड बदलें',
           'please_enter_your_name': 'कृपया अपना नाम दर्ज करें',
           'please_enter_your_phone_number': 'कृपया अपना फोन नंबर दर्ज करें',
           'please_verify_your_phone_number':
@@ -2502,8 +2518,8 @@ class AppTranslations extends Translations {
           'Failed to send OTP': 'Nabigong magpadala ng OTP',
           'OTP sent successfully': 'Matagumpay na naipadala ang OTP',
           'please_fill_all_fields': 'Pakiusap punan ang lahat ng mga patlang',
-          'Only owner can access profile':
-              'Tanging ang may-ari lamang ang maaaring mag-access ng profile',
+          'Sorry... this service is restricted to the workshop manager only,':
+              'Paumanhin... ang serbisyong ito ay limitado lamang sa tagapamahala ng workshop,',
           'You must log in first with your mobile number':
               'Kailangan mong mag-log in muna gamit ang iyong mobile number',
           'confirm_password_hint': 'Kumpirmahin ang password',
@@ -2648,6 +2664,10 @@ class AppTranslations extends Translations {
           'Additional User': 'Karagdagang User',
           'Additional user added successfully': 'Matagumpay na naidagdag ang karagdagang user',
           'Additional user deleted successfully': 'Matagumpay na natanggal ang karagdagang user',
+          'are_you_sure_delete_additional_user': 'Sigurado ka ba na gusto mong tanggalin ang karagdagang user na ito?',
+          'Password Changed Successfully': 'Matagumpay na binago ang password',
+          'Change Password': 'Palitan ang Password',
+          'change_password_for_user': 'Palitan ang password para sa user na ito',
           'please_enter_your_name': 'Pakipasok ang iyong pangalan',
           'please_enter_your_phone_number':
               'Pakipasok ang iyong numero ng telepono',
@@ -3122,8 +3142,8 @@ class AppTranslations extends Translations {
           'Activation Successful': 'فعالیت کامیاب',
           'Failed to send OTP': 'OTP بھیجنے میں ناکام',
           'OTP sent successfully': 'OTP کامیابی کے ساتھ بھیج دیا گیا',
-          'Only owner can access profile':
-              'صرف مالک ہی پروفائل تک رسائی حاصل کر سکتا ہے',
+          'Sorry... this service is restricted to the workshop manager only,':
+              'معذرت... یہ سروس صرف ورکشاپ مینیجر تک محدود ہے،',
           'You must log in first with your mobile number':
               'جاری رکھنے کے لیے آپ کو پہلے اپنے موبائل نمبر سے لاگ ان کرنا ہوگا',
           'confirm_password_hint': 'پاس ورڈ کی تصدیق کریں',
@@ -3260,6 +3280,10 @@ class AppTranslations extends Translations {
           'Additional User': 'اضافی صارف',
           'Additional user added successfully': 'اضافی صارف کامیابی کے ساتھ شامل کر دیا گیا',
           'Additional user deleted successfully': 'اضافی صارف کامیابی کے ساتھ حذف کر دیا گیا',
+          'are_you_sure_delete_additional_user': 'کیا آپ واقعی اس اضافی صارف کو حذف کرنا چاہتے ہیں؟',
+          'Password Changed Successfully': 'پاس ورڈ کامیابی کے ساتھ تبدیل ہو گیا',
+          'Change Password': 'پاس ورڈ تبدیل کریں',
+          'change_password_for_user': 'اس صارف کا پاس ورڈ تبدیل کریں',
           'please_enter_your_name': 'براہ کرم اپنا نام درج کریں',
           'please_enter_your_phone_number': 'براہ کرم اپنا فون نمبر درج کریں',
           'please_verify_your_phone_number':

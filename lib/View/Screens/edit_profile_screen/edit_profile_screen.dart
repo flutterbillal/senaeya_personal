@@ -4,6 +4,7 @@ import 'package:Senaeya/Utils/AppImg/app_img.dart';
 import 'package:Senaeya/Utils/ToastMsg/toast_message.dart';
 import 'package:Senaeya/View/Screens/auth_screens/login_screen/widgets/custom_text_field.dart';
 import 'package:Senaeya/View/Screens/edit_profile_screen/controller/edit_profile_controller.dart';
+import 'package:Senaeya/View/Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
 import 'package:Senaeya/View/Widgegts/custom_button/custom_button.dart';
 import 'package:Senaeya/View/Widgegts/custom_text/custom_text.dart';
 import 'package:Senaeya/View/Widgets/custom_app_bar.dart';
@@ -14,6 +15,111 @@ import 'package:get/get.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
+
+  /// Bottom sheet dialog to change password for a specific additional user
+  void _showChangePasswordDialog(
+    BuildContext context,
+    EditProfileController controller, {
+    required String userId,
+    required String userContact,
+  }) {
+    controller.changeHelperPasswordController.clear();
+    controller.changeHelperConfirmPasswordController.clear();
+
+    Get.bottomSheet(
+      Container(
+        padding: EdgeInsets.only(
+          left: 16.w,
+          right: 16.w,
+          top: 20.h,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 20.h,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.r),
+            topRight: Radius.circular(20.r),
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        text: 'Change Password'.tr,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                      ),
+                      SizedBox(height: 2.h),
+                      CustomText(
+                        text: userContact,
+                        fontSize: 12.sp,
+                        color: Colors.grey.shade600,
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Get.back(),
+                  ),
+                ],
+              ),
+              const Divider(),
+              SizedBox(height: 12.h),
+              CustomTextFormField(
+                controller: controller.changeHelperPasswordController,
+                hintText: 'new_password'.tr,
+                icon: AppIcon.lock,
+                obscureText: true,
+              ),
+              CustomTextFormField(
+                controller: controller.changeHelperConfirmPasswordController,
+                hintText: 'confirm_password'.tr,
+                icon: AppIcon.lock,
+                obscureText: true,
+              ),
+              SizedBox(height: 16.h),
+              Center(
+                child: Obx(
+                  () => controller.isChangingHelperPassword.value
+                      ? const CircularProgressIndicator()
+                      : CustomButtonPrev(
+                          title: 'save'.tr,
+                          height: 44.h,
+                          width: double.infinity,
+                          onTap: () async {
+                            final success =
+                                await controller.chagePasswordSpecifiqAdditionalUser(
+                              id: userId,
+                              newPassword: controller
+                                  .changeHelperPasswordController.text,
+                              confirmPassword: controller
+                                  .changeHelperConfirmPasswordController.text,
+                            );
+                            if (success) {
+                              Get.back();
+                            }
+                          },
+                          fillColor: AppColors.primary,
+                          textColor: Colors.white,
+                        ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      isScrollControlled: true,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -199,11 +305,48 @@ class EditProfileScreen extends StatelessWidget {
                                           hintText: '+966 5xxxxxxxxx',
                                           prefix: '+9665',
                                           keyboardType: TextInputType.phone,
+                                          onTextChanged: (_) {
+                                            if (controller.isNewHelperPhoneVerified.value &&
+                                                controller.verifiedHelperPhoneNumber.value !=
+                                                    controller.newHelperPhoneController.text.trim()) {
+                                              controller.isNewHelperPhoneVerified.value = false;
+                                              controller.verifiedHelperPhoneNumber.value = '';
+                                            }
+                                          },
                                           onButtonTap: () {
                                             controller.verifiedPhone(
                                               controller.newHelperPhoneController.text.trim(),
                                             );
                                           },
+                                        ),
+                                        Obx(
+                                          () => (controller.isNewHelperPhoneVerified.value &&
+                                                  controller.verifiedHelperPhoneNumber.value ==
+                                                      controller.newHelperPhoneController.text.trim())
+                                              ? Padding(
+                                                  padding: EdgeInsets.only(
+                                                    left: 12.w,
+                                                    bottom: 8.h,
+                                                    top: 2.h,
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.check_circle,
+                                                        color: Colors.green,
+                                                        size: 16.sp,
+                                                      ),
+                                                      SizedBox(width: 4.w),
+                                                      CustomText(
+                                                        text: 'Phone verified'.tr,
+                                                        color: Colors.green,
+                                                        fontSize: 12.sp,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              : const SizedBox.shrink(),
                                         ),
                                         CustomTextFormField(
                                           controller: controller.newHelperPasswordController,
@@ -308,6 +451,24 @@ class EditProfileScreen extends StatelessWidget {
                                                   ],
                                                 ),
                                               ),
+                                              // Change Password Button
+                                              IconButton(
+                                                icon: const Icon(
+                                                  Icons.lock_reset,
+                                                  color: Color(0xFF0C5CA8),
+                                                ),
+                                                tooltip: 'Change Password'.tr,
+                                                onPressed: () {
+                                                  if (user.sId != null) {
+                                                    _showChangePasswordDialog(
+                                                      context,
+                                                      controller,
+                                                      userId: user.sId!,
+                                                      userContact: user.contact ?? user.name ?? '',
+                                                    );
+                                                  }
+                                                },
+                                              ),
                                               // Status Switch (enable/disable)
                                               Transform.scale(
                                                 scale: 0.8,
@@ -333,16 +494,19 @@ class EditProfileScreen extends StatelessWidget {
                                                 ),
                                                 onPressed: () {
                                                   if (user.sId != null) {
-                                                    Get.defaultDialog(
+                                                    CustomAlert.showConfirmation(
+                                                      context: context,
                                                       title: 'delete'.tr,
-                                                      middleText: 'Are you sure you want to delete this user?'.tr,
-                                                      textConfirm: 'yes'.tr,
-                                                      textCancel: 'no'.tr,
-                                                      confirmTextColor: Colors.white,
-                                                      buttonColor: Colors.red,
-                                                      onConfirm: () {
-                                                        Get.back();
+                                                      message: 'are_you_sure_delete_additional_user'.tr,
+                                                      yesButtonText: 'yes'.tr,
+                                                      noButtonText: 'no'.tr,
+                                                      titleBackgroundColor: Colors.red,
+                                                      onYesPressed: () {
+                                                        Navigator.of(context).pop();
                                                         controller.deleteAdditionalUser(id: user.sId!);
+                                                      },
+                                                      onNoPressed: () {
+                                                        Navigator.of(context).pop();
                                                       },
                                                     );
                                                   }
