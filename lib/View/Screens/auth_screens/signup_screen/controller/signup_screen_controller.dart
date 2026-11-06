@@ -200,10 +200,10 @@ class SignupScreenController extends GetxController {
       return false;
     }
 
-    if (emailController.text.isEmpty) {
-      showCustomSnackBar("please_enter_your_email".tr);
-      return false;
-    }
+    // if (emailController.text.isEmpty) {
+    //   showCustomSnackBar("please_enter_your_email".tr);
+    //   return false;
+    // }
 
     if (passwordController.text.isEmpty) {
       showCustomSnackBar("please_enter_password".tr);

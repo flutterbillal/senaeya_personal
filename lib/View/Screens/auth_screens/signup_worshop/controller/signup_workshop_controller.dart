@@ -198,49 +198,81 @@ class SignupWorkshopController extends GetxController {
 
   // Add workshop location
   Future<void> addLocation() async {
-    // Check if location services are enabled
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (serviceEnabled) {
-      showCustomSnackBar('location_services_disabled'.tr, isError: true);
-      return;
-    }
+    try {
+      // Check if location services are enabled
+      final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      // print("serviceEnabled $serviceEnabled");
 
-    // Request location permission
-    PermissionStatus permission = await Permission.location.status;
+      if (!serviceEnabled) {
+        showCustomSnackBar(
+          'location_services_disabled'.tr,
+          isError: true,
+        );
+        return;
+      }
 
-    if (permission.isDenied) {
-      permission = await Permission.location.request();
-    }
+      // Check location permission
+      PermissionStatus permission = await Permission.location.status;
 
-    if (permission.isDenied) {
-      showCustomSnackBar('location_permission_required'.tr, isError: true);
-      return;
-    }
+      // Request permission if denied
+      if (permission.isDenied) {
+        permission = await Permission.location.request();
+      }
 
-    if (permission.isPermanentlyDenied) {
+      // Handle permanently denied permission
+      if (permission.isPermanentlyDenied) {
+        showCustomSnackBar(
+          'location_permission_permanently_denied'.tr,
+          isError: true,
+        );
+
+        await openAppSettings();
+        return;
+      }
+
+      // Handle restricted permission
+      if (permission.isRestricted) {
+        showCustomSnackBar(
+          'location_permission_required'.tr,
+          isError: true,
+        );
+        return;
+      }
+
+      // Handle denied permission
+      if (!permission.isGranted && !permission.isLimited) {
+        showCustomSnackBar(
+          'location_permission_required'.tr,
+          isError: true,
+        );
+        return;
+      }
+
+      // Show map dialog
+      Get.dialog(
+        MapLocationPickerDialog(
+          initialLocation: selectedLocation,
+          onLocationSelected: (location, address) {
+            selectedLocation = location;
+            locationAddress.value = address;
+            isLocationAdded.value = true;
+
+            showCustomSnackBar(
+              'location_selected_successfully'.tr,
+              isError: false,
+            );
+          },
+        ),
+        barrierDismissible: false,
+      );
+    } catch (e) {
+      debugPrint('Add Location Error: $e');
+
       showCustomSnackBar(
-        'location_permission_permanently_denied'.tr,
+        'location_permission_required'.tr,
         isError: true,
       );
-      await openAppSettings();
-      return;
     }
-
-    // Permission granted, show map dialog
-    Get.dialog(
-      MapLocationPickerDialog(
-        initialLocation: selectedLocation,
-        onLocationSelected: (location, address) {
-          selectedLocation = location;
-          locationAddress.value = address;
-          isLocationAdded.value = true;
-          showCustomSnackBar(
-            'location_selected_successfully'.tr,
-            isError: false,
-          );
-        },
-      ),
-    );
   }
 
   // Check workshop before submitting

@@ -322,7 +322,7 @@ class InvoiceSummaryController extends GetxController {
 
     nextIsLoading.value = false;
     if (response.statusCode == 200) {
-      String qrCode = response.body['data']['invoiceQRLink'] ?? '';
+      String qrCode = response.body['data']['webInvoiceQRLink'] ?? '';
       print("✅ Invoice created successfully");
       releaseInvoice(qrLink: qrCode);
     } else {
