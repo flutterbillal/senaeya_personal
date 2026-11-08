@@ -1,7 +1,8 @@
-# Uncomment this line to define a global platform for your project
+
+# Global iOS deployment target
 platform :ios, '16.0'
 
-# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
+# Disable CocoaPods analytics
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {
@@ -10,49 +11,64 @@ project 'Runner', {
   'Release' => :release,
 }
 
-
-
 def flutter_root
-  generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
+  generated_xcode_build_settings_path = File.expand_path(
+    File.join('..', 'Flutter', 'Generated.xcconfig'),
+    __FILE__
+  )
+
   unless File.exist?(generated_xcode_build_settings_path)
-    raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure flutter pub get is executed first"
+    raise "#{generated_xcode_build_settings_path} must exist. Run flutter pub get first."
   end
 
   File.foreach(generated_xcode_build_settings_path) do |line|
     matches = line.match(/FLUTTER_ROOT\=(.*)/)
     return matches[1].strip if matches
   end
-  raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
+
+  raise "FLUTTER_ROOT not found. Try running flutter pub get again."
 end
 
-require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+require File.expand_path(
+  File.join('packages', 'flutter_tools', 'bin', 'podhelper'),
+  flutter_root
+)
 
 flutter_ios_podfile_setup
 
-# The main target for your Flutter app
+# Runner target
 target 'Runner' do
-  use_frameworks!  # Ensures that frameworks are used instead of static libraries
-  use_modular_headers!  # Required for Firebase and other plugins
+  use_frameworks!
+  use_modular_headers!
 
-  # Install all Flutter plugin dependencies
+  # Flutter plugins
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
-  # Add Firebase dependencies (adjust versions if needed)
-  pod 'Firebase/Core'       
-  pod 'Firebase/Messaging'  
+  # Firebase dependencies
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
 
   target 'RunnerTests' do
     inherit! :search_paths
   end
 end
 
-
+# Post install configurations
 post_install do |installer|
+
   installer.pods_project.targets.each do |target|
+
     flutter_additional_ios_build_settings(target)
 
     target.build_configurations.each do |config|
+
+      # Minimum iOS deployment target
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
+
+      # Excluded architectures
       config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'i386'
+
+      # Permission configurations
       config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
         '$(inherited)',
         'PERMISSION_CAMERA=1',
@@ -61,14 +77,28 @@ post_install do |installer|
         'PERMISSION_MEDIA_LIBRARY=0',
         'PERMISSION_MICROPHONE=0',
       ]
+
     end
   end
 
-  Dir.glob(File.join(__dir__, 'Pods', 'Target Support Files', '**', '*.xcconfig')).each do |path|
+  # Update CocoaPods xcconfig files
+  Dir.glob(
+    File.join(__dir__, 'Pods', 'Target Support Files', '**', '*.xcconfig')
+  ).each do |path|
+
     text = File.read(path)
+
     updated = text
-      .gsub('EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64', 'EXCLUDED_ARCHS[sdk=iphonesimulator*] = i386')
-      .gsub('EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386 arm64', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386')
+      .gsub(
+        'EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64',
+        'EXCLUDED_ARCHS[sdk=iphonesimulator*] = i386'
+      )
+      .gsub(
+        'EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386 arm64',
+        'EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386'
+      )
+
     File.write(path, updated) if updated != text
+
   end
 end
