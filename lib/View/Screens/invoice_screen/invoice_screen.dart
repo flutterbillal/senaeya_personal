@@ -29,8 +29,6 @@ import 'controller/invoice_screen_controller.dart';
 class InvoiceScreen extends StatelessWidget {
   const InvoiceScreen({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<InvoiceScreenController>();
@@ -158,7 +156,8 @@ class InvoiceScreen extends StatelessWidget {
                     ),
                     CustomText(
                       text:
-                          "VAT: ${controller.invoiceScreenModel.value?.data?.workshop?.taxVatNumber ?? ''}",
+                          // "VAT: ${controller.invoiceScreenModel.value?.data?.workshop?.taxVatNumber ?? ''}",
+                          "VAT: 300787972600003",
                       fontWeight: FontWeight.w400,
                       fontSize: 14.w,
                     ),
@@ -369,7 +368,7 @@ class InvoiceScreen extends StatelessWidget {
                       text: "End And Return".tr,
                       backgroundColor: AppColors.primary,
                       onPressed: () {
-                        Get.toNamed(AppRoute.profileScreen);
+                        Navigator.pop(context);
                       },
                     ),
                   ],

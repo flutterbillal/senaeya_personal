@@ -18,9 +18,9 @@ import '../../../../Utils/ToastMsg/toast_message.dart';
 import '../controller/invoice_screen_controller.dart';
 
 Future<void> generatePDF(
-    BuildContext context,
-    InvoiceScreenController controller,
-    ) async {
+  BuildContext context,
+  InvoiceScreenController controller,
+) async {
   final pdf = pw.Document();
 
   final data = controller.invoiceScreenModel.value?.data;
@@ -55,7 +55,7 @@ Future<void> generatePDF(
   // Compute price before tax from the paid amount (inclusive of tax): priceBeforeTax = amountPaid / (1 + taxRate)
   // Guard against division by zero and unexpected values
   final priceBeforeTax =
-  (1 + taxRate) != 0 ? (amountPaid / (1 + taxRate)) : 0.0;
+      (1 + taxRate) != 0 ? (amountPaid / (1 + taxRate)) : 0.0;
   double taxAmount = amountPaid - priceBeforeTax;
 
   // Clamp tiny floating point artifacts to zero (for display) and ensure non-negative
@@ -114,8 +114,7 @@ Future<void> generatePDF(
           appLog('❌ Error decoding/encoding image: $imageError');
         }
       } else {
-        appLog(
-            'Failed to load QR image. Status code: ${response.statusCode}');
+        appLog('Failed to load QR image. Status code: ${response.statusCode}');
         appLog('Response body: ${response.body}');
       }
     } else {
@@ -203,7 +202,8 @@ Future<void> generatePDF(
                 style: const pw.TextStyle(fontSize: 14),
               ),
               pw.Text(
-                "VAT: ${controller.invoiceScreenModel.value?.data?.workshop?.taxVatNumber ?? ''}",
+                // "VAT: ${controller.invoiceScreenModel.value?.data?.workshop?.taxVatNumber ?? ''}",
+                "VAT: 300787972600003",
                 style: const pw.TextStyle(fontSize: 14),
               ),
               pw.SizedBox(height: 10),
@@ -218,9 +218,9 @@ Future<void> generatePDF(
                   pw.Row(
                     children: [
                       pw.Text(
-                        data.trxId != null && data.trxId!.length >= 13
-                            ? data.trxId!.substring(data.trxId!.length - 13)
-                            : data.trxId ?? '',
+                        data.recieptNumber != null
+                            ? "${data.recieptNumber}"
+                            : 'N/A',
                         style: pw.TextStyle(
                           fontSize: 20,
                           fontWeight: pw.FontWeight.bold,
@@ -300,7 +300,7 @@ Future<void> generatePDF(
                               children: [
                                 pw.Text(
                                   controller.invoiceScreenModel.value?.data
-                                      ?.title ??
+                                          ?.title ??
                                       "12 months+6 months free",
                                   style: pw.TextStyle(
                                     fontSize: 12,
@@ -377,7 +377,6 @@ Future<void> generatePDF(
               pw.Container(
                 width: 300,
                 decoration: pw.BoxDecoration(
-
                   color: PdfColor.fromHex('#FFE5E5'),
                   borderRadius: const pw.BorderRadius.all(
                     pw.Radius.circular(24),
@@ -459,7 +458,10 @@ Future<void> generatePDF(
       directory = await getApplicationDocumentsDirectory();
     }
 
-    final fileName = 'invoice_${DateTime.now().millisecondsSinceEpoch}.pdf';
+    final invoiceNum = data.recieptNumber != null
+        ? '${data.recieptNumber}'
+        : '${DateTime.now().millisecondsSinceEpoch}';
+    final fileName = 'invoice_$invoiceNum.pdf';
     final file = File('${directory!.path}/$fileName');
     await file.writeAsBytes(await pdf.save());
 
@@ -507,13 +509,13 @@ Future<void> generatePDF(
 }
 
 pw.Widget buildPdfInvoiceCard(
-    String title,
-    String rightText, {
-      PdfColor? titleColor,
-      PdfColor? borderColor,
-      bool bold = false,
-      pw.Font? font,
-    }) {
+  String title,
+  String rightText, {
+  PdfColor? titleColor,
+  PdfColor? borderColor,
+  bool bold = false,
+  pw.Font? font,
+}) {
   appLog('Building PDF invoice card: $title - $rightText');
   return pw.Container(
     decoration: pw.BoxDecoration(

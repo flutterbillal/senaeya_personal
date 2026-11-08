@@ -177,8 +177,12 @@ class EditProfileScreen extends StatelessWidget {
                                   hintText: '+966 5xxxxxxxxx',
                                   prefix: '+9665',
                                   keyboardType: TextInputType.phone,
-                                  enabled: false,
-                                  onButtonTap: () {},
+                                  enabled: true,
+                                  onButtonTap: () {
+                                    controller.verifiedPhone(
+                                      controller.phoneController.text,
+                                    );
+                                  },
                                 ),
                                 // Password
                                 CustomTextFormField(
