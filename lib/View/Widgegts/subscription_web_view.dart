@@ -31,7 +31,7 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
         onNavigationRequest: (NavigationRequest request) async {
           logger.i("Navigating to URL: ${request.url}");
           if (request.url.contains(paymentSuccessUrl) &&
-              request.url.contains("respStatus=A")) {
+              request.url.contains("message=APPROVED")) {
             logger.i("Payment Success URL detected");
             logger.i("Payment Success URL: ${request.url}");
             logger.i("Payment Success URL: ${paymentSuccessUrl}");
@@ -129,7 +129,7 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
             }
             return NavigationDecision.prevent;
           } else if (request.url.contains(paymentSuccessUrl) &&
-              request.url.contains("respStatus=D")) {
+              request.url.contains("message=DECLINED")) {
             logger.i("Payment Failed URL detected");
             logger.i("Payment Failed URL: ${request.url}");
             logger.i("Payment Failed URL: ${paymentSuccessUrl}");
@@ -158,7 +158,7 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
             );
 
             return NavigationDecision.prevent;
-          } else if (request.url.contains("respStatus=C")) {
+          } else if (request.url.contains("message=CANCELLED")) {
             logger.i("Payment Cancelled URL detected");
             logger.i("Payment Cancelled URL: ${request.url}");
             logger.i("Payment Cancelled URL: ${paymentSuccessUrl}");
