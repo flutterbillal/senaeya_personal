@@ -36,7 +36,7 @@ class CustomerCarCard extends StatelessWidget {
           left: 16.w,
           right: 16.w,
           top: 16.h,
-          bottom: 16.h,
+          bottom: 12.h,
         ),
         child: Row(
           children: [
@@ -53,7 +53,7 @@ class CustomerCarCard extends StatelessWidget {
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 12.h),
                   // Phone number with icon
                   Row(
                     children: [
@@ -81,6 +81,7 @@ class CustomerCarCard extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 8.h),
                   Row(
                     children: [
                       SizedBox(width: 34.w),
@@ -159,7 +160,7 @@ class CustomerCarCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 12.h),
                   // Invoices button
                   GestureDetector(
                     onTap: () {
