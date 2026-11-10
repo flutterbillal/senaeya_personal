@@ -98,7 +98,7 @@ class CustomerCarCard extends StatelessWidget {
                         },
                         child: SvgPicture.asset(
                           AppIcon.carRepair,
-                          height: 48.w,
+                          height: 40.w,
                         ),
                       ),
                       SizedBox(width: 40.w),
