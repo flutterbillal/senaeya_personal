@@ -68,4 +68,31 @@ class SubscriptionRepo {
       return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
     }
   }
+
+  Future<Response> createSubscription({
+    required String packageId,
+    required String amountPaid,
+    required String couponCode,
+    required String vatPercent,
+    required String flatDiscountedAmount,
+    required String flatVatAmount,
+  }) async {
+    try {
+      Map<String, dynamic> body = {
+        "packageId": packageId,
+        "amountPaid": amountPaid,
+        "couponCode": couponCode,
+        "vatPercent": vatPercent,
+        "flatDiscountedAmount": flatDiscountedAmount,
+        "flatVatAmount": flatVatAmount,
+      };
+
+      Response response;
+      response =
+          await ApiClient.postData(ApiConstant.createSubscription, body: body);
+      return response;
+    } catch (e) {
+      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+    }
+  }
 }

@@ -76,4 +76,5 @@ class ApiConstant {
 
   static const appVersion = "/settings/app-version";
   static const additionalUser = "/users/helper-user";
+  static const createSubscription = "/subscription/create-subscription";
 }
