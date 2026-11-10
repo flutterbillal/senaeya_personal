@@ -3,10 +3,11 @@ class ApiConstant {
   // "http://10.10.7.77:8002/api/v1"
   //https://api-v2.senaeya.net
   static const baseUrl =
-      "https://api-v2.senaeya.net/api/v1"; //This is local url
-  static const imageBaseUrl = "https://api-v2.senaeya.net"; //This is local url
+      "https://1fac-118-179-44-27.ngrok-free.app/api/v1"; //This is local url
+  static const imageBaseUrl =
+      "https://1fac-118-179-44-27.ngrok-free.app"; //This is local url
   // static const imageBaseUrl = "http://10.10.7.103:7010/api/v1"; //This is local url
-  static const socketUrl = "https://api-v2.senaeya.net";
+  static const socketUrl = "https://1fac-118-179-44-27.ngrok-free.app";
   // static const socketUrl = "http://158.252.71.185:7010";
 
   ///<=================================== For Auth part ====================>
