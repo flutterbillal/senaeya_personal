@@ -3,6 +3,7 @@ import 'package:Senaeya/View/Screens/subscription_screen/model/subscrioption_mod
 import 'package:Senaeya/View/Screens/subscription_screen/repo/subscription_repo.dart';
 import 'package:Senaeya/View/Screens/subscription_screen/model/moyasar_payment_model.dart';
 import 'package:Senaeya/View/Screens/subscription_screen/moyasar_payment_screen.dart';
+import 'package:Senaeya/View/Widgegts/subscription_web_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -57,7 +58,17 @@ class SubscriptionScreenController extends GetxController {
           showCustomSnackBar('Invalid checkout response');
           return;
         }
-        launchUrl(Uri.parse(preparation.checkoutUrl));
+        // launchUrl(Uri.parse(preparation.checkoutUrl));
+        openSubscriptionWebView(Get.context!, preparation.checkoutUrl,
+            vatPercent: '15',
+            paymentSuccessUrl: preparation.callbackUrl,
+            packageId: subscriptionsList[0].sId ?? '',
+            amountPaid: "${preparation.amount}",
+            flatDiscountedAmount:
+                "${(subscriptionsList[0].price * cuponDiscount.value / 100)}",
+            flatVatAmount:
+                "${((subscriptionsList[0].price - (subscriptionsList[0].price * cuponDiscount.value / 100)) * 0.15)}");
+
         // Get.to(() => MoyasarPaymentScreen(preparation: preparation));
       } catch (e) {
         showCustomSnackBar("Error processing checkout: ${e.toString()}");
