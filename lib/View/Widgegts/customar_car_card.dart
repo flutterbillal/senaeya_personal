@@ -21,7 +21,8 @@ class CustomerCarCard extends StatelessWidget {
     required this.onTapYes,
     required this.customerName,
     required this.customerPhone,
-    required this.customerId, required this.isWarning,
+    required this.customerId,
+    required this.isWarning,
   });
 
   @override
@@ -35,7 +36,7 @@ class CustomerCarCard extends StatelessWidget {
           left: 16.w,
           right: 16.w,
           top: 10.h,
-          bottom: 6.h,
+          bottom: 10.h,
         ),
         child: Row(
           children: [
@@ -59,8 +60,11 @@ class CustomerCarCard extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           if (customerPhone.isNotEmpty) {
-                            Clipboard.setData(ClipboardData(text: customerPhone));
-                            showCustomSnackBar('Phone number copied to clipboard'.tr,isError: false);
+                            Clipboard.setData(
+                                ClipboardData(text: customerPhone));
+                            showCustomSnackBar(
+                                'Phone number copied to clipboard'.tr,
+                                isError: false);
                           }
                         },
                         child: SvgPicture.asset(
@@ -88,13 +92,13 @@ class CustomerCarCard extends StatelessWidget {
                             noButtonText: 'no'.tr,
                             yesButtonText: 'yes'.tr,
                             message:
-                                "Send a message to\nthe customer to receive the car".tr,
-
+                                "Send a message to\nthe customer to receive the car"
+                                    .tr,
                           );
                         },
                         child: SvgPicture.asset(
                           AppIcon.carRepair,
-                          height: 30.w,
+                          height: 48.w,
                         ),
                       ),
                       SizedBox(width: 40.w),
@@ -109,13 +113,15 @@ class CustomerCarCard extends StatelessWidget {
                           //       "Do you want to place the customer\non the defaulters list?".tr,
                           // );
                         },
-                        child: isWarning?Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: SvgPicture.asset(
-                            AppIcon.warning,
-                            height: 36.w,
-                          ),
-                        ):SizedBox(),
+                        child: isWarning
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: SvgPicture.asset(
+                                  AppIcon.warning,
+                                  height: 36.w,
+                                ),
+                              )
+                            : SizedBox(),
                       ),
                     ],
                   ),
@@ -131,7 +137,8 @@ class CustomerCarCard extends StatelessWidget {
                   // Cars button
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed(AppRoute.carsScreen,arguments: {'id':customerId});
+                      Get.toNamed(AppRoute.carsScreen,
+                          arguments: {'id': customerId});
                     },
                     child: Container(
                       width: double.infinity,
@@ -156,7 +163,8 @@ class CustomerCarCard extends StatelessWidget {
                   // Invoices button
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed(AppRoute.customerInvoiceScreen,arguments: {'clientId':customerId});
+                      Get.toNamed(AppRoute.customerInvoiceScreen,
+                          arguments: {'clientId': customerId});
                     },
                     child: Container(
                       width: double.infinity,
