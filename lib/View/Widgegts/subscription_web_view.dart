@@ -4,6 +4,7 @@ import 'package:Senaeya/Utils/AppLog/app_log.dart';
 import 'package:Senaeya/View/Screens/profile_screen/model/subscription_details_model.dart';
 import 'package:Senaeya/View/Screens/profile_screen/repo/profile_repo.dart';
 import 'package:Senaeya/View/Screens/subscription_screen/repo/subscription_repo.dart';
+import 'package:Senaeya/View/Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
 import 'package:Senaeya/View/Widgegts/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,31 +51,47 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
               if (response.statusCode == 200 || response.statusCode == 201) {
                 logger.i("Payment verified successfully");
                 String subscriptionId = await getSubscriptionByWorkshop();
-                showDialog(
-                  context: context,
-                  builder: (context) => Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: AlertDialog(
-                      title: CustomText(text: 'Payment Successful'.tr),
-                      content: CustomText(
-                        text: 'Your subscription payment was successful.'.tr,
-                        maxLines: 3,
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () async {
-                            Navigator.of(context).pop(); // Close alert dialog
-                            Navigator.of(context).pop(); // Close webview
+                CustomAlert.showInfo(
+                  context: Get.context!,
+                  message:
+                      "${'Payment Successful'.tr}\n ${'Your subscription payment was successful.'.tr}",
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close alert dialog
+                    Navigator.of(context).pop(); // Close webview
 
-                            Get.toNamed(AppRoute.invoiceScreen,
-                                arguments: {"subscriptionId": subscriptionId});
-                          },
-                          child: CustomText(text: 'OK'.tr),
-                        )
-                      ],
-                    ),
-                  ),
+                    Get.toNamed(AppRoute.invoiceScreen,
+                        arguments: {"subscriptionId": subscriptionId});
+                  },
                 );
+                // showDialog(
+                //   context: context,
+                //   builder: (context) => SizedBox(
+                //     height: 400,
+                //     child: Directionality(
+                //       textDirection: TextDirection.ltr,
+                //       child: AlertDialog(
+                //         title: CustomText(text: 'Payment Successful'.tr),
+                //         content: CustomText(
+                //           text: ,
+                //           maxLines: 3,
+                //         ),
+                //         actions: [
+                //           TextButton(
+                //             onPressed: () async {
+                //               Navigator.of(context).pop(); // Close alert dialog
+                //               Navigator.of(context).pop(); // Close webview
+
+                //               Get.toNamed(AppRoute.invoiceScreen, arguments: {
+                //                 "subscriptionId": subscriptionId
+                //               });
+                //             },
+                //             child: CustomText(text: 'OK'.tr),
+                //           )
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // );
               } else {
                 logger.e(
                     "Payment verification failed with status: ${response.statusCode}");
