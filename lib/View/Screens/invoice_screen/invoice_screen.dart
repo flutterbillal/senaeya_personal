@@ -368,7 +368,7 @@ class InvoiceScreen extends StatelessWidget {
                       text: "End And Return".tr,
                       backgroundColor: AppColors.primary,
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.offAllNamed(AppRoute.navScreen);
                       },
                     ),
                   ],

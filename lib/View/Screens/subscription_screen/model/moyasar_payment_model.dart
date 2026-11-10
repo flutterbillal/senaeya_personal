@@ -5,6 +5,7 @@ class MoyasarPaymentPreparation {
   final String description;
   final String callbackUrl;
   final String givenId;
+  final String checkoutUrl;
   final Map<String, dynamic> metadata;
 
   const MoyasarPaymentPreparation({
@@ -14,12 +15,14 @@ class MoyasarPaymentPreparation {
     required this.description,
     required this.callbackUrl,
     required this.givenId,
+    required this.checkoutUrl,
     required this.metadata,
   });
 
   factory MoyasarPaymentPreparation.fromJson(Map<String, dynamic> json) {
     final metadata = json['metadata'];
     return MoyasarPaymentPreparation(
+      checkoutUrl: json['checkoutUrl'] ?? '',
       publishableApiKey: json['publishableApiKey']?.toString() ?? '',
       amount: (json['amount'] as num?)?.toInt() ?? 0,
       currency: json['currency']?.toString() ?? 'SAR',

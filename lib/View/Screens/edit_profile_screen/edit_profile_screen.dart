@@ -134,7 +134,7 @@ class EditProfileScreen extends StatelessWidget {
             appBar: CustomAppBar(
               title: 'edit_profile'.tr,
               titleColor: Colors.black,
-              onBack: () => Get.offAllNamed(AppRoute.navScreen),
+              onBack: () => Get.back(),
             ),
             backgroundColor: const Color(0xFF0C5CA8),
             body: SafeArea(
