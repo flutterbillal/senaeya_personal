@@ -130,7 +130,8 @@ class AppTranslations extends Translations {
           'Activation Successful': 'Activation Successful',
           'Failed to send OTP': 'Failed to send OTP',
           'OTP sent successfully': 'OTP sent successfully',
-          'Sorry... this service is restricted to the workshop manager only,': 'Sorry... this service is restricted to the workshop manager only,',
+          'Sorry... this service is restricted to the workshop manager only,':
+              'Sorry... this service is restricted to the workshop manager only,',
           'You must log in first with your mobile number':
               'You must log in first with your mobile number',
           'confirm_password_hint': 'Confirm Password',
@@ -261,9 +262,12 @@ class AppTranslations extends Translations {
           'you_can_only_add_one_additional_user':
               'You can only add up to two additional users',
           'Additional User': 'Additional User',
-          'Additional user added successfully': 'Additional user added successfully',
-          'Additional user deleted successfully': 'Additional user deleted successfully',
-          'are_you_sure_delete_additional_user': 'Are you sure you want to delete this additional user?',
+          'Additional user added successfully':
+              'Additional user added successfully',
+          'Additional user deleted successfully':
+              'Additional user deleted successfully',
+          'are_you_sure_delete_additional_user':
+              'Are you sure you want to delete this additional user?',
           'Password Changed Successfully': 'Password Changed Successfully',
           'Change Password': 'Change Password',
           'change_password_for_user': 'Change password for this user',
@@ -849,9 +853,12 @@ class AppTranslations extends Translations {
           'you_can_only_add_one_additional_user':
               'يمكنك إضافة ما يصل إلى مستخدمين إضافيين فقط',
           'Additional User': 'مستخدم إضافي',
-          'Additional user added successfully': 'تمت إضافة المستخدم الإضافي بنجاح',
-          'Additional user deleted successfully': 'تم حذف المستخدم الإضافي بنجاح',
-          'are_you_sure_delete_additional_user': 'هل أنت متأكد من رغبتك في حذف هذا المستخدم الإضافي؟',
+          'Additional user added successfully':
+              'تمت إضافة المستخدم الإضافي بنجاح',
+          'Additional user deleted successfully':
+              'تم حذف المستخدم الإضافي بنجاح',
+          'are_you_sure_delete_additional_user':
+              'هل أنت متأكد من رغبتك في حذف هذا المستخدم الإضافي؟',
           'Password Changed Successfully': 'تم تغيير كلمة المرور بنجاح',
           'Change Password': 'تغيير كلمة المرور',
           'change_password_for_user': 'تغيير كلمة المرور لهذا المستخدم',
@@ -1446,12 +1453,17 @@ class AppTranslations extends Translations {
           'you_can_only_add_one_additional_user':
               'আপনি সর্বোচ্চ দুটি অতিরিক্ত ব্যবহারকারী যোগ করতে পারেন',
           'Additional User': 'অতিরিক্ত ব্যবহারকারী',
-          'Additional user added successfully': 'অতিরিক্ত ব্যবহারকারী সফলভাবে যোগ করা হয়েছে',
-          'Additional user deleted successfully': 'অতিরিক্ত ব্যবহারকারী সফলভাবে মুছে ফেলা হয়েছে',
-          'are_you_sure_delete_additional_user': 'আপনি কি নিশ্চিত যে আপনি এই অতিরিক্ত ব্যবহারকারীকে মুছে ফেলতে চান?',
-          'Password Changed Successfully': 'পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে',
+          'Additional user added successfully':
+              'অতিরিক্ত ব্যবহারকারী সফলভাবে যোগ করা হয়েছে',
+          'Additional user deleted successfully':
+              'অতিরিক্ত ব্যবহারকারী সফলভাবে মুছে ফেলা হয়েছে',
+          'are_you_sure_delete_additional_user':
+              'আপনি কি নিশ্চিত যে আপনি এই অতিরিক্ত ব্যবহারকারীকে মুছে ফেলতে চান?',
+          'Password Changed Successfully':
+              'পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে',
           'Change Password': 'পাসওয়ার্ড পরিবর্তন করুন',
-          'change_password_for_user': 'এই ব্যবহারকারীর পাসওয়ার্ড পরিবর্তন করুন',
+          'change_password_for_user':
+              'এই ব্যবহারকারীর পাসওয়ার্ড পরিবর্তন করুন',
           'please_enter_your_name': 'অনুগ্রহ করে আপনার নাম লিখুন',
           'please_enter_your_phone_number': 'অনুগ্রহ করে আপনার ফোন নম্বর লিখুন',
           'please_verify_your_phone_number':
@@ -2046,9 +2058,12 @@ class AppTranslations extends Translations {
           'you_can_only_add_one_additional_user':
               'आप केवल अधिकतम दो अतिरिक्त उपयोगकर्ता जोड़ सकते हैं',
           'Additional User': 'अतिरिक्त उपयोगकर्ता',
-          'Additional user added successfully': 'अतिरिक्त उपयोगकर्ता सफलतापूर्वक जोड़ा गया',
-          'Additional user deleted successfully': 'अतिरिक्त उपयोगकर्ता सफलतापूर्वक हटा दिया गया',
-          'are_you_sure_delete_additional_user': 'क्या आप वाकई इस अतिरिक्त उपयोगकर्ता को हटाना चाहते हैं?',
+          'Additional user added successfully':
+              'अतिरिक्त उपयोगकर्ता सफलतापूर्वक जोड़ा गया',
+          'Additional user deleted successfully':
+              'अतिरिक्त उपयोगकर्ता सफलतापूर्वक हटा दिया गया',
+          'are_you_sure_delete_additional_user':
+              'क्या आप वाकई इस अतिरिक्त उपयोगकर्ता को हटाना चाहते हैं?',
           'Password Changed Successfully': 'पासवर्ड सफलतापूर्वक बदल दिया गया',
           'Change Password': 'पासवर्ड बदलें',
           'change_password_for_user': 'इस उपयोगकर्ता का पासवर्ड बदलें',
@@ -2662,12 +2677,16 @@ class AppTranslations extends Translations {
           'you_can_only_add_one_additional_user':
               'Maaari ka lamang magdagdag ng hanggang dalawang karagdagang user',
           'Additional User': 'Karagdagang User',
-          'Additional user added successfully': 'Matagumpay na naidagdag ang karagdagang user',
-          'Additional user deleted successfully': 'Matagumpay na natanggal ang karagdagang user',
-          'are_you_sure_delete_additional_user': 'Sigurado ka ba na gusto mong tanggalin ang karagdagang user na ito?',
+          'Additional user added successfully':
+              'Matagumpay na naidagdag ang karagdagang user',
+          'Additional user deleted successfully':
+              'Matagumpay na natanggal ang karagdagang user',
+          'are_you_sure_delete_additional_user':
+              'Sigurado ka ba na gusto mong tanggalin ang karagdagang user na ito?',
           'Password Changed Successfully': 'Matagumpay na binago ang password',
           'Change Password': 'Palitan ang Password',
-          'change_password_for_user': 'Palitan ang password para sa user na ito',
+          'change_password_for_user':
+              'Palitan ang password para sa user na ito',
           'please_enter_your_name': 'Pakipasok ang iyong pangalan',
           'please_enter_your_phone_number':
               'Pakipasok ang iyong numero ng telepono',
@@ -3278,10 +3297,14 @@ class AppTranslations extends Translations {
           'you_can_only_add_one_additional_user':
               'آپ زیادہ سے زیادہ دو اضافی صارف شامل کر سکتے ہیں',
           'Additional User': 'اضافی صارف',
-          'Additional user added successfully': 'اضافی صارف کامیابی کے ساتھ شامل کر دیا گیا',
-          'Additional user deleted successfully': 'اضافی صارف کامیابی کے ساتھ حذف کر دیا گیا',
-          'are_you_sure_delete_additional_user': 'کیا آپ واقعی اس اضافی صارف کو حذف کرنا چاہتے ہیں؟',
-          'Password Changed Successfully': 'پاس ورڈ کامیابی کے ساتھ تبدیل ہو گیا',
+          'Additional user added successfully':
+              'اضافی صارف کامیابی کے ساتھ شامل کر دیا گیا',
+          'Additional user deleted successfully':
+              'اضافی صارف کامیابی کے ساتھ حذف کر دیا گیا',
+          'are_you_sure_delete_additional_user':
+              'کیا آپ واقعی اس اضافی صارف کو حذف کرنا چاہتے ہیں؟',
+          'Password Changed Successfully':
+              'پاس ورڈ کامیابی کے ساتھ تبدیل ہو گیا',
           'Change Password': 'پاس ورڈ تبدیل کریں',
           'change_password_for_user': 'اس صارف کا پاس ورڈ تبدیل کریں',
           'please_enter_your_name': 'براہ کرم اپنا نام درج کریں',

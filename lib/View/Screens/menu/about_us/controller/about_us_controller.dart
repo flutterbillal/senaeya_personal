@@ -5,7 +5,6 @@ import '../../../../../Service/api_client.dart';
 import '../../../../../Service/api_url.dart';
 import '../../../../../Utils/ToastMsg/toast_message.dart';
 import '../../terms_and_condition/model/terms_and_condition_model.dart';
-import '../models/about_us_model.dart';
 
 class AboutUsController extends GetxController {
   RxBool isloading = false.obs;

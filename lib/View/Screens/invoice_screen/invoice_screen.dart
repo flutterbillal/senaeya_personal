@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:Senaeya/Service/api_url.dart';
-import 'package:Senaeya/Utils/ToastMsg/toast_message.dart';
 import 'package:Senaeya/View/Screens/invoice_screen/widget/invoice_widget.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
@@ -8,13 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:path_provider/path_provider.dart';
-import 'package:open_file/open_file.dart';
-import 'package:image/image.dart' as img;
 
 import 'package:Senaeya/Core/AppRoute/app_route.dart';
 import 'package:Senaeya/Utils/AppColors/app_colors.dart';

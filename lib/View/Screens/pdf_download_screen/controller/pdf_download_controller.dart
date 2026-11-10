@@ -1,11 +1,8 @@
 import 'dart:math';
-import 'package:Senaeya/Service/api_url.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../repo_downloadpdf.dart';
-
-
 
 class PdfDownloadController extends GetxController {
   final RxBool _inProgress = false.obs;
@@ -50,7 +47,6 @@ class PdfDownloadController extends GetxController {
     pdfViewerController.zoomLevel -= 0.25;
   }
 
-
   Future<void> downloadPDF() async {
     // AWS link is already a complete URL, don't prepend base URL
     String pdfUrl = pricePDF.value;
@@ -62,18 +58,14 @@ class PdfDownloadController extends GetxController {
 
     fileName = 'invoice$value.pdf';
 
-
-    downloadRepository.downloadPDF(
-        pdfUrl,
+    downloadRepository.downloadPDF(pdfUrl,
         setInProgress: setInProgress,
         setErrorMessage: setErrorMessage,
         name: fileName,
-        folderName:folderName
-    );
+        folderName: folderName);
   }
+
   String folderName = "Invoices";
 
 // Method to download the PDF
-
-
 }

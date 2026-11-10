@@ -531,9 +531,9 @@ class InvoiceSummaryController extends GetxController {
             invoice
                 .car!.plateNumberForSaudi!.alphabetsCombinations!.isNotEmpty) {
           carPlateType.value =
-              invoice.car!.plateNumberForSaudi!.alphabetsCombinations![0] ?? '';
+              invoice.car!.plateNumberForSaudi!.alphabetsCombinations![0];
           saudiPlateEnglishText.value =
-              invoice.car!.plateNumberForSaudi!.alphabetsCombinations![0] ?? '';
+              invoice.car!.plateNumberForSaudi!.alphabetsCombinations![0];
         }
 
         if (invoice.car!.plateNumberForSaudi!.symbol?.image != null) {

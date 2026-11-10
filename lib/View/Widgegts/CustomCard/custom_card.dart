@@ -7,32 +7,31 @@ import '../../../Utils/AppImg/app_img.dart';
 import '../../../utils/AppColors/app_colors.dart';
 
 class CustomCard extends StatelessWidget {
-  CustomCard(
-      {super.key,
-      this.onTap,
-      this.favourTab,
-      required this.courseName,
-      required this.mentors,
-      required this.date,
-      required this.time,
-      required this.price,
-      required this.lecture,
-      required this.isFavourite,
-      required this.iconVisible,
-      this.home=false,
-
-      });
-  void Function()? onTap;
-  void Function()? favourTab;
-  bool home;
-  String courseName;
-  String mentors;
-  String date;
-  String time;
-  String lecture;
-  String price;
-  bool isFavourite;
-  bool iconVisible;
+  const CustomCard({
+    super.key,
+    this.onTap,
+    this.favourTab,
+    required this.courseName,
+    required this.mentors,
+    required this.date,
+    required this.time,
+    required this.price,
+    required this.lecture,
+    required this.isFavourite,
+    required this.iconVisible,
+    this.home = false,
+  });
+  final void Function()? onTap;
+  final void Function()? favourTab;
+  final bool home;
+  final String courseName;
+  final String mentors;
+  final String date;
+  final String time;
+  final String lecture;
+  final String price;
+  final bool isFavourite;
+  final bool iconVisible;
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +39,11 @@ class CustomCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 290.h,
-        width: home==false?double.maxFinite:300.w,
+        width: home == false ? double.maxFinite : 300.w,
         margin: EdgeInsets.symmetric(horizontal: 5.w),
         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
         decoration: BoxDecoration(
-          boxShadow:[
+          boxShadow: [
             BoxShadow(
               color: AppColors.black200.withOpacity(0.5), // Shadow color
               spreadRadius: 0.5, // Spread of shadow
@@ -69,31 +68,33 @@ class CustomCard extends StatelessWidget {
                       image: AssetImage(
                         AppImages.newCustomCards,
                       ))),
-              child:  iconVisible==true ?Padding(
-                padding:EdgeInsets.only(top: 16.h,right: 10.w),
-                child: Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: Container(
-                    //margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 19.w),
-                    padding: EdgeInsets.all(1.r),
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: AppColors.white500),
-                    child: IconButton(
-                        onPressed: favourTab,
-                        icon: isFavourite == true
-                            ? const Icon(
-                                size: 16,
-                                Icons.favorite_outlined,
-                                color: AppColors.red,
-                              )
-                            : const Icon(
-                                Icons.favorite_border,
-                                color: AppColors.red,
-                              )),
-                  ),
-                ),
-              ):
-              SizedBox(),
+              child: iconVisible == true
+                  ? Padding(
+                      padding: EdgeInsets.only(top: 16.h, right: 10.w),
+                      child: Align(
+                        alignment: AlignmentDirectional.topEnd,
+                        child: Container(
+                          //margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 19.w),
+                          padding: EdgeInsets.all(1.r),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.white500),
+                          child: IconButton(
+                              onPressed: favourTab,
+                              icon: isFavourite == true
+                                  ? const Icon(
+                                      size: 16,
+                                      Icons.favorite_outlined,
+                                      color: AppColors.red,
+                                    )
+                                  : const Icon(
+                                      Icons.favorite_border,
+                                      color: AppColors.red,
+                                    )),
+                        ),
+                      ),
+                    )
+                  : SizedBox(),
             ),
 
             SizedBox(

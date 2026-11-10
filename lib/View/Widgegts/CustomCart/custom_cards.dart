@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomCards extends StatelessWidget {
-   CustomCards({super.key,required this.children});
-  Widget children;
+  const CustomCards({super.key, required this.children});
+  final Widget children;
   @override
   Widget build(BuildContext context) {
     return Container(
-     padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 16.h), // Set your desired height
+      padding: EdgeInsets.symmetric(
+          horizontal: 20.w, vertical: 16.h), // Set your desired height
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.r),
         color: const Color(0xFFFAFAFA), // Background color
@@ -20,7 +21,7 @@ class CustomCards extends StatelessWidget {
           ),
         ],
       ),
-     child: children,
+      child: children,
     );
   }
 }

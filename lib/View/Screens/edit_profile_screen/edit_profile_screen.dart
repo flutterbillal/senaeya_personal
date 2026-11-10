@@ -1,5 +1,4 @@
-﻿import 'package:Senaeya/Core/AppRoute/app_route.dart';
-import 'package:Senaeya/Utils/AppColors/app_colors.dart';
+﻿import 'package:Senaeya/Utils/AppColors/app_colors.dart';
 import 'package:Senaeya/Utils/AppImg/app_img.dart';
 import 'package:Senaeya/Utils/ToastMsg/toast_message.dart';
 import 'package:Senaeya/View/Screens/auth_screens/login_screen/widgets/custom_text_field.dart';

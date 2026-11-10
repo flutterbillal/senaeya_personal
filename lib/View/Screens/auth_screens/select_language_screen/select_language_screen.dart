@@ -8,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../../Widgegts/custom_text/custom_text.dart';
 import '../../../Widgets/commonTextWithoutResize.dart';
 
 class SelectLanguageScreen extends StatefulWidget {
@@ -19,7 +18,8 @@ class SelectLanguageScreen extends StatefulWidget {
 }
 
 class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
-  final SelectLanguageController controller = Get.put(SelectLanguageController());
+  final SelectLanguageController controller =
+      Get.put(SelectLanguageController());
 
   @override
   void didChangeDependencies() {
@@ -59,9 +59,11 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                     ],
                   ),
                   child: Column(
-                    children: List.generate(controller.languages.length, (index) {
+                    children:
+                        List.generate(controller.languages.length, (index) {
                       final lang = controller.languages[index];
-                      final isSelected = lang.code == controller.selectedLang.value;
+                      final isSelected =
+                          lang.code == controller.selectedLang.value;
                       return Column(
                         children: [
                           if (index != 0)
@@ -74,7 +76,8 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                                   width: 100.w,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Container(
                                         height: 32,
@@ -130,7 +133,9 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
-                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 8)],
+                    boxShadow: [
+                      BoxShadow(color: Colors.black12, blurRadius: 8)
+                    ],
                   ),
                   child: Center(
                     child: SvgPicture.asset(

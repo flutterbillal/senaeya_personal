@@ -14,7 +14,8 @@ import '../../../Widgegts/liscence_plate_widget.dart';
 import '../../../Widgets/custom_text_style.dart';
 import '../controller/invoice_summary_controller.dart';
 
-Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context) {
+Widget invoiceSummary(
+    InvoiceSummaryController controller, BuildContext context) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
@@ -47,91 +48,76 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                     child: controller.brandName.isEmpty
                         ? CustomText(text: "Workshop")
                         : Column(
-                      crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Image.network(
-                              ApiConstant.imageBaseUrl +
-                                  controller.brandImage,
-                              width: 28.w,
-                              height: 28.w,
-                            ),
-                            SizedBox(width: 14.w),
-                            Flexible(
-                              child: Obx(
-                                    () => CustomText(
-                                  text: controller
-                                      .carBrand.value,
-                                  fontWeight:
-                                  FontWeight.w400,
-                                  fontSize: 18.sp,
-                                  overflow: TextOverflow
-                                      .visible,
-                                ),
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Image.network(
+                                    ApiConstant.imageBaseUrl +
+                                        controller.brandImage,
+                                    width: 28.w,
+                                    height: 28.w,
+                                  ),
+                                  SizedBox(width: 14.w),
+                                  Flexible(
+                                    child: Obx(
+                                      () => CustomText(
+                                        text: controller.carBrand.value,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 18.sp,
+                                        overflow: TextOverflow.visible,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 8.h),
-                        Row(
-                          children: [
-                            Flexible(
-                              flex: 3,
-                              child: Obx(
-                                    () => CustomText(
-                                  text: controller
-                                      .carModel.value,
-                                  fontSize: 16.sp,
-                                  overflow: TextOverflow
-                                      .visible,
-                                ),
+                              SizedBox(height: 8.h),
+                              Row(
+                                children: [
+                                  Flexible(
+                                    flex: 3,
+                                    child: Obx(
+                                      () => CustomText(
+                                        text: controller.carModel.value,
+                                        fontSize: 16.sp,
+                                        overflow: TextOverflow.visible,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 30.w),
+                                  Flexible(
+                                    flex: 1,
+                                    child: Obx(
+                                      () => CustomText(
+                                        text: controller.carYear.value,
+                                        fontSize: 16.sp,
+                                        overflow: TextOverflow.visible,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            SizedBox(width: 30.w),
-                            Flexible(
-                              flex: 1,
-                              child: Obx(
-                                    () => CustomText(
-                                  text: controller
-                                      .carYear.value,
-                                  fontSize: 16.sp,
-                                  overflow: TextOverflow
-                                      .visible,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                            ],
+                          ),
                   ),
                   SizedBox(width: 8.w),
                   Obx(() {
                     // Use controller getter methods that prioritize arguments over invoice data
                     if (controller.isSaudiPlate) {
                       return SaudiLicensePlate(
-                        saudiCarPlateImage:
-                        controller.displaySymbolImage,
-                        arabicText:
-                        controller.displayPlateArabicText,
-                        plateNumber:
-                        controller.displayPlateNumber,
-                        plateLetters:
-                        controller.displayPlateLetters,
+                        saudiCarPlateImage: controller.displaySymbolImage,
+                        arabicText: controller.displayPlateArabicText,
+                        plateNumber: controller.displayPlateNumber,
+                        plateLetters: controller.displayPlateLetters,
                         textColor: Colors.black,
                         borderColor: Colors.black,
                       );
-                    } else if (controller
-                        .isInternationalPlate) {
+                    } else if (controller.isInternationalPlate) {
                       return Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius:
-                          BorderRadius.circular(8.r),
-                          border:
-                          Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(8.r),
+                          border: Border.all(color: Colors.black),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -144,13 +130,11 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                       return Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius:
-                          BorderRadius.circular(8.r),
-                          border:
-                          Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(8.r),
+                          border: Border.all(color: Colors.black),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: CustomText(text: 'N/A'),
                         ),
                       );
@@ -172,14 +156,11 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.textFiledColor,
-                        border:
-                        Border.all(color: AppColors.red),
-                        borderRadius:
-                        BorderRadius.circular(8.r),
+                        border: Border.all(color: AppColors.red),
+                        borderRadius: BorderRadius.circular(8.r),
                       ),
                       child: Column(
-                        crossAxisAlignment:
-                        CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           CustomText(
                             overflow: TextOverflow.visible,
@@ -190,8 +171,7 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                           ),
                           SizedBox(height: 6.h),
                           Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SvgPicture.asset(
                                 height: 20.w,
@@ -199,9 +179,8 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                               ),
                               const SizedBox(width: 4),
                               Obx(
-                                    () => CustomText(
-                                  text: controller
-                                      .sparePartsCost.value
+                                () => CustomText(
+                                  text: controller.sparePartsCost.value
                                       .toStringAsFixed(2),
                                   fontSize: 20.w,
                                   color: AppColors.red,
@@ -225,8 +204,7 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.textFiledColor,
-                        border:
-                        Border.all(color: AppColors.red),
+                        border: Border.all(color: AppColors.red),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Column(
@@ -240,8 +218,7 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                           ),
                           SizedBox(height: 6.h),
                           Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SvgPicture.asset(
                                 height: 20.w,
@@ -249,9 +226,8 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                               ),
                               const SizedBox(width: 4),
                               Obx(
-                                    () => CustomText(
-                                  text: controller
-                                      .workshopCost.value
+                                () => CustomText(
+                                  text: controller.workshopCost.value
                                       .toStringAsFixed(2),
                                   fontSize: 20.w,
                                   color: AppColors.red,
@@ -283,9 +259,8 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                     ),
                     SizedBox(width: 6.w),
                     Obx(
-                          () => CustomText(
-                        text: controller.totalAmountDue
-                            .toStringAsFixed(2),
+                      () => CustomText(
+                        text: controller.totalAmountDue.toStringAsFixed(2),
                         fontSize: 22,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -311,8 +286,7 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                     ),
                   ),
                   Padding(
-                    padding:
-                    EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
                     child: CustomText(
                       text: 'pay_method'.tr,
                       fontWeight: FontWeight.bold,
@@ -330,19 +304,17 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
               SizedBox(height: 4.h),
               // Pay method
               Obx(
-                    () => Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment.spaceEvenly,
+                () => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Radio<PayMethod>(
                           value: PayMethod.postpaid,
-                          groupValue:
-                          controller.payMethod.value,
-                          onChanged: (val) => controller
-                              .setPayMethod(PayMethod.postpaid),
+                          groupValue: controller.payMethod.value,
+                          onChanged: (val) =>
+                              controller.setPayMethod(PayMethod.postpaid),
                           activeColor: AppColors.primary,
                           // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           visualDensity: VisualDensity.compact,
@@ -359,10 +331,9 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                       children: [
                         Radio<PayMethod>(
                           value: PayMethod.transfer,
-                          groupValue:
-                          controller.payMethod.value,
-                          onChanged: (val) => controller
-                              .setPayMethod(PayMethod.transfer),
+                          groupValue: controller.payMethod.value,
+                          onChanged: (val) =>
+                              controller.setPayMethod(PayMethod.transfer),
                           activeColor: AppColors.primary,
                           visualDensity: VisualDensity.compact,
                         ),
@@ -378,10 +349,9 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                       children: [
                         Radio<PayMethod>(
                           value: PayMethod.card,
-                          groupValue:
-                          controller.payMethod.value,
-                          onChanged: (val) => controller
-                              .setPayMethod(PayMethod.card),
+                          groupValue: controller.payMethod.value,
+                          onChanged: (val) =>
+                              controller.setPayMethod(PayMethod.card),
                           activeColor: AppColors.primary,
                           visualDensity: VisualDensity.compact,
                         ),
@@ -397,10 +367,9 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                       children: [
                         Radio<PayMethod>(
                           value: PayMethod.cash,
-                          groupValue:
-                          controller.payMethod.value,
-                          onChanged: (val) => controller
-                              .setPayMethod(PayMethod.cash),
+                          groupValue: controller.payMethod.value,
+                          onChanged: (val) =>
+                              controller.setPayMethod(PayMethod.cash),
                           activeColor: AppColors.primary,
                           visualDensity: VisualDensity.compact,
                         ),
@@ -425,8 +394,7 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                 switch (controller.payMethod.value!) {
                   case PayMethod.cash:
                     return Column(
-                      crossAxisAlignment:
-                      CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CustomText(
                           text: 'if_cash_receive_money'.tr,
@@ -434,15 +402,13 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                           fontWeight: FontWeight.bold,
                         ),
                         Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Radio<bool>(
                               value: true,
-                              groupValue:
-                              controller.receiveCash.value,
-                              onChanged: (val) => controller
-                                  .setReceiveCash(true),
+                              groupValue: controller.receiveCash.value,
+                              onChanged: (val) =>
+                                  controller.setReceiveCash(true),
                               activeColor: AppColors.primary,
                             ),
                             CustomText(
@@ -453,10 +419,9 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                             SizedBox(width: 20.w),
                             Radio<bool>(
                               value: false,
-                              groupValue:
-                              controller.receiveCash.value,
-                              onChanged: (val) => controller
-                                  .setReceiveCash(false),
+                              groupValue: controller.receiveCash.value,
+                              onChanged: (val) =>
+                                  controller.setReceiveCash(false),
                               activeColor: AppColors.primary,
                             ),
                             CustomText(
@@ -470,41 +435,31 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                     );
                   case PayMethod.card:
                     return Column(
-                      crossAxisAlignment:
-                      CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CustomText(
-                          text:
-                          'if_card_enter_approval_code'.tr,
+                          text: 'if_card_enter_approval_code'.tr,
                           fontSize: 16.w,
                           fontWeight: FontWeight.bold,
                         ),
                         SizedBox(
                           width: 120,
                           child: TextFormField(
-
-                            onTapOutside: (_){
+                            onTapOutside: (_) {
                               FocusScope.of(Get.key.currentContext!).unfocus();
                             },
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
-                            style:
-                            customTextStyle(fontSize: 22.h),
-                            initialValue: controller
-                                .cardApprovalCode.value,
-                            onChanged:
-                            controller.setCardApprovalCode,
+                            style: customTextStyle(fontSize: 22.h),
+                            initialValue: controller.cardApprovalCode.value,
+                            onChanged: controller.setCardApprovalCode,
                             inputFormatters: [
-                              FilteringTextInputFormatter
-                                  .digitsOnly,
-                              LengthLimitingTextInputFormatter(
-                                  6),
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(6),
                             ],
                             decoration: const InputDecoration(
-
                               border: OutlineInputBorder(),
-                              contentPadding:
-                              EdgeInsets.symmetric(
+                              contentPadding: EdgeInsets.symmetric(
                                 horizontal: 8,
                                 vertical: 4,
                               ),
@@ -515,25 +470,21 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                     );
                   case PayMethod.transfer:
                     return Column(
-                      crossAxisAlignment:
-                      CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CustomText(
-                          text:
-                          'if_transfer_receive_transfer'.tr,
+                          text: 'if_transfer_receive_transfer'.tr,
                           fontSize: 16.w,
                           fontWeight: FontWeight.bold,
                         ),
                         Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Radio<bool>(
                               value: true,
-                              groupValue: controller
-                                  .receiveTransfer.value,
-                              onChanged: (val) => controller
-                                  .setReceiveTransfer(true),
+                              groupValue: controller.receiveTransfer.value,
+                              onChanged: (val) =>
+                                  controller.setReceiveTransfer(true),
                               activeColor: AppColors.primary,
                             ),
                             CustomText(
@@ -544,10 +495,9 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                             SizedBox(width: 20.w),
                             Radio<bool>(
                               value: false,
-                              groupValue: controller
-                                  .receiveTransfer.value,
-                              onChanged: (val) => controller
-                                  .setReceiveTransfer(false),
+                              groupValue: controller.receiveTransfer.value,
+                              onChanged: (val) =>
+                                  controller.setReceiveTransfer(false),
                               activeColor: AppColors.primary,
                             ),
                             CustomText(
@@ -561,13 +511,10 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                     );
                   case PayMethod.postpaid:
                     return Column(
-                      crossAxisAlignment:
-                      CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CustomText(
-                          text:
-                          'if_postpaid_select_payment_date'
-                              .tr,
+                          text: 'if_postpaid_select_payment_date'.tr,
                           fontSize: 16.w,
                           fontWeight: FontWeight.bold,
                         ),
@@ -579,16 +526,13 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                             decoration: const InputDecoration(
                               hintText: 'DD-MM-YYYY',
                               border: OutlineInputBorder(),
-                              contentPadding:
-                              EdgeInsets.symmetric(
+                              contentPadding: EdgeInsets.symmetric(
                                 horizontal: 8,
                                 vertical: 4,
                               ),
                             ),
                             onTap: () async {
-                              DateTime? picked =
-                              await _showDatePicker(
-                                  context);
+                              DateTime? picked = await _showDatePicker(context);
 
                               if (picked != null) {
                                 controller.setPostpaidDate(
@@ -598,8 +542,7 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                               }
                             },
                             controller: TextEditingController(
-                              text:
-                              controller.postpaidDate.value,
+                              text: controller.postpaidDate.value,
                             ),
                           ),
                         ),
@@ -607,7 +550,6 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
                     );
                 }
               }),
-
             ],
           ),
         ),
@@ -615,98 +557,96 @@ Widget invoiceSummary(InvoiceSummaryController controller, BuildContext context)
       SizedBox(height: 16.h),
       Obx(() {
         // Always show both buttons
-        bool isCard = controller.payMethod.value ==
-            PayMethod.card;
-        bool validCardCode =
-            controller.cardApprovalCode.value.length ==
-                6;
+        bool isCard = controller.payMethod.value == PayMethod.card;
+        bool validCardCode = controller.cardApprovalCode.value.length == 6;
         return Row(
           children: [
-            (controller.saveIsLoading.value ||
-                controller.nextIsLoading.value)
+            (controller.saveIsLoading.value || controller.nextIsLoading.value)
                 ? SizedBox()
                 : NextButton(
-              text: 'save_invoice'.tr,
-              onTap: isCard
-                  ? () {}
-                  : (controller.canSaveInvoice
-                  ? () {
-                controller.showYesNoDialog(context: context, onYes: (){
-                  controller.invoiceId
-                      .isNotEmpty
-                      ? Get.back()
-                      : controller
-                      .onTapRelease(
-                    saveLoading:
-                    true,
-                  );
-                }, title: 'do_you_want_to_save_invoice'.tr);
-              }
-                  : () {}),
-              backgroundColor: isCard
-                  ? Colors.grey
-                  : (controller.canSaveInvoice
-                  ? AppColors.redTextFiled
-                  : Colors.grey),
-              textColor: isCard
-                  ? Colors.white
-                  : (controller.canSaveInvoice
-                  ? AppColors.red
-                  : Colors.white),
-            ),
+                    text: 'save_invoice'.tr,
+                    onTap: isCard
+                        ? () {}
+                        : (controller.canSaveInvoice
+                            ? () {
+                                controller.showYesNoDialog(
+                                    context: context,
+                                    onYes: () {
+                                      controller.invoiceId.isNotEmpty
+                                          ? Get.back()
+                                          : controller.onTapRelease(
+                                              saveLoading: true,
+                                            );
+                                    },
+                                    title: 'do_you_want_to_save_invoice'.tr);
+                              }
+                            : () {}),
+                    backgroundColor: isCard
+                        ? Colors.grey
+                        : (controller.canSaveInvoice
+                            ? AppColors.redTextFiled
+                            : Colors.grey),
+                    textColor: isCard
+                        ? Colors.white
+                        : (controller.canSaveInvoice
+                            ? AppColors.red
+                            : Colors.white),
+                  ),
             const SizedBox(width: 20),
-            (controller.nextIsLoading.value ||
-                controller.saveIsLoading.value)
+            (controller.nextIsLoading.value || controller.saveIsLoading.value)
                 ? SizedBox()
                 : NextButton(
-              text: 'release_invoice'.tr,
-              onTap: isCard
-                  ? (validCardCode
-                  ? () {
-                controller.showYesNoDialog(context: context, onYes: (){
-                  controller
-                      .onTapRelease();
-                }, title: 'do_you_want_to_release_invoice'.tr);
-              }
-                  : () {})
-                  : (controller.canReleaseInvoice
-                  ? (controller.payMethod
-                  .value?.name ==
-                  "postpaid"
-                  ?(){
-                controller.showYesNoDialog(context: context, onYes:(){
-                  controller
-                      .onTapPostPaid();
-                }, title: 'do_you_want_to_release_invoice'.tr);
-              }
-                  : () {
-                controller.showYesNoDialog(context: context, onYes: (){
-                  controller
-                      .onTapRelease();
-                }, title: 'do_you_want_to_release_invoice'.tr);
-              })
-                  : () {}),
-              backgroundColor: isCard
-                  ? (validCardCode
-                  ? AppColors.primary
-                  : Colors.grey)
-                  : (controller.canReleaseInvoice
-                  ? AppColors.primary
-                  : Colors.grey),
-              textColor: isCard
-                  ? (validCardCode
-                  ? Colors.white
-                  : Colors.white)
-                  : (controller.canReleaseInvoice
-                  ? Colors.white
-                  : Colors.white),
-            ),
+                    text: 'release_invoice'.tr,
+                    onTap: isCard
+                        ? (validCardCode
+                            ? () {
+                                controller.showYesNoDialog(
+                                    context: context,
+                                    onYes: () {
+                                      controller.onTapRelease();
+                                    },
+                                    title: 'do_you_want_to_release_invoice'.tr);
+                              }
+                            : () {})
+                        : (controller.canReleaseInvoice
+                            ? (controller.payMethod.value?.name == "postpaid"
+                                ? () {
+                                    controller.showYesNoDialog(
+                                        context: context,
+                                        onYes: () {
+                                          controller.onTapPostPaid();
+                                        },
+                                        title: 'do_you_want_to_release_invoice'
+                                            .tr);
+                                  }
+                                : () {
+                                    controller.showYesNoDialog(
+                                        context: context,
+                                        onYes: () {
+                                          controller.onTapRelease();
+                                        },
+                                        title: 'do_you_want_to_release_invoice'
+                                            .tr);
+                                  })
+                            : () {}),
+                    backgroundColor: isCard
+                        ? (validCardCode ? AppColors.primary : Colors.grey)
+                        : (controller.canReleaseInvoice
+                            ? AppColors.primary
+                            : Colors.grey),
+                    textColor: isCard
+                        ? (validCardCode ? Colors.white : Colors.white)
+                        : (controller.canReleaseInvoice
+                            ? Colors.white
+                            : Colors.white),
+                  ),
           ],
         );
       }),
     ],
   );
 }
+
 Future<DateTime?> _showDatePicker(BuildContext context) {
   return showDatePicker(
     context: context,

@@ -1,4 +1,3 @@
-import 'package:Senaeya/Core/AppRoute/app_route.dart';
 import 'package:Senaeya/Utils/AppColors/app_colors.dart';
 import 'package:Senaeya/View/Widgegts/custom_button/next_button.dart';
 import 'package:Senaeya/View/Widgegts/custom_text_field/custom_text_field.dart';
@@ -43,7 +42,8 @@ class AddWorksScreen extends StatelessWidget {
         body: SafeArea(
           child: Container(
             margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.only(left: 6,right: 6,top: 12,bottom: 12),
+            padding:
+                const EdgeInsets.only(left: 6, right: 6, top: 12, bottom: 12),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
@@ -75,13 +75,12 @@ class AddWorksScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                     SizedBox(width: 4.w),
+                    SizedBox(width: 4.w),
                     Expanded(
                       flex: 6,
                       child: Obx(
                         () => CustomDropdown<String>(
-                          value:
-                              controller.workName.value.isNotEmpty &&
+                          value: controller.workName.value.isNotEmpty &&
                                   controller.availableWorks.contains(
                                     controller.workName.value,
                                   )
@@ -111,16 +110,18 @@ class AddWorksScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-          
+
                 SizedBox(height: 6.h),
-          
+
                 Row(
                   children: [
                     Expanded(
                       flex: 3,
                       child: Obx(
                         () => CustomDropdown<int>(
-                          value: controller.qty.value > 0 ? controller.qty.value : null,
+                          value: controller.qty.value > 0
+                              ? controller.qty.value
+                              : null,
                           items: List.generate(20, (i) => i + 1),
                           hint: 'Qty'.tr,
                           onChanged: (val) {
@@ -144,7 +145,9 @@ class AddWorksScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: 4.w,),
+                    SizedBox(
+                      width: 4.w,
+                    ),
                     Expanded(
                       flex: 3,
                       child: CustomTextField(
@@ -155,17 +158,17 @@ class AddWorksScreen extends StatelessWidget {
                         height: 40.h,
                       ),
                     ),
-                    SizedBox(width: 4.w,),
-          
+                    SizedBox(
+                      width: 4.w,
+                    ),
                     Expanded(
                       flex: 3,
                       child: ElevatedButton(
-          
                         onPressed: controller.addWork,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
                           foregroundColor: Colors.white,
-                          padding:  EdgeInsets.symmetric(
+                          padding: EdgeInsets.symmetric(
                             horizontal: 14.w,
                             vertical: 8.h,
                           ),
@@ -174,13 +177,16 @@ class AddWorksScreen extends StatelessWidget {
                           ),
                           elevation: 0,
                         ),
-                        child: CustomText(text: 'add'.tr, fontSize: 14.w, color: Colors.white),
+                        child: CustomText(
+                            text: 'add'.tr,
+                            fontSize: 14.w,
+                            color: Colors.white),
                       ),
                     ),
                   ],
                 ),
                 SizedBox(height: 6.w),
-          
+
                 Row(
                   children: [
                     Expanded(
@@ -201,7 +207,8 @@ class AddWorksScreen extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () {
                           if (controller.selectedIndex.value >= 0) {
-                            controller.showEditDialog(context, controller.selectedIndex.value);
+                            controller.showEditDialog(
+                                context, controller.selectedIndex.value);
                           }
                         },
                         child: SvgPicture.asset(
@@ -211,41 +218,42 @@ class AddWorksScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: 10.w,),
+                    SizedBox(
+                      width: 10.w,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(onTap: (){
-                        if (controller.selectedIndex.value >= 0) {
-                          controller.deleteWork(controller.selectedIndex.value);
-                        }
-                      },child: SvgPicture.asset(AppIcon.deleteIcon,height: 20.w,width: 20.w)),
+                      child: GestureDetector(
+                          onTap: () {
+                            if (controller.selectedIndex.value >= 0) {
+                              controller
+                                  .deleteWork(controller.selectedIndex.value);
+                            }
+                          },
+                          child: SvgPicture.asset(AppIcon.deleteIcon,
+                              height: 20.w, width: 20.w)),
                     )
-          
                   ],
                 ),
-          
+
                 const SizedBox(height: 12),
-          
+
                 // Data Table
                 Expanded(
-                  child:  GetBuilder<AddWorksController>(
-                      builder: (context) {
-                        return WorksDataTable(
-                          works: controller.filteredWorks,
-                          onWorkTap: controller.selectWork,
-                          selectedIndex: controller.selectedIndex.value,
-                        );
-                      }
-                    ),
-          
+                  child: GetBuilder<AddWorksController>(builder: (context) {
+                    return WorksDataTable(
+                      works: controller.filteredWorks,
+                      onWorkTap: controller.selectWork,
+                      selectedIndex: controller.selectedIndex.value,
+                    );
+                  }),
                 ),
-          
-                 SizedBox(height: 8.h),
-          
+
+                SizedBox(height: 8.h),
+
                 // Summary Row 1: Total Before Tax & Discount
                 Row(
                   children: [
-          
                     Expanded(
                       flex: 3,
                       child: GestureDetector(
@@ -255,23 +263,33 @@ class AddWorksScreen extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             color: AppColors.textFiledColor,
-                            border: Border.all(color: Colors.grey.shade300,width: 2),
+                            border: Border.all(
+                                color: Colors.grey.shade300, width: 2),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0,right: 8,top: 2,bottom: 2),
+                            padding: const EdgeInsets.only(
+                                left: 8.0, right: 8, top: 2, bottom: 2),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                CustomText(text: 'discount'.tr, fontSize: 13.w,fontWeight: FontWeight.w700,overflow: TextOverflow.visible,),
-                                SizedBox(height: 4.h,),
+                                CustomText(
+                                  text: 'discount'.tr,
+                                  fontSize: 13.w,
+                                  fontWeight: FontWeight.w700,
+                                  overflow: TextOverflow.visible,
+                                ),
+                                SizedBox(
+                                  height: 4.h,
+                                ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SvgPicture.asset(height: 20.w, AppIcon.riyal),
+                                    SvgPicture.asset(
+                                        height: 20.w, AppIcon.riyal),
                                     const SizedBox(width: 4),
                                     Obx(
-                                          () => CustomText(
+                                      () => CustomText(
                                         text: controller.discount.value
                                             .toStringAsFixed(2),
                                         fontSize: 14,
@@ -286,11 +304,11 @@ class AddWorksScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 6.w),
-          
                     Expanded(
                       flex: 4,
                       child: Container(
-                        padding: const EdgeInsets.only(left: 8.0,right: 8,top: 2,bottom: 2),
+                        padding: const EdgeInsets.only(
+                            left: 8.0, right: 8, top: 2, bottom: 2),
                         decoration: BoxDecoration(
                           color: AppColors.textFiledColor,
                           border: Border.all(color: AppColors.primary),
@@ -305,14 +323,17 @@ class AddWorksScreen extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                               overflow: TextOverflow.visible,
                             ),
-                            SizedBox(height: 4.h,),
+                            SizedBox(
+                              height: 4.h,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SvgPicture.asset(height: 20.w, AppIcon.riyalBlue),
+                                SvgPicture.asset(
+                                    height: 20.w, AppIcon.riyalBlue),
                                 const SizedBox(width: 4),
                                 Obx(
-                                      () => CustomText(
+                                  () => CustomText(
                                     text: controller.totalBeforeTax
                                         .toStringAsFixed(2),
                                     fontSize: 14,
@@ -328,16 +349,17 @@ class AddWorksScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-          
-                 SizedBox(height: 6.h),
-          
+
+                SizedBox(height: 6.h),
+
                 // Summary Row 2: Tax & Total Including Tax
                 Row(
                   children: [
                     Expanded(
                       flex: 3,
                       child: Container(
-                        padding: const EdgeInsets.only(left: 8.0,right: 8,top: 2,bottom: 2),
+                        padding: const EdgeInsets.only(
+                            left: 8.0, right: 8, top: 2, bottom: 2),
                         decoration: BoxDecoration(
                           color: AppColors.textFiledColor,
                           border: Border.all(color: Colors.grey.shade300),
@@ -345,9 +367,16 @@ class AddWorksScreen extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            CustomText(text: 'tax_vat'.tr, fontSize: 13.w,overflow: TextOverflow.visible,fontWeight: FontWeight.w700,),
+                            CustomText(
+                              text: 'tax_vat'.tr,
+                              fontSize: 13.w,
+                              overflow: TextOverflow.visible,
+                              fontWeight: FontWeight.w700,
+                            ),
                             // CustomText(text: 'TAX (15%)', fontSize: 13.w,overflow: TextOverflow.visible,fontWeight: FontWeight.w700,),
-                            SizedBox(height: 4.h,),
+                            SizedBox(
+                              height: 4.h,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -365,11 +394,12 @@ class AddWorksScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                     SizedBox(width: 6.w),
+                    SizedBox(width: 6.w),
                     Expanded(
                       flex: 4,
                       child: Container(
-                        padding: const EdgeInsets.only(left: 8.0,right: 8,top: 2,bottom: 2),
+                        padding: const EdgeInsets.only(
+                            left: 8.0, right: 8, top: 2, bottom: 2),
                         decoration: BoxDecoration(
                           color: AppColors.textFiledColor,
                           border: Border.all(color: AppColors.red),
@@ -384,11 +414,14 @@ class AddWorksScreen extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                               overflow: TextOverflow.visible,
                             ),
-                            SizedBox(height: 4.h,),
+                            SizedBox(
+                              height: 4.h,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SvgPicture.asset(height: 20.w, AppIcon.riyalRed),
+                                SvgPicture.asset(
+                                    height: 20.w, AppIcon.riyalRed),
                                 const SizedBox(width: 4),
                                 Obx(
                                   () => CustomText(
@@ -399,8 +432,7 @@ class AddWorksScreen extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                 SizedBox(width: 8.w),
-          
+                                SizedBox(width: 8.w),
                               ],
                             ),
                           ],
@@ -409,12 +441,12 @@ class AddWorksScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-          
+
                 const SizedBox(height: 20),
-          
+
                 // Bottom Buttons
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0,right: 16),
+                  padding: const EdgeInsets.only(left: 16.0, right: 16),
                   child: Row(
                     children: [
                       NextButton(

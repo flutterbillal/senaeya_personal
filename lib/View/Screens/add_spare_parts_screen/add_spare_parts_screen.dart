@@ -1,5 +1,3 @@
-import 'package:Senaeya/Core/AppRoute/app_route.dart';
-import 'package:Senaeya/Utils/ToastMsg/toast_message.dart';
 import 'package:Senaeya/View/Widgegts/custom_button/next_button.dart';
 import 'package:Senaeya/View/Widgegts/custom_text/custom_text.dart';
 import 'package:Senaeya/View/Widgegts/custom_data_table/custom_data_table.dart';

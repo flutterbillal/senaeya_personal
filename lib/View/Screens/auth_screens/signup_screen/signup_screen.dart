@@ -7,8 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../Widgegts/custom_text/custom_text.dart';
 import '../../../Widgets/custom_app_bar.dart';
 import '../../../Widgegts/custom_button/custom_button.dart';
-import '../../../Widgets/custom_phone_field_with_button.dart';
-import '../../../Widgets/custom_phone_text_filed/custom_phone_text_filed.dart';
 import '../login_screen/widgets/custom_text_field.dart';
 import 'controller/signup_screen_controller.dart';
 

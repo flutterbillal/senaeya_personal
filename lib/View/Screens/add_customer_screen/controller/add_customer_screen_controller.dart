@@ -285,7 +285,7 @@ class AddCustomerScreenController extends GetxController {
 
       // Set brand value and brand ID
       brand.value = matchedBrand.title;
-      brandImage.value = matchedBrand.image ?? '';
+      brandImage.value = matchedBrand.image;
       brandId.value = matchedBrand.id;
 
       // Reset model when brand changes
@@ -582,9 +582,9 @@ class AddCustomerScreenController extends GetxController {
 
   Future<void> getBrands() async {
     // print("====================================${selectedCountryList.length}");
-    for (var item in selectedCountryList) {
-      // print("====================================${item.title}");
-    }
+    // for (CommonItemModel item in selectedCountryList) {
+    //   // print("====================================${item.title}");
+    // }
     // Build query string with repeated 'country' keys
     String queryString =
         selectedCountryList.map((item) => 'country=${item.sId}').join('&');
@@ -595,7 +595,7 @@ class AddCustomerScreenController extends GetxController {
       CarBrandResponse commonListModel = CarBrandResponse.fromJson(
         response.body,
       );
-      carBrandModels.value = commonListModel.data.result ?? [];
+      carBrandModels.value = commonListModel.data.result;
       SharePrefsHelper.setCarBrandList(
           SharedPreferenceValue.carBrandList, carBrandModels);
 
@@ -862,7 +862,7 @@ class AddCustomerScreenController extends GetxController {
         var clientData = firstCar['client'];
         var clientIdData = clientData != null ? clientData['clientId'] : null;
         var brandData = firstCar['brand'];
-        var plateData = firstCar['plateNumberForSaudi'];
+        // var plateData = firstCar['plateNumberForSaudi'];
 
         // Set name from clientId.name and contact from client.contact
         setName(clientIdData?['name'] ?? '');
@@ -1630,9 +1630,8 @@ class AddCustomerScreenController extends GetxController {
           image: SvgPicture.asset(
             AppIcon.warning,
           ),
-          message:
-              'This Customer has %s unpaid invoice at another workshop'
-                  .trArgs([unpaidInvoiceCount.toString()]),
+          message: 'This Customer has %s unpaid invoice at another workshop'
+              .trArgs([unpaidInvoiceCount.toString()]),
         );
       }
     }

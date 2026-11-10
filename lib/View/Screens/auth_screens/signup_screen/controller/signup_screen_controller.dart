@@ -7,7 +7,6 @@ import 'package:Senaeya/Utils/ToastMsg/toast_message.dart';
 import 'package:Senaeya/View/Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../../../../Core/AppRoute/app_route.dart';
 import '../../../../Widgegts/custom_alert_verification_dialog/custom_alert_verification_dialog.dart';

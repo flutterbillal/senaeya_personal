@@ -1,13 +1,10 @@
 import 'package:Senaeya/Core/AppRoute/app_route.dart';
 import 'package:Senaeya/Service/api_url.dart';
-import 'package:Senaeya/Utils/AppImg/app_img.dart';
 import 'package:Senaeya/Utils/AppLog/app_log.dart';
 import 'package:Senaeya/View/Screens/previous_invoices_screen/common_parse_date/converted_date.dart';
-import 'package:Senaeya/View/Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 import '../custom_text/custom_text.dart';
 import '../liscence_plate_widget.dart';
@@ -23,8 +20,8 @@ class CarCard extends StatelessWidget {
   final String invoiceAmount;
   final String invoiceDate;
 
-  CarCard({
-    Key? key,
+  const CarCard({
+    super.key,
     this.car,
     this.carBrand = "",
     this.carModel = "",
@@ -33,7 +30,7 @@ class CarCard extends StatelessWidget {
     this.carNumber = "",
     this.invoiceAmount = "",
     this.invoiceDate = "",
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +39,15 @@ class CarCard extends StatelessWidget {
     final brandImage = car?.brand?.image ?? '';
     final modelTitle = car?.model?.title ?? '';
     final yearTitle = car?.year ?? carYear;
-    final regDate = car?.createdAt != null ? FormateDateTime.formatDateTime(car!.createdAt!) : registrationDate;
+    final regDate = car?.createdAt != null
+        ? FormateDateTime.formatDateTime(car!.createdAt!)
+        : registrationDate;
     final plateNumber = car?.plateNumberForSaudi?.numberEnglish ?? carNumber;
-    final plateLetters = (car?.plateNumberForSaudi?.alphabetsCombinations != null && car!.plateNumberForSaudi!.alphabetsCombinations!.isNotEmpty)
-        ? car!.plateNumberForSaudi!.alphabetsCombinations![0]
-        : 'TGD';
+    final plateLetters =
+        (car?.plateNumberForSaudi?.alphabetsCombinations != null &&
+                car!.plateNumberForSaudi!.alphabetsCombinations!.isNotEmpty)
+            ? car!.plateNumberForSaudi!.alphabetsCombinations![0]
+            : 'TGD';
 
     print('Plate Letters: $plateLetters');
     print('Plate Number: $plateNumber');
@@ -54,13 +55,13 @@ class CarCard extends StatelessWidget {
     print('Brand Image: $brandImage');
     print('Model Title: $modelTitle');
     print('Year Title: $yearTitle');
-    appLog("saudi car image:${car?.plateNumberForSaudi?.symbol?.image??''}");
-
+    appLog("saudi car image:${car?.plateNumberForSaudi?.symbol?.image ?? ''}");
 
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
         color: const Color(0xFF1771B7), // Blue background matching app theme
         margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 4.w),
         child: Padding(
@@ -77,18 +78,18 @@ class CarCard extends StatelessWidget {
                       children: [
                         Center(
                           child: Image.network(
-                            ApiConstant.imageBaseUrl+brandImage,
+                            ApiConstant.imageBaseUrl + brandImage,
                             width: 26.w,
                             height: 26.w,
                           ),
                         ),
                         SizedBox(width: 12.w),
                         CustomText(
-                        text:   brandTitle,
-
-                            color: Colors.white,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,overflow: TextOverflow.ellipsis,
+                          text: brandTitle,
+                          color: Colors.white,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -136,9 +137,9 @@ class CarCard extends StatelessWidget {
               Column(
                 children: [
                   GestureDetector(
-                    onTap: (){
-                      Get.toNamed(AppRoute.carInvoiceScreen,arguments: {
-                        'carId':car?.id,
+                    onTap: () {
+                      Get.toNamed(AppRoute.carInvoiceScreen, arguments: {
+                        'carId': car?.id,
                       });
                     },
                     child: Container(
@@ -157,30 +158,36 @@ class CarCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10.h,),
-                  (car?.plateNumberForSaudi==null||car!.plateNumberForSaudi.toString().isEmpty)?         Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: CustomText(
-                        text: car?.plateNumberForInternational ??
-                            '',
-                      ),
-                    ),
-                  ):SizedBox(),
-
-                 (car?.plateNumberForSaudi!=null&&car!.plateNumberForSaudi.toString().isNotEmpty)?SaudiLicensePlate(
-                    borderColor: Colors.black,
-                    saudiCarPlateImage: car?.plateNumberForSaudi?.symbol?.image??'',
-                    textColor: Colors.black,
-                    width: 120.w,
-                    plateNumber: plateNumber,
-                    plateLetters: plateLetters,
-
-                  ):SizedBox(),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  (car?.plateNumberForSaudi == null ||
+                          car!.plateNumberForSaudi.toString().isEmpty)
+                      ? Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: CustomText(
+                              text: car?.plateNumberForInternational ?? '',
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                  (car?.plateNumberForSaudi != null &&
+                          car!.plateNumberForSaudi.toString().isNotEmpty)
+                      ? SaudiLicensePlate(
+                          borderColor: Colors.black,
+                          saudiCarPlateImage:
+                              car?.plateNumberForSaudi?.symbol?.image ?? '',
+                          textColor: Colors.black,
+                          width: 120.w,
+                          plateNumber: plateNumber,
+                          plateLetters: plateLetters,
+                        )
+                      : SizedBox(),
                 ],
               ),
             ],
@@ -190,4 +197,3 @@ class CarCard extends StatelessWidget {
     );
   }
 }
-

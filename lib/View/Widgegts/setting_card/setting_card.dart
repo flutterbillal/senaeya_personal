@@ -1,5 +1,4 @@
 import 'package:Senaeya/Service/api_url.dart';
-import 'package:Senaeya/Utils/AppConst/app_const.dart';
 import 'package:Senaeya/View/Widgegts/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,7 +60,8 @@ class ServiceCard extends StatelessWidget {
                     child: CustomText(
                       text: title,
                       textAlign: TextAlign.center,
-                      fontSize: 16, // raw value; CustomText applies .sp internally
+                      fontSize:
+                          16, // raw value; CustomText applies .sp internally
                       minFontSize: 10,
                       maxLines: 2,
                       fontWeight: FontWeight.w600,
@@ -76,7 +76,7 @@ class ServiceCard extends StatelessWidget {
           Positioned(
             top: 12,
             right: 12,
-            child:Container(
+            child: Container(
               width: 28.w,
               height: 28.w,
               decoration: BoxDecoration(
@@ -106,7 +106,8 @@ class ServiceCard extends StatelessWidget {
 
   Widget _buildImage(bool isSvg) {
     // Check if it's a network image (starts with http/https) or local path
-    bool isNetworkImage = imagePath.startsWith('http') || imagePath.startsWith('https');
+    bool isNetworkImage =
+        imagePath.startsWith('http') || imagePath.startsWith('https');
     bool isServerPath = imagePath.startsWith('/');
 
     if (isSvg) {

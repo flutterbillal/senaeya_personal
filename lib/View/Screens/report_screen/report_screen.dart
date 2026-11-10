@@ -2,8 +2,6 @@ import 'package:Senaeya/Utils/AppColors/app_colors.dart';
 import 'package:Senaeya/Utils/AppImg/app_img.dart';
 import 'package:Senaeya/View/Screens/auth_screens/login_screen/widgets/custom_button.dart';
 import 'package:Senaeya/View/Screens/report_screen/controller/report_screen_controller.dart';
-import 'package:Senaeya/View/Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
-import 'package:Senaeya/View/Widgegts/custom_text/custom_text.dart';
 import 'package:Senaeya/View/Widgegts/report_card/report_card.dart';
 import 'package:Senaeya/View/Widgets/custom_app_bar.dart';
 import 'package:Senaeya/View/Widgets/custom_dropdown.dart';
@@ -22,7 +20,7 @@ class ReportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ReportScreenController controller =
-    Get.find<ReportScreenController>();
+        Get.find<ReportScreenController>();
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.white,
@@ -62,7 +60,8 @@ class ReportScreen extends StatelessWidget {
                       BoxShadow(color: Colors.black12, blurRadius: 8),
                     ],
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
                   child: Stack(
                     children: [
                       Column(
@@ -75,8 +74,11 @@ class ReportScreen extends StatelessWidget {
                                 child: Obx(
                                   () => ReportCard(
                                     tittle: "daily_report".tr,
-                                    isSelected: controller.selectedReportType.value == "Daily",
-                                    onTap: () => controller.selectedReportType.value = "Daily",
+                                    isSelected:
+                                        controller.selectedReportType.value ==
+                                            "Daily",
+                                    onTap: () => controller
+                                        .selectedReportType.value = "Daily",
                                   ),
                                 ),
                               ),
@@ -85,8 +87,11 @@ class ReportScreen extends StatelessWidget {
                                 child: Obx(
                                   () => ReportCard(
                                     tittle: "weekly_report".tr,
-                                    isSelected: controller.selectedReportType.value == "Weekly",
-                                    onTap: () => controller.selectedReportType.value = "Weekly",
+                                    isSelected:
+                                        controller.selectedReportType.value ==
+                                            "Weekly",
+                                    onTap: () => controller
+                                        .selectedReportType.value = "Weekly",
                                   ),
                                 ),
                               ),
@@ -99,8 +104,11 @@ class ReportScreen extends StatelessWidget {
                                 child: Obx(
                                   () => ReportCard(
                                     tittle: "monthly_report".tr,
-                                    isSelected: controller.selectedReportType.value == "Monthly",
-                                    onTap: () => controller.selectedReportType.value = "Monthly",
+                                    isSelected:
+                                        controller.selectedReportType.value ==
+                                            "Monthly",
+                                    onTap: () => controller
+                                        .selectedReportType.value = "Monthly",
                                   ),
                                 ),
                               ),
@@ -109,8 +117,11 @@ class ReportScreen extends StatelessWidget {
                                 child: Obx(
                                   () => ReportCard(
                                     tittle: "three_month_report".tr,
-                                    isSelected: controller.selectedReportType.value == "3-month",
-                                    onTap: () => controller.selectedReportType.value = "3-month",
+                                    isSelected:
+                                        controller.selectedReportType.value ==
+                                            "3-month",
+                                    onTap: () => controller
+                                        .selectedReportType.value = "3-month",
                                   ),
                                 ),
                               ),
@@ -123,8 +134,11 @@ class ReportScreen extends StatelessWidget {
                                 child: Obx(
                                   () => ReportCard(
                                     tittle: "six_month_report".tr,
-                                    isSelected: controller.selectedReportType.value == "6-month",
-                                    onTap: () => controller.selectedReportType.value = "6-month",
+                                    isSelected:
+                                        controller.selectedReportType.value ==
+                                            "6-month",
+                                    onTap: () => controller
+                                        .selectedReportType.value = "6-month",
                                   ),
                                 ),
                               ),
@@ -133,8 +147,11 @@ class ReportScreen extends StatelessWidget {
                                 child: Obx(
                                   () => ReportCard(
                                     tittle: "annual_report".tr,
-                                    isSelected: controller.selectedReportType.value == "Annual",
-                                    onTap: () => controller.selectedReportType.value = "Annual",
+                                    isSelected:
+                                        controller.selectedReportType.value ==
+                                            "Annual",
+                                    onTap: () => controller
+                                        .selectedReportType.value = "Annual",
                                   ),
                                 ),
                               ),
@@ -160,23 +177,25 @@ class ReportScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Obx(
-                                      () => CustomDropdown<String>(
+                                  () => CustomDropdown<String>(
                                     value: controller.selectedDay.value.isEmpty
                                         ? null
                                         : controller.selectedDay.value,
                                     items: List.generate(
                                       31,
-                                          (index) =>
-                                          (index + 1).toString().padLeft(2, '0'),
+                                      (index) => (index + 1)
+                                          .toString()
+                                          .padLeft(2, '0'),
                                     ),
                                     hint: "day_label".tr,
-                                    onChanged: (value) =>
-                                    controller.selectedDay.value = value ?? '',
+                                    onChanged: (value) => controller
+                                        .selectedDay.value = value ?? '',
                                     height: 40.h,
                                     width: double.infinity,
                                     borderRadius: 24.r,
                                     fillColor: Colors.grey[100],
-                                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 8.w),
                                     hintStyle: customTextStyle(
                                       color: Colors.grey,
                                       fontSize: 10.sp,
@@ -188,23 +207,26 @@ class ReportScreen extends StatelessWidget {
                               SizedBox(width: 8.w),
                               Expanded(
                                 child: Obx(
-                                      () => CustomDropdown<String>(
-                                    value: controller.selectedMonth.value.isEmpty
-                                        ? null
-                                        : controller.selectedMonth.value,
+                                  () => CustomDropdown<String>(
+                                    value:
+                                        controller.selectedMonth.value.isEmpty
+                                            ? null
+                                            : controller.selectedMonth.value,
                                     items: List.generate(
                                       12,
-                                          (index) =>
-                                          (index + 1).toString().padLeft(2, '0'),
+                                      (index) => (index + 1)
+                                          .toString()
+                                          .padLeft(2, '0'),
                                     ),
                                     hint: "month_label".tr,
-                                    onChanged: (value) =>
-                                    controller.selectedMonth.value = value ?? '',
+                                    onChanged: (value) => controller
+                                        .selectedMonth.value = value ?? '',
                                     height: 40.h,
                                     width: double.infinity,
                                     borderRadius: 24.r,
                                     fillColor: Colors.grey[100],
-                                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 8.w),
                                     hintStyle: customTextStyle(
                                       color: Colors.grey,
                                       fontSize: 10.sp,
@@ -216,23 +238,25 @@ class ReportScreen extends StatelessWidget {
                               SizedBox(width: 8.w),
                               Expanded(
                                 child: Obx(
-                                      () => CustomDropdown<String>(
+                                  () => CustomDropdown<String>(
                                     value: controller.selectedYear.value.isEmpty
                                         ? null
                                         : controller.selectedYear.value,
                                     items: List.generate(
                                       10,
-                                          (index) =>
-                                          (DateTime.now().year-2 + index).toString(),
+                                      (index) =>
+                                          (DateTime.now().year - 2 + index)
+                                              .toString(),
                                     ),
                                     hint: "year_label".tr,
-                                    onChanged: (value) =>
-                                    controller.selectedYear.value = value ?? '',
+                                    onChanged: (value) => controller
+                                        .selectedYear.value = value ?? '',
                                     height: 40.h,
                                     width: double.infinity,
                                     borderRadius: 24.r,
                                     fillColor: Colors.grey[100],
-                                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 8.w),
                                     hintStyle: customTextStyle(
                                       color: Colors.grey,
                                       fontSize: 10.sp,
@@ -247,7 +271,8 @@ class ReportScreen extends StatelessWidget {
 
                           // Checkboxes Section
                           Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                            padding:
+                                const EdgeInsets.only(left: 8.0, right: 8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -255,7 +280,7 @@ class ReportScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Obx(
-                                          () => GestureDetector(
+                                      () => GestureDetector(
                                         // onTap: () {
                                         //   controller.includeIncome.value =
                                         //       !controller.includeIncome.value;
@@ -272,10 +297,10 @@ class ReportScreen extends StatelessWidget {
                                           ),
                                           child: controller.includeIncome.value
                                               ? SvgPicture.asset(
-                                            AppIcon.check,
-                                            width: 16.sp,
-                                            height: 16.sp,
-                                          )
+                                                  AppIcon.check,
+                                                  width: 16.sp,
+                                                  height: 16.sp,
+                                                )
                                               : null,
                                         ),
                                       ),
@@ -295,7 +320,7 @@ class ReportScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Obx(
-                                          () => GestureDetector(
+                                      () => GestureDetector(
                                         // onTap: () {
                                         //   controller.includeOutlay.value =
                                         //       !controller.includeOutlay.value;
@@ -312,10 +337,10 @@ class ReportScreen extends StatelessWidget {
                                           ),
                                           child: controller.includeOutlay.value
                                               ? SvgPicture.asset(
-                                            AppIcon.check,
-                                            width: 16.sp,
-                                            height: 16.sp,
-                                          )
+                                                  AppIcon.check,
+                                                  width: 16.sp,
+                                                  height: 16.sp,
+                                                )
                                               : null,
                                         ),
                                       ),
@@ -332,12 +357,11 @@ class ReportScreen extends StatelessWidget {
                                   ],
                                 ),
                                 const Spacer(),
-
                                 Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Obx(
-                                          () => GestureDetector(
+                                      () => GestureDetector(
                                         // onTap: () {
                                         //   controller.includeNumberOfCars.value =
                                         //       !controller.includeNumberOfCars.value;
@@ -352,12 +376,13 @@ class ReportScreen extends StatelessWidget {
                                               width: 2,
                                             ),
                                           ),
-                                          child: controller.includeNumberOfCars.value
+                                          child: controller
+                                                  .includeNumberOfCars.value
                                               ? SvgPicture.asset(
-                                            AppIcon.check,
-                                            width: 16.sp,
-                                            height: 16.sp,
-                                          )
+                                                  AppIcon.check,
+                                                  width: 16.sp,
+                                                  height: 16.sp,
+                                                )
                                               : null,
                                         ),
                                       ),
@@ -376,7 +401,6 @@ class ReportScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-
 
                           // Toggle for Daily Report Generation
                           // Row(
@@ -411,13 +435,12 @@ class ReportScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                               ),
                               SizedBox(height: 8.sp),
-
                               Obx(
-                                    () => Radio<String>(
+                                () => Radio<String>(
                                   value: "عربي",
                                   groupValue: controller.selectedLanguage.value,
-                                  onChanged: (value) =>
-                                  controller.selectedLanguage.value = value!,
+                                  onChanged: (value) => controller
+                                      .selectedLanguage.value = value!,
                                   activeColor: AppColors.primary,
                                 ),
                               ),
@@ -427,11 +450,11 @@ class ReportScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                               ),
                               Obx(
-                                    () => Radio<String>(
+                                () => Radio<String>(
                                   value: "English",
                                   groupValue: controller.selectedLanguage.value,
-                                  onChanged: (value) =>
-                                  controller.selectedLanguage.value = value!,
+                                  onChanged: (value) => controller
+                                      .selectedLanguage.value = value!,
                                   activeColor: AppColors.primary,
                                 ),
                               ),
@@ -446,19 +469,18 @@ class ReportScreen extends StatelessWidget {
                           const Spacer(),
 
                           Obx(
-                                () => CustomButton(
+                            () => CustomButton(
                               text: controller.isLoading.value
                                   ? "Generating...".tr
                                   : "report_release".tr,
                               onPressed: controller.isLoading.value
                                   ? null
-                                  : ()  {
-                                controller
-                                    .generateReport();
-                                // if (success) {
-                                //  controller.reportSuccess();
-                                // }
-                              },
+                                  : () {
+                                      controller.generateReport();
+                                      // if (success) {
+                                      //  controller.reportSuccess();
+                                      // }
+                                    },
                               backgroundColor: controller.isLoading.value
                                   ? Colors.grey
                                   : null,
@@ -467,20 +489,20 @@ class ReportScreen extends StatelessWidget {
                         ],
                       ),
                       Obx(
-                            () => controller.isLoading.value
+                        () => controller.isLoading.value
                             ? Positioned(
-                          top: 10,
-                          left: 10,
-                          right: 10,
-                          bottom: 10,
-                          child: Center(
-                            child: Image.asset(
-                              AppImages.loading,
-                              width: 150.w,
-                              height: 150.w,
-                            ),
-                          ),
-                        )
+                                top: 10,
+                                left: 10,
+                                right: 10,
+                                bottom: 10,
+                                child: Center(
+                                  child: Image.asset(
+                                    AppImages.loading,
+                                    width: 150.w,
+                                    height: 150.w,
+                                  ),
+                                ),
+                              )
                             : const SizedBox(),
                       )
                     ],
@@ -494,4 +516,3 @@ class ReportScreen extends StatelessWidget {
     );
   }
 }
-

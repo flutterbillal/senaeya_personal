@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:Senaeya/Core/AppRoute/app_route.dart';
 import 'package:Senaeya/Helper/shared_prefe/shared_prefe.dart';
-import 'package:Senaeya/Utils/AppConst/app_const.dart';
 import 'package:Senaeya/Utils/AppLog/app_log.dart';
 import 'package:Senaeya/View/Screens/edit_profile_screen/models/profile_screen_model.dart';
 import 'package:Senaeya/View/Screens/home_screen/controller/home_controller.dart';

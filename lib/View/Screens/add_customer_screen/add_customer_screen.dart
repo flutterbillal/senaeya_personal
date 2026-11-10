@@ -1,29 +1,12 @@
-import 'package:Senaeya/Core/AppRoute/app_route.dart';
-import 'package:Senaeya/Service/api_url.dart';
-import 'package:Senaeya/Utils/AppColors/app_colors.dart';
-import 'package:Senaeya/Utils/ToastMsg/toast_message.dart';
-import 'package:Senaeya/View/Screens/auth_screens/login_screen/widgets/custom_button.dart';
-import 'package:Senaeya/View/Widgegts/customUserTextFiled.dart';
-import 'package:Senaeya/View/Widgegts/custom_button/next_button.dart';
-import 'package:Senaeya/View/Widgegts/custom_text_field/custom_text_field.dart';
-import 'package:Senaeya/View/Widgegts/vin_text_field.dart';
-import 'package:Senaeya/View/Widgets/carplate_text_filed.dart';
-import 'package:Senaeya/View/Widgets/custom_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Senaeya/View/Widgets/custom_app_bar.dart';
 import '../../../Utils/AppImg/app_img.dart';
-import '../../Widgegts/custom_text/custom_text.dart';
 import '../../Widgegts/user_management.dart';
 import '../../Widgegts/workshop_management.dart';
-import '../../Widgets/commonTextWithoutResize.dart';
-import '../../Widgets/custom_dropdown_field.dart';
-import '../../Widgets/custom_phone_field_with_button.dart';
-import '../../Widgets/custom_phone_text_filed/custom_phone_text_filed.dart';
-import '../auth_screens/login_screen/widgets/custom_text_field.dart';
+
 import 'controller/add_customer_screen_controller.dart';
 
 class AddCustomerScreen extends StatelessWidget {
@@ -96,7 +79,7 @@ class AddCustomerScreen extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   // Customer/Workshop selection
-                                 /* Obx(
+                                  /* Obx(
                                     () => Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
@@ -142,10 +125,14 @@ class AddCustomerScreen extends StatelessWidget {
                                   Obx(() {
                                     if (controller.userType.value == 1) {
                                       // Workshop view
-                                      return WorkshopManagement(formKey1: formKey1, controller: controller);
+                                      return WorkshopManagement(
+                                          formKey1: formKey1,
+                                          controller: controller);
                                     } else {
                                       // Customer view
-                                      return UserManagement(formKey: formKey, controller: controller);
+                                      return UserManagement(
+                                          formKey: formKey,
+                                          controller: controller);
                                     }
                                   }),
                                 ],
@@ -162,7 +149,3 @@ class AddCustomerScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-

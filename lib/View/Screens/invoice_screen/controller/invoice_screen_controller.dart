@@ -4,8 +4,6 @@ import 'package:Senaeya/Utils/ToastMsg/toast_message.dart';
 import 'package:Senaeya/View/Screens/invoice_screen/models/invoice_screen_model.dart';
 import 'package:get/get.dart';
 
-import '../../../../Helper/shared_prefe/shared_prefe.dart';
-
 class InvoiceScreenController extends GetxController {
   RxBool isLoading = false.obs;
   Rxn<InvoiceScreenModel> invoiceScreenModel = Rxn<InvoiceScreenModel>();
@@ -13,7 +11,7 @@ class InvoiceScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    subscriptionId = Get.arguments['subscriptionId']??'';
+    subscriptionId = Get.arguments['subscriptionId'] ?? '';
     // print("====================subsriptionId$subscriptionId");
     fetchData();
   }

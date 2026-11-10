@@ -1,4 +1,3 @@
-import 'package:Senaeya/Core/AppRoute/app_route.dart';
 import 'package:Senaeya/Utils/ToastMsg/toast_message.dart';
 import 'package:Senaeya/View/Screens/auth_screens/repo/auth_repo.dart';
 import 'package:Senaeya/View/Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
@@ -11,42 +10,36 @@ class ForgotScreenController extends GetxController {
   var errorMessage = ''.obs;
   var successMessage = ''.obs;
 
-
-
-  Future<void>onTapForget()async{
+  Future<void> onTapForget() async {
     // final phone = phoneController.text.trim();
     // if (!_validatePhone(phone)) {
     //   errorMessage.value = 'forgot_password_invalid_phone'.tr;
     //   return;
     // }
-    isLoading.value=true;
-    Response response = await AuthRepo().forgotPassword(password: phoneController.text.trim());
-    isLoading.value=false;
-    if(response.statusCode==200){
+    isLoading.value = true;
+    Response response =
+        await AuthRepo().forgotPassword(password: phoneController.text.trim());
+    isLoading.value = false;
+    if (response.statusCode == 200) {
       CustomAlert.showInfo(
         context: Get.context!,
         message: "The new password has\n been sent via WhatsApp".tr,
         onPressed: () {
-         Navigator.pop(Get.context!);
+          Navigator.pop(Get.context!);
         },
       );
-
-    }else{
-      errorMessage.value=response.statusText??"Error";
-      showCustomSnackBar(errorMessage.value,isError: true);
+    } else {
+      errorMessage.value = response.statusText ?? "Error";
+      showCustomSnackBar(errorMessage.value, isError: true);
     }
   }
 
-
-  bool _validatePhone(String phone) {
+  bool validatePhone(String phone) {
     // Basic Saudi phone validation: starts with 05, 9 digits
-    final normalized = phone
-        .replaceAll('+9665', '')
-        .replaceAll(RegExp(r'[^0-9]'), '');
+    final normalized =
+        phone.replaceAll('+9665', '').replaceAll(RegExp(r'[^0-9]'), '');
     return normalized.length == 9 && normalized.startsWith('5');
   }
-
-
 
   void initial() {
     phoneController = TextEditingController();

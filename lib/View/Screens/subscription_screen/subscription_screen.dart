@@ -3,7 +3,6 @@ import 'package:Senaeya/Utils/AppImg/app_img.dart';
 import 'package:Senaeya/View/Screens/auth_screens/login_screen/widgets/custom_button.dart';
 import 'package:Senaeya/View/Screens/subscription_screen/controller/subscription_screen_controller.dart';
 import 'package:Senaeya/View/Widgets/custom_app_bar.dart';
-import 'package:Senaeya/View/Widgets/custom_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -51,9 +50,10 @@ class SubscriptionScreen extends StatelessWidget {
                         return const Center(child: CircularProgressIndicator());
                       }
 
-                      final subscription = controller.subscriptionsList.isNotEmpty
-                          ? controller.subscriptionsList[0]
-                          : null;
+                      final subscription =
+                          controller.subscriptionsList.isNotEmpty
+                              ? controller.subscriptionsList[0]
+                              : null;
 
                       if (subscription == null) {
                         return Center(
@@ -86,7 +86,8 @@ class SubscriptionScreen extends StatelessWidget {
                                           width: 28.w, height: 28.w),
                                       SizedBox(width: 6.w),
                                       CustomText(
-                                        text: '${subscription.monthlyBasePrice}',
+                                        text:
+                                            '${subscription.monthlyBasePrice}',
                                         fontSize: 32.sp,
                                         fontWeight: FontWeight.w700,
                                         color: Colors.white,
@@ -203,8 +204,9 @@ class SubscriptionScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: TextField(
-                                    onTapOutside: (_){
-                                      FocusScope.of(Get.key.currentContext!).unfocus();
+                                    onTapOutside: (_) {
+                                      FocusScope.of(Get.key.currentContext!)
+                                          .unfocus();
                                     },
                                     controller: controller.cuponCodeController,
                                     decoration: InputDecoration(
@@ -212,7 +214,8 @@ class SubscriptionScreen extends StatelessWidget {
                                       hintStyle: TextStyle(
                                           color: Colors.grey, fontSize: 14.sp),
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(4.r),
+                                        borderRadius:
+                                            BorderRadius.circular(4.r),
                                       ),
                                       contentPadding: EdgeInsets.symmetric(
                                           horizontal: 16.w, vertical: 12.h),
@@ -329,8 +332,7 @@ class SubscriptionScreen extends StatelessWidget {
                                           SizedBox(width: 4.w),
                                           CustomText(
                                             text:
-                                                "${(subscription.price -
-                                                    (subscription.price * controller.cuponDiscount.value / 100)).toStringAsFixed(2)}",
+                                                "${(subscription.price - (subscription.price * controller.cuponDiscount.value / 100)).toStringAsFixed(2)}",
                                             fontSize: 15.sp,
                                             fontWeight: FontWeight.w700,
                                           ),

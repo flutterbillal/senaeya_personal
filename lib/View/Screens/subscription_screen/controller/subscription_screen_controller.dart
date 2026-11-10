@@ -2,11 +2,9 @@ import 'package:Senaeya/Utils/ToastMsg/toast_message.dart';
 import 'package:Senaeya/View/Screens/subscription_screen/model/subscrioption_model.dart';
 import 'package:Senaeya/View/Screens/subscription_screen/repo/subscription_repo.dart';
 import 'package:Senaeya/View/Screens/subscription_screen/model/moyasar_payment_model.dart';
-import 'package:Senaeya/View/Screens/subscription_screen/moyasar_payment_screen.dart';
 import 'package:Senaeya/View/Widgegts/subscription_web_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SubscriptionScreenController extends GetxController {
   RxBool isLoading = false.obs;

@@ -3,7 +3,6 @@ import 'package:Senaeya/Service/api_url.dart';
 import 'package:Senaeya/Utils/ToastMsg/toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_field/phone_number.dart';
 
 import '../../../../../Helper/shared_prefe/shared_prefe.dart';
 import '../../../../Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
@@ -14,7 +13,6 @@ class ContactUsController extends GetxController {
   final phoneController = TextEditingController();
   String phoneNumber = "";
   final messageController = TextEditingController();
-
 
   Future<void> contactUs({required VoidCallback onTapOk}) async {
     try {
@@ -55,9 +53,8 @@ response: ${response.body}
 
   void onSendSuccess({required VoidCallback onTap}) {
     CustomAlert.showInfo(
-      context: Get.context!,
-      message: 'your_message_has_been_send_successfully'.tr,
-      onPressed: onTap
-    );
+        context: Get.context!,
+        message: 'your_message_has_been_send_successfully'.tr,
+        onPressed: onTap);
   }
 }

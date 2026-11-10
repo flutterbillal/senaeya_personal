@@ -1,5 +1,4 @@
 import 'package:Senaeya/Core/AppRoute/app_route.dart';
-import 'package:Senaeya/Service/api_client.dart';
 import 'package:Senaeya/Utils/AppLog/app_log.dart';
 import 'package:Senaeya/View/Screens/profile_screen/model/subscription_details_model.dart';
 import 'package:Senaeya/View/Screens/profile_screen/repo/profile_repo.dart';
@@ -10,8 +9,80 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:http/http.dart' as http;
 import '../../../Helper/shared_prefe/shared_prefe.dart';
+
+const String _hideInvoiceHeaderScript = r'''
+(function() {
+  function applyHiding() {
+    // 1. Inject global CSS rules
+    if (!document.getElementById('moyasar-custom-hide-style')) {
+      var style = document.createElement('style');
+      style.id = 'moyasar-custom-hide-style';
+      style.innerHTML = `
+        /* Hide STC Pay button */
+        [class*="stc"], [id*="stc"], button:has([alt*="stc"]), button:has(img[src*="stc"]) {
+          display: none !important;
+        }
+        /* Hide invoice title/header container if present */
+        .invoice-details, .invoice-header, .invoice-summary,
+        [class*="InvoiceDetails"], [class*="invoice-header"], [class*="invoice_header"] {
+          display: none !important;
+        }
+      `;
+      (document.head || document.documentElement).appendChild(style);
+    }
+
+    // 2. Hide Back button/link
+    document.querySelectorAll('a, button, span').forEach(function(el) {
+      var txt = (el.innerText || '').trim();
+      if (txt === '← Back' || txt === 'Back' || txt === 'رجوع' || txt === '←') {
+        el.style.display = 'none';
+      }
+    });
+
+    // 3. Hide Invoice summary container (amount, date, Expires, UUID, Description)
+    document.querySelectorAll('div, section, header').forEach(function(el) {
+      // Never hide elements that contain input fields (payment form)
+      if (el.querySelector('input, select, iframe')) return;
+
+      var text = el.innerText || '';
+      var hasExpiry = text.includes('Expires') || text.includes('ينتهي') || text.includes('Expiry');
+      var hasSAR = text.includes('SAR') || text.includes('ر.س');
+      var hasUUID = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}/i.test(text);
+
+      if ((hasExpiry || hasUUID) && (hasSAR || text.includes('Invoice') || text.includes('فاتورة'))) {
+        el.style.display = 'none';
+      }
+
+      // Also hide the description box ("باقة الاشتراك السنوي") right above the form if separate
+      if (text.includes('باقة الاشتراك') && !el.querySelector('input')) {
+        el.style.display = 'none';
+      }
+    });
+
+    // 4. Hide STC Pay button & its wrapper
+    document.querySelectorAll('button, div[role="button"]').forEach(function(btn) {
+      var btnText = (btn.innerText || '').toLowerCase();
+      var hasStc = btnText.includes('stc') || 
+                   btn.querySelector('img[src*="stc"], img[alt*="stc"], svg[class*="stc"], [class*="stc"]');
+      if (hasStc) {
+        btn.style.display = 'none';
+        if (btn.parentElement && btn.parentElement.children.length === 1) {
+          btn.parentElement.style.display = 'none';
+        }
+      }
+    });
+  }
+
+  applyHiding();
+  var count = 0;
+  var interval = setInterval(function() {
+    applyHiding();
+    count++;
+    if (count > 25) clearInterval(interval);
+  }, 200);
+})();
+''';
 
 void openSubscriptionWebView(BuildContext context, String paymentUrl,
     {required String paymentSuccessUrl,
@@ -25,17 +96,21 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
   String url = paymentUrl;
   logger.i("Opening subscription URL: $url");
 
-  final WebViewController controller = WebViewController()
+  late final WebViewController controller;
+  controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..setNavigationDelegate(
       NavigationDelegate(
+        onPageFinished: (String url) {
+          controller.runJavaScript(_hideInvoiceHeaderScript);
+        },
         onNavigationRequest: (NavigationRequest request) async {
           logger.i("Navigating to URL: ${request.url}");
           if (request.url.contains(paymentSuccessUrl) &&
               request.url.contains("message=APPROVED")) {
             logger.i("Payment Success URL detected");
             logger.i("Payment Success URL: ${request.url}");
-            logger.i("Payment Success URL: ${paymentSuccessUrl}");
+            logger.i("Payment Success URL: $paymentSuccessUrl");
             // Verify payment status from the success URL
 
             try {
@@ -63,61 +138,9 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
                         arguments: {"subscriptionId": subscriptionId});
                   },
                 );
-                // showDialog(
-                //   context: context,
-                //   builder: (context) => SizedBox(
-                //     height: 400,
-                //     child: Directionality(
-                //       textDirection: TextDirection.ltr,
-                //       child: AlertDialog(
-                //         title: CustomText(text: 'Payment Successful'.tr),
-                //         content: CustomText(
-                //           text: ,
-                //           maxLines: 3,
-                //         ),
-                //         actions: [
-                //           TextButton(
-                //             onPressed: () async {
-                //               Navigator.of(context).pop(); // Close alert dialog
-                //               Navigator.of(context).pop(); // Close webview
-
-                //               Get.toNamed(AppRoute.invoiceScreen, arguments: {
-                //                 "subscriptionId": subscriptionId
-                //               });
-                //             },
-                //             child: CustomText(text: 'OK'.tr),
-                //           )
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // );
               } else {
                 logger.e(
                     "Payment verification failed with status: ${response.statusCode}");
-                // showDialog(
-                //   context: context,
-                //   builder: (context) => Directionality(
-                //     textDirection: TextDirection.ltr,
-                //     child: AlertDialog(
-                //       title: CustomText(text: 'Payment Verification Failed'.tr),
-                //       content: CustomText(
-                //           maxLines: 4,
-                //           text:
-                //               'Unable to verify payment. Please contact support.'
-                //                   .tr),
-                //       actions: [
-                //         TextButton(
-                //           onPressed: () {
-                //             Navigator.of(context).pop(); // Close alert dialog
-                //             Navigator.of(context).pop(); // Close webview
-                //           },
-                //           child: CustomText(text: 'OK'.tr),
-                //         )
-                //       ],
-                //     ),
-                //   ),
-                // );
                 CustomAlert.showInfo(
                   context: Get.context!,
                   message:
@@ -130,27 +153,6 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
               }
             } catch (e) {
               logger.e("Error verifying payment: $e");
-              // showDialog(
-              //   context: context,
-              //   builder: (context) => Directionality(
-              //     textDirection: TextDirection.ltr,
-              //     child: AlertDialog(
-              //       title: CustomText(text: 'Error'.tr),
-              //       content: CustomText(
-              //           maxLines: 4,
-              //           text: 'An error occurred while verifying payment.'.tr),
-              //       actions: [
-              //         TextButton(
-              //           onPressed: () {
-              //             Navigator.of(context).pop(); // Close alert dialog
-              //             Navigator.of(context).pop(); // Close webview
-              //           },
-              //           child: CustomText(text: 'OK'.tr),
-              //         )
-              //       ],
-              //     ),
-              //   ),
-              // );
               CustomAlert.showInfo(
                 context: Get.context!,
                 message:
@@ -166,7 +168,7 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
               request.url.contains("message=DECLINED")) {
             logger.i("Payment Failed URL detected");
             logger.i("Payment Failed URL: ${request.url}");
-            logger.i("Payment Failed URL: ${paymentSuccessUrl}");
+            logger.i("Payment Failed URL: $paymentSuccessUrl");
             CustomAlert.showInfo(
               context: Get.context!,
               message:
@@ -177,34 +179,11 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
               },
             );
 
-            // showDialog(
-            //   context: context,
-            //   builder: (context) => Directionality(
-            //     textDirection: TextDirection.ltr,
-            //     child: AlertDialog(
-            //       title: CustomText(text: 'Payment Failed'.tr),
-            //       content: CustomText(
-            //         text: 'Your subscription payment was not successful.'.tr,
-            //         maxLines: 3,
-            //       ),
-            //       actions: [
-            //         TextButton(
-            //           onPressed: () {
-            //             Navigator.of(context).pop(); // Close alert dialog
-            //             Navigator.of(context).pop(); // Close webview
-            //           },
-            //           child: CustomText(text: 'OK'.tr),
-            //         )
-            //       ],
-            //     ),
-            //   ),
-            // );
-
             return NavigationDecision.prevent;
           } else if (request.url.contains("message=CANCELLED")) {
             logger.i("Payment Cancelled URL detected");
             logger.i("Payment Cancelled URL: ${request.url}");
-            logger.i("Payment Cancelled URL: ${paymentSuccessUrl}");
+            logger.i("Payment Cancelled URL: $paymentSuccessUrl");
             CustomAlert.showInfo(
               context: Get.context!,
               message:
@@ -214,30 +193,17 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
                 Navigator.of(context).pop(); // Close webview
               },
             );
-            // showDialog(
-            //   context: context,
-            //   builder: (context) => Directionality(
-            //     textDirection: TextDirection.ltr,
-            //     child: AlertDialog(
-            //       title: CustomText(text: 'Payment Cancelled'.tr),
-            //       content: CustomText(
-            //         text: 'Your subscription payment was cancelled.'.tr,
-            //         maxLines: 3,
-            //       ),
-            //       actions: [
-            //         TextButton(
-            //           onPressed: () {
-            //             Navigator.of(context).pop(); // Close alert dialog
-            //             Navigator.of(context).pop(); // Close webview
-            //           },
-            //           child: CustomText(text: 'OK'.tr),
-            //         )
-            //       ],
-            //     ),
-            //   ),
-            // );
 
             return NavigationDecision.prevent;
+          } else {
+            CustomAlert.showInfo(
+              context: Get.context!,
+              message: "${'Payment Failed'.tr}\n ${'Something went wrong'.tr}",
+              onPressed: () {
+                Navigator.of(context).pop(); // Close alert dialog
+                Navigator.of(context).pop(); // Close webview
+              },
+            );
           }
           return NavigationDecision.navigate;
         },
@@ -252,7 +218,6 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            // Get.find<SubscriptionScreenController>().getSubscriptions();
             Navigator.pop(context); // Close WebView screen
           },
         ),

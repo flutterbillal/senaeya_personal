@@ -1,10 +1,6 @@
-import 'package:Senaeya/Helper/shared_prefe/shared_prefe.dart';
 import 'package:Senaeya/Service/api_client.dart';
 import 'package:Senaeya/View/Screens/customers_screen/model/client_by_car_model.dart';
-import 'package:Senaeya/View/Screens/customers_screen/model/client_by_contact_model.dart';
-import 'package:Senaeya/View/Screens/customers_screen/model/customers_model.dart';
 import 'package:Senaeya/View/Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
-import 'package:Senaeya/View/Widgegts/custom_alert_verification_dialog/custom_alert_verification_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -95,6 +91,7 @@ class CustomersScreenController extends GetxController {
       );
     }
   }
+
   void setPlateLetter(int index, String value) => plateLetters[index] = value;
   void setSelectedColor(int? value) => selectedColor.value = value ?? 0;
   void setVin(String value) => vin.value = value;
@@ -134,8 +131,6 @@ class CustomersScreenController extends GetxController {
       );
     }
   }
-
-
 
   RxList<CommonItemModel> carSymbols = <CommonItemModel>[].obs;
   RxBool isLoading = false.obs;
@@ -179,8 +174,9 @@ class CustomersScreenController extends GetxController {
     if (response.statusCode == 200) {
       var responseData = response.body;
 
-      if (responseData['data'] != null && responseData['data'] is List && (responseData['data'] as List).isNotEmpty) {
-
+      if (responseData['data'] != null &&
+          responseData['data'] is List &&
+          (responseData['data'] as List).isNotEmpty) {
         final dataList = responseData['data'] as List?;
         if (dataList == null || dataList.isEmpty) return;
 
@@ -205,17 +201,13 @@ class CustomersScreenController extends GetxController {
         }
 
 // Extract fields safely
-        final clientType = clientMap?['clientType'] ?? '';
-        final isWorkshop = clientType == 'WorkShop';
 
-        final clientName = clientIdMap?['name'] ??
-            clientMap?['workShopNameAsClient'] ??
-            '';
+        final clientName =
+            clientIdMap?['name'] ?? clientMap?['workShopNameAsClient'] ?? '';
 
-        final clientPhone = clientIdMap?['contact'] ??
-            clientMap?['contact'] ??
-            '';
-        final isWarning = clientMap?['hasPaymentIssues'] ;
+        final clientPhone =
+            clientIdMap?['contact'] ?? clientMap?['contact'] ?? '';
+        final isWarning = clientMap?['hasPaymentIssues'];
 
         final clientId = clientMap?['_id'] ?? firstItem['_id'] ?? '';
 
@@ -223,7 +215,8 @@ class CustomersScreenController extends GetxController {
           CustomerCustomModel(
             id: clientId,
             name: clientName,
-            phone: clientPhone, isWarning: isWarning,
+            phone: clientPhone,
+            isWarning: isWarning,
           ),
         );
 
@@ -232,28 +225,29 @@ class CustomersScreenController extends GetxController {
         showCustomSnackBar('No customer data found'.tr, isError: true);
       }
     } else if (response.statusCode == 400) {
-      showCustomSnackBar('Customer not found with this phone number'.tr, isError: true);
+      showCustomSnackBar('Customer not found with this phone number'.tr,
+          isError: true);
     } else {
       showCustomSnackBar('Client not found'.tr, isError: true);
     }
   }
 
-
   ///Customer lIst by non saudi Car palte
-  Future<void>getCustomerListByCarPlate()async{
+  Future<void> getCustomerListByCarPlate() async {
     if (plateCode.value.isEmpty || plateCode.value == '------') {
       showCustomSnackBar('Please enter a plate number'.tr, isError: true);
       return;
     }
 
     listIsLoading.value = true;
-    Response response = await AddCustomerRepo().getCustomerByCarPlate(number: plateCode.value);
+    Response response =
+        await AddCustomerRepo().getCustomerByCarPlate(number: plateCode.value);
     listIsLoading.value = false;
 
     print('====> Response status (by plate): ${response.statusCode}');
     print('====> Response body (by plate): ${response.body}');
     customerList.clear();
-    if(response.statusCode==200){
+    if (response.statusCode == 200) {
       var responseData = response.body;
 
       if (responseData['data'] != null &&
@@ -261,20 +255,23 @@ class CustomersScreenController extends GetxController {
           responseData['data']['result'] != null &&
           responseData['data']['result'] is List &&
           (responseData['data']['result'] as List).isNotEmpty) {
-
-
         for (var item in responseData['data']['result']) {
           var clientData = item['client'];
           var clientIdData = clientData != null ? clientData['clientId'] : null;
-          final isWarning = clientData?['hasPaymentIssues']?? false;
-
+          final isWarning = clientData?['hasPaymentIssues'] ?? false;
 
           customerList.add(
             CustomerCustomModel(
               isWarning: isWarning,
-              id: clientData != null ? (clientData['_id'] ?? '') : (clientIdData?['_id'] ?? ''),
-              name: clientIdData != null ? (clientIdData['name'] ?? 'Unknown') : (clientData?['name'] ?? 'Unknown'),
-              phone: clientData != null ? (clientData['contact'] ?? '') : (clientIdData?['contact'] ?? ''),
+              id: clientData != null
+                  ? (clientData['_id'] ?? '')
+                  : (clientIdData?['_id'] ?? ''),
+              name: clientIdData != null
+                  ? (clientIdData['name'] ?? 'Unknown')
+                  : (clientData?['name'] ?? 'Unknown'),
+              phone: clientData != null
+                  ? (clientData['contact'] ?? '')
+                  : (clientIdData?['contact'] ?? ''),
             ),
           );
         }
@@ -283,39 +280,40 @@ class CustomersScreenController extends GetxController {
       } else {
         showCustomSnackBar('No customer data found'.tr, isError: true);
       }
-    } else if(response.statusCode==400){
-      showCustomSnackBar('Customer not found with this plate number'.tr, isError: true);
+    } else if (response.statusCode == 400) {
+      showCustomSnackBar('Customer not found with this plate number'.tr,
+          isError: true);
     } else {
       showCustomSnackBar('Client not found'.tr, isError: true);
     }
   }
 
-
   ///Customer lIst by Saudi Car palte
-
 
   ///Send customer to recieve car
   RxBool messageSendingIsLoading = false.obs;
 
-  Future<void>sendMessageToReceiveCar({required String clientId})async{
-
+  Future<void> sendMessageToReceiveCar({required String clientId}) async {
     messageSendingIsLoading.value = true;
-    Response response = await ApiClient.postData(ApiConstant.sendMessageToReceiveCar(clientId:clientId ),);
+    Response response = await ApiClient.postData(
+      ApiConstant.sendMessageToReceiveCar(clientId: clientId),
+    );
     messageSendingIsLoading.value = false;
-    if(response.statusCode==200){
+    if (response.statusCode == 200) {
       CustomAlert.showInfo(
         context: Get.context!,
-        message: 'A message has been sent to the customer to pick up the car'.tr,
+        message:
+            'A message has been sent to the customer to pick up the car'.tr,
         onPressed: () {
           Get.back(); // Close the dialog only
         },
       );
       // showCustomSnackBar('A message has been sent to the customer to pick up the car'.tr, isError: false);
-    }else{
-      showCustomSnackBar(response.statusText ?? 'Error sending message', isError: true);
+    } else {
+      showCustomSnackBar(response.statusText ?? 'Error sending message',
+          isError: true);
     }
   }
-
 
   // Helper function to convert English numerals to Arabic numerals
   String _convertToArabicNumerals(String englishNumber) {
@@ -340,10 +338,6 @@ class CustomersScreenController extends GetxController {
     return result;
   }
 
-
-
-
-
   void searchCustomerByPhone() {
     CustomAlert.showInfo(
       context: Get.context!,
@@ -354,7 +348,9 @@ class CustomersScreenController extends GetxController {
   void searchCustomerByCar() {
     CustomAlert.showInfo(
       context: Get.context!,
-      message: "The Car is Not Registered\nat the workshop,\nPlease complete the data entry".tr,
+      message:
+          "The Car is Not Registered\nat the workshop,\nPlease complete the data entry"
+              .tr,
     );
   }
 
@@ -372,27 +368,30 @@ class CustomersScreenController extends GetxController {
       },
     );
   }
-  Future<void>getCustomerListByCarPlateInternational()async{
+
+  Future<void> getCustomerListByCarPlateInternational() async {
     if (plateCode.value.isEmpty || plateCode.value == '------') {
       showCustomSnackBar('Please enter a plate number'.tr, isError: true);
       return;
     }
 
     listIsLoading.value = true;
-    Response response = await AddCustomerRepo().getCustomerByCarPlateNumberOrSlag(slugOrPlateNumber: plateCode.value);
+    Response response = await AddCustomerRepo()
+        .getCustomerByCarPlateNumberOrSlag(slugOrPlateNumber: plateCode.value);
     listIsLoading.value = false;
 
     print('====> Response status (by plate): ${response.statusCode}');
     print('====> Response body (by plate): ${response.body}');
     customerList.clear();
-    if(response.statusCode==200){
-
-      var responseData = response.body;
-
-      ClientByCarModel clientByCarModel=ClientByCarModel.fromJson(response.body);
-      List<ClientItem> clients=clientByCarModel.clientList??[];
-      for(var client in clients){
-        String? name = (client.workShopNameAsClient!=null&&client.workShopNameAsClient!.isNotEmpty)?client.workShopNameAsClient: client.clientId?.name??"";
+    if (response.statusCode == 200) {
+      ClientByCarModel clientByCarModel =
+          ClientByCarModel.fromJson(response.body);
+      List<ClientItem> clients = clientByCarModel.clientList ?? [];
+      for (var client in clients) {
+        String? name = (client.workShopNameAsClient != null &&
+                client.workShopNameAsClient!.isNotEmpty)
+            ? client.workShopNameAsClient
+            : client.clientId?.name ?? "";
         customerList.add(
           CustomerCustomModel(
             isWarning: client.isWarning,
@@ -404,22 +403,19 @@ class CustomersScreenController extends GetxController {
       }
 
       if (customerList.isNotEmpty) {
-
-
-
-
         showCustomSnackBar('Customer(s) found successfully'.tr, isError: false);
       } else {
         showCustomSnackBar('No customer data found', isError: true);
       }
-    } else if(response.statusCode==400){
-      showCustomSnackBar('Customer not found with this plate number', isError: true);
+    } else if (response.statusCode == 400) {
+      showCustomSnackBar('Customer not found with this plate number',
+          isError: true);
     } else {
       showCustomSnackBar('Client not found'.tr, isError: true);
     }
   }
 
-  Future<void>getCustomerListBySaudiCar()async{
+  Future<void> getCustomerListBySaudiCar() async {
     if (plateNumber.value.isEmpty) {
       showCustomSnackBar('Please enter a plate number'.tr, isError: true);
       return;
@@ -438,7 +434,7 @@ class CustomersScreenController extends GetxController {
       if (letter.isNotEmpty) {
         // Find matching option for this letter
         var matchedOption = letterOptions.firstWhere(
-              (option) => option['ar'] == letter || option['en'] == letter,
+          (option) => option['ar'] == letter || option['en'] == letter,
           orElse: () => {'en': '', 'ar': ''},
         );
 
@@ -460,25 +456,29 @@ class CustomersScreenController extends GetxController {
     // Join letters with dash
     String englishLettersString = englishLetters.join('');
     String arabicLettersString = arabicLetters.join('');
-    String slug = "${selectedCarSymbolId.value}-${plateNumber.value}-$arabicPlateNumber-$englishLettersString-$arabicLettersString";
+    String slug =
+        "${selectedCarSymbolId.value}-${plateNumber.value}-$arabicPlateNumber-$englishLettersString-$arabicLettersString";
 
     // Construct the slug: symbolId-plateNumberEnglish-plateNumberArabic-englishLetters
     // Example: 68e0b3451a87a17657aab6c5-1234-١٢٣٤-AB-CD
 
     listIsLoading.value = true;
-    Response response = await AddCustomerRepo().getCustomerByCarPlateNumberOrSlag(slugOrPlateNumber: slug);
+    Response response = await AddCustomerRepo()
+        .getCustomerByCarPlateNumberOrSlag(slugOrPlateNumber: slug);
     listIsLoading.value = false;
 
     print('====> Response status (by plate): ${response.statusCode}');
     print('====> Response body (by plate): ${response.body}');
     customerList.clear();
-    if(response.statusCode==200){
-      var responseData = response.body;
-
-      ClientByCarModel clientByCarModel=ClientByCarModel.fromJson(response.body);
-      List<ClientItem> clients=clientByCarModel.clientList??[];
-      for(var client in clients){
-        String? name = (client.workShopNameAsClient!=null&&client.workShopNameAsClient!.isNotEmpty)?client.workShopNameAsClient: client.clientId?.name??"";
+    if (response.statusCode == 200) {
+      ClientByCarModel clientByCarModel =
+          ClientByCarModel.fromJson(response.body);
+      List<ClientItem> clients = clientByCarModel.clientList ?? [];
+      for (var client in clients) {
+        String? name = (client.workShopNameAsClient != null &&
+                client.workShopNameAsClient!.isNotEmpty)
+            ? client.workShopNameAsClient
+            : client.clientId?.name ?? "";
         customerList.add(
           CustomerCustomModel(
             isWarning: client.isWarning,
@@ -490,16 +490,15 @@ class CustomersScreenController extends GetxController {
       }
 
       if (customerList.isNotEmpty) {
-
         showCustomSnackBar('Customer(s) found successfully'.tr, isError: false);
       } else {
         showCustomSnackBar('No customer data found', isError: true);
       }
-    } else if(response.statusCode==400){
-      showCustomSnackBar('Customer not found with this plate number', isError: true);
+    } else if (response.statusCode == 400) {
+      showCustomSnackBar('Customer not found with this plate number',
+          isError: true);
     } else {
       showCustomSnackBar('Client not found'.tr, isError: true);
     }
   }
-
 }

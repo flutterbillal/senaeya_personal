@@ -1,4 +1,3 @@
-import 'package:Senaeya/View/Widgegts/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -32,9 +31,8 @@ class CustomDropdownField extends StatelessWidget {
     final uniqueItems = items.toSet().toList();
 
     // Ensure the value is in the unique items list, otherwise set to null
-    final safeValue = (value?.isEmpty == true || !uniqueItems.contains(value))
-        ? null
-        : value;
+    final safeValue =
+        (value?.isEmpty == true || !uniqueItems.contains(value)) ? null : value;
 
     return Stack(
       children: [
@@ -45,16 +43,16 @@ class CustomDropdownField extends StatelessWidget {
           items: uniqueItems
               .map(
                 (e) => DropdownMenuItem(
-              value: e,
-              child: Center(
-                child: Text(
-                  e,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis, // Handle long text
+                  value: e,
+                  child: Center(
+                    child: Text(
+                      e,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis, // Handle long text
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          )
+              )
               .toList(),
           onChanged: enabled ? onChanged : null,
           icon: SvgPicture.asset(

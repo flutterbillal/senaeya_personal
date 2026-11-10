@@ -8,7 +8,6 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AppExplainScreen extends StatelessWidget {
   const AppExplainScreen({super.key});
@@ -111,35 +110,33 @@ class AppExplainScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Obx(
-                                        () => controller.isloading.value
+                                    () => controller.isloading.value
                                         ? const Center(
-                                      child: CircularProgressIndicator(
-                                        color: AppColors.primary,
-                                      ),
-                                    )
+                                            child: CircularProgressIndicator(
+                                              color: AppColors.primary,
+                                            ),
+                                          )
                                         : HtmlWidget(
-                                          // onTapUrl: (url) async {
-                                          //   final uri = Uri.parse(url);
-                                          //   if (await canLaunchUrl(uri)) {
-                                          //     await launchUrl(uri, mode: LaunchMode.externalApplication);
-                                          //   } else {
-                                          //     print("Could not launch $url");
-                                          //   }
-                                          //   return true; // mark link as handled
-                                          // },
-                                      controller
-                                          .appExplain
-                                          .value
-                                          ?.data?.content ??
-                                          '',
+                                            // onTapUrl: (url) async {
+                                            //   final uri = Uri.parse(url);
+                                            //   if (await canLaunchUrl(uri)) {
+                                            //     await launchUrl(uri, mode: LaunchMode.externalApplication);
+                                            //   } else {
+                                            //     print("Could not launch $url");
+                                            //   }
+                                            //   return true; // mark link as handled
+                                            // },
+                                            controller.appExplain.value?.data
+                                                    ?.content ??
+                                                '',
 
-                                      textStyle: TextStyle(
-                                        fontSize: 14.sp,
-                                        color: AppColors.primary,
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.5,
-                                      ),
-                                    ),
+                                            textStyle: TextStyle(
+                                              fontSize: 14.sp,
+                                              color: AppColors.primary,
+                                              fontWeight: FontWeight.w400,
+                                              height: 1.5,
+                                            ),
+                                          ),
                                   ),
                                 ],
                               ),

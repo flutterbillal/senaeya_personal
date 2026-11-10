@@ -1,19 +1,11 @@
-import 'package:Senaeya/Service/api_url.dart';
-import 'package:Senaeya/Utils/AppIcons/app_icons.dart';
 import 'package:Senaeya/View/Screens/invoice_summary_screen/widget/invoice_summary.dart';
-import 'package:Senaeya/View/Widgegts/custom_button/next_button.dart';
-import 'package:Senaeya/View/Widgets/custom_text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../Utils/AppImg/app_img.dart';
-import '../../Widgegts/customUserTextFiled.dart';
-import '../../Widgegts/liscence_plate_widget.dart';
 import '../../Widgets/custom_app_bar.dart';
 import 'controller/invoice_summary_controller.dart';
 import 'package:flutter/services.dart';
-import '../../Widgegts/custom_text/custom_text.dart';
 import '../../../Utils/AppColors/app_colors.dart';
 
 class InvoiceSummaryScreen extends StatelessWidget {
@@ -86,6 +78,4 @@ class InvoiceSummaryScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

@@ -139,7 +139,6 @@ class HomeController extends GetxController {
   /// Fetch profile data from API
   Future<void> fetchProfile() async {
     try {
-      //TODO: show loading indicator
       isLoading(false);
       Response response = await ApiClient.getData(ApiConstant.getProfile);
 

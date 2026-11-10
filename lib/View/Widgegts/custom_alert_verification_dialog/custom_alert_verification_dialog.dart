@@ -1,5 +1,4 @@
-﻿import 'package:Senaeya/View/Widgegts/custom_alert_dialog/custom_alert_dialog.dart';
-import 'package:Senaeya/View/Widgegts/custom_text/custom_text.dart';
+﻿import 'package:Senaeya/View/Widgegts/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:get/get.dart';
