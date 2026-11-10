@@ -38,70 +38,70 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
             // Verify payment status from the success URL
 
             try {
-              final Response response = await SubscriptionRepo()
-                  .createSubscription(
-                      packageId: packageId,
-                      amountPaid: amountPaid,
-                      couponCode: couponCode,
-                      vatPercent: vatPercent,
-                      flatDiscountedAmount: flatDiscountedAmount,
-                      flatVatAmount: flatVatAmount);
+              // final Response response = await SubscriptionRepo()
+              //     .createSubscription(
+              //         packageId: packageId,
+              //         amountPaid: amountPaid,
+              //         couponCode: couponCode,
+              //         vatPercent: vatPercent,
+              //         flatDiscountedAmount: flatDiscountedAmount,
+              //         flatVatAmount: flatVatAmount);
 
-              if (response.statusCode == 200 || response.statusCode == 201) {
-                logger.i("Payment verified successfully");
-                String subscriptionId = await getSubscriptionByWorkshop();
-                showDialog(
-                  context: context,
-                  builder: (context) => Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: AlertDialog(
-                      title: CustomText(text: 'Payment Successful'.tr),
-                      content: CustomText(
-                        text: 'Your subscription payment was successful.'.tr,
-                        maxLines: 3,
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () async {
-                            Navigator.of(context).pop(); // Close alert dialog
-                            Navigator.of(context).pop(); // Close webview
+              // if (response.statusCode == 200 || response.statusCode == 201) {
+              logger.i("Payment verified successfully");
+              String subscriptionId = await getSubscriptionByWorkshop();
+              showDialog(
+                context: context,
+                builder: (context) => Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: AlertDialog(
+                    title: CustomText(text: 'Payment Successful'.tr),
+                    content: CustomText(
+                      text: 'Your subscription payment was successful.'.tr,
+                      maxLines: 3,
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.of(context).pop(); // Close alert dialog
+                          Navigator.of(context).pop(); // Close webview
 
-                            Get.toNamed(AppRoute.invoiceScreen,
-                                arguments: {"subscriptionId": subscriptionId});
-                          },
-                          child: CustomText(text: 'OK'.tr),
-                        )
-                      ],
-                    ),
+                          Get.toNamed(AppRoute.invoiceScreen,
+                              arguments: {"subscriptionId": subscriptionId});
+                        },
+                        child: CustomText(text: 'OK'.tr),
+                      )
+                    ],
                   ),
-                );
-              } else {
-                logger.e(
-                    "Payment verification failed with status: ${response.statusCode}");
-                showDialog(
-                  context: context,
-                  builder: (context) => Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: AlertDialog(
-                      title: CustomText(text: 'Payment Verification Failed'.tr),
-                      content: CustomText(
-                          maxLines: 4,
-                          text:
-                              'Unable to verify payment. Please contact support.'
-                                  .tr),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop(); // Close alert dialog
-                            Navigator.of(context).pop(); // Close webview
-                          },
-                          child: CustomText(text: 'OK'.tr),
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              }
+                ),
+              );
+              // } else {
+              //   logger.e(
+              //       "Payment verification failed with status: ${response.statusCode}");
+              //   showDialog(
+              //     context: context,
+              //     builder: (context) => Directionality(
+              //       textDirection: TextDirection.ltr,
+              //       child: AlertDialog(
+              //         title: CustomText(text: 'Payment Verification Failed'.tr),
+              //         content: CustomText(
+              //             maxLines: 4,
+              //             text:
+              //                 'Unable to verify payment. Please contact support.'
+              //                     .tr),
+              //         actions: [
+              //           TextButton(
+              //             onPressed: () {
+              //               Navigator.of(context).pop(); // Close alert dialog
+              //               Navigator.of(context).pop(); // Close webview
+              //             },
+              //             child: CustomText(text: 'OK'.tr),
+              //           )
+              //         ],
+              //       ),
+              //     ),
+              //   );
+              // }
             } catch (e) {
               logger.e("Error verifying payment: $e");
               showDialog(
