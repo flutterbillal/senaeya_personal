@@ -95,52 +95,70 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
               } else {
                 logger.e(
                     "Payment verification failed with status: ${response.statusCode}");
-                showDialog(
-                  context: context,
-                  builder: (context) => Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: AlertDialog(
-                      title: CustomText(text: 'Payment Verification Failed'.tr),
-                      content: CustomText(
-                          maxLines: 4,
-                          text:
-                              'Unable to verify payment. Please contact support.'
-                                  .tr),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop(); // Close alert dialog
-                            Navigator.of(context).pop(); // Close webview
-                          },
-                          child: CustomText(text: 'OK'.tr),
-                        )
-                      ],
-                    ),
-                  ),
+                // showDialog(
+                //   context: context,
+                //   builder: (context) => Directionality(
+                //     textDirection: TextDirection.ltr,
+                //     child: AlertDialog(
+                //       title: CustomText(text: 'Payment Verification Failed'.tr),
+                //       content: CustomText(
+                //           maxLines: 4,
+                //           text:
+                //               'Unable to verify payment. Please contact support.'
+                //                   .tr),
+                //       actions: [
+                //         TextButton(
+                //           onPressed: () {
+                //             Navigator.of(context).pop(); // Close alert dialog
+                //             Navigator.of(context).pop(); // Close webview
+                //           },
+                //           child: CustomText(text: 'OK'.tr),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // );
+                CustomAlert.showInfo(
+                  context: Get.context!,
+                  message:
+                      "${'Payment Verification Failed'.tr}\n ${'Unable to verify payment. Please contact support.'.tr}",
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close alert dialog
+                    Navigator.of(context).pop(); // Close webview
+                  },
                 );
               }
             } catch (e) {
               logger.e("Error verifying payment: $e");
-              showDialog(
-                context: context,
-                builder: (context) => Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: AlertDialog(
-                    title: CustomText(text: 'Error'.tr),
-                    content: CustomText(
-                        maxLines: 4,
-                        text: 'An error occurred while verifying payment.'.tr),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop(); // Close alert dialog
-                          Navigator.of(context).pop(); // Close webview
-                        },
-                        child: CustomText(text: 'OK'.tr),
-                      )
-                    ],
-                  ),
-                ),
+              // showDialog(
+              //   context: context,
+              //   builder: (context) => Directionality(
+              //     textDirection: TextDirection.ltr,
+              //     child: AlertDialog(
+              //       title: CustomText(text: 'Error'.tr),
+              //       content: CustomText(
+              //           maxLines: 4,
+              //           text: 'An error occurred while verifying payment.'.tr),
+              //       actions: [
+              //         TextButton(
+              //           onPressed: () {
+              //             Navigator.of(context).pop(); // Close alert dialog
+              //             Navigator.of(context).pop(); // Close webview
+              //           },
+              //           child: CustomText(text: 'OK'.tr),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // );
+              CustomAlert.showInfo(
+                context: Get.context!,
+                message:
+                    "${'Error'.tr}\n ${'An error occurred while verifying payment.'.tr}",
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close alert dialog
+                  Navigator.of(context).pop(); // Close webview
+                },
               );
             }
             return NavigationDecision.prevent;
@@ -149,58 +167,75 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
             logger.i("Payment Failed URL detected");
             logger.i("Payment Failed URL: ${request.url}");
             logger.i("Payment Failed URL: ${paymentSuccessUrl}");
-
-            showDialog(
-              context: context,
-              builder: (context) => Directionality(
-                textDirection: TextDirection.ltr,
-                child: AlertDialog(
-                  title: CustomText(text: 'Payment Failed'.tr),
-                  content: CustomText(
-                    text: 'Your subscription payment was not successful.'.tr,
-                    maxLines: 3,
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(); // Close alert dialog
-                        Navigator.of(context).pop(); // Close webview
-                      },
-                      child: CustomText(text: 'OK'.tr),
-                    )
-                  ],
-                ),
-              ),
+            CustomAlert.showInfo(
+              context: Get.context!,
+              message:
+                  "${'Payment Failed'.tr}\n ${'Your subscription payment was not successful.'.tr}",
+              onPressed: () {
+                Navigator.of(context).pop(); // Close alert dialog
+                Navigator.of(context).pop(); // Close webview
+              },
             );
+
+            // showDialog(
+            //   context: context,
+            //   builder: (context) => Directionality(
+            //     textDirection: TextDirection.ltr,
+            //     child: AlertDialog(
+            //       title: CustomText(text: 'Payment Failed'.tr),
+            //       content: CustomText(
+            //         text: 'Your subscription payment was not successful.'.tr,
+            //         maxLines: 3,
+            //       ),
+            //       actions: [
+            //         TextButton(
+            //           onPressed: () {
+            //             Navigator.of(context).pop(); // Close alert dialog
+            //             Navigator.of(context).pop(); // Close webview
+            //           },
+            //           child: CustomText(text: 'OK'.tr),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // );
 
             return NavigationDecision.prevent;
           } else if (request.url.contains("message=CANCELLED")) {
             logger.i("Payment Cancelled URL detected");
             logger.i("Payment Cancelled URL: ${request.url}");
             logger.i("Payment Cancelled URL: ${paymentSuccessUrl}");
-
-            showDialog(
-              context: context,
-              builder: (context) => Directionality(
-                textDirection: TextDirection.ltr,
-                child: AlertDialog(
-                  title: CustomText(text: 'Payment Cancelled'.tr),
-                  content: CustomText(
-                    text: 'Your subscription payment was cancelled.'.tr,
-                    maxLines: 3,
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(); // Close alert dialog
-                        Navigator.of(context).pop(); // Close webview
-                      },
-                      child: CustomText(text: 'OK'.tr),
-                    )
-                  ],
-                ),
-              ),
+            CustomAlert.showInfo(
+              context: Get.context!,
+              message:
+                  "${'Payment Cancelled'.tr}\n ${'Your subscription payment was cancelled.'.tr}",
+              onPressed: () {
+                Navigator.of(context).pop(); // Close alert dialog
+                Navigator.of(context).pop(); // Close webview
+              },
             );
+            // showDialog(
+            //   context: context,
+            //   builder: (context) => Directionality(
+            //     textDirection: TextDirection.ltr,
+            //     child: AlertDialog(
+            //       title: CustomText(text: 'Payment Cancelled'.tr),
+            //       content: CustomText(
+            //         text: 'Your subscription payment was cancelled.'.tr,
+            //         maxLines: 3,
+            //       ),
+            //       actions: [
+            //         TextButton(
+            //           onPressed: () {
+            //             Navigator.of(context).pop(); // Close alert dialog
+            //             Navigator.of(context).pop(); // Close webview
+            //           },
+            //           child: CustomText(text: 'OK'.tr),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // );
 
             return NavigationDecision.prevent;
           }

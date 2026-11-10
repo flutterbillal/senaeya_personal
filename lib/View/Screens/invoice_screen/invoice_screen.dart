@@ -93,7 +93,9 @@ class InvoiceScreen extends StatelessWidget {
 
             // Format dates
             final createdDate = data.createdAt != null
-                ? DateFormat('dd-MM-yyyy hh:mm a').format(data.createdAt!)
+                ? DateFormat('dd-MM-yyyy hh:mm a').format(
+                    data.createdAt!.toUtc().add(const Duration(hours: 3)),
+                  )
                 : '';
             final expiryDate = data.currentPeriodEnd != null
                 ? DateFormat('dd-MM-yyyy').format(data.currentPeriodEnd!)
