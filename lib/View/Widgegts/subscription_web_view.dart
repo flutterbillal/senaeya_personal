@@ -1,4 +1,4 @@
-﻿import 'package:Senaeya/Core/AppRoute/app_route.dart';
+import 'package:Senaeya/Core/AppRoute/app_route.dart';
 import 'package:Senaeya/Utils/AppLog/app_log.dart';
 import 'package:Senaeya/View/Screens/profile_screen/model/subscription_details_model.dart';
 import 'package:Senaeya/View/Screens/profile_screen/repo/profile_repo.dart';
@@ -97,6 +97,8 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
   logger.i("Opening subscription URL: $url");
 
   late final WebViewController controller;
+  bool isPaymentHandled = false;
+
   controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..setNavigationDelegate(
@@ -106,84 +108,112 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
         },
         onNavigationRequest: (NavigationRequest request) async {
           logger.i("Navigating to URL: ${request.url}");
-          if (request.url.contains(paymentSuccessUrl) &&
-              request.url.contains("message=APPROVED")) {
-            logger.i("Payment Success URL detected");
-            logger.i("Payment Success URL: ${request.url}");
-            logger.i("Payment Success URL: $paymentSuccessUrl");
-            // Verify payment status from the success URL
 
-            try {
-              final Response response = await SubscriptionRepo()
-                  .createSubscription(
-                      packageId: packageId,
-                      amountPaid: amountPaid,
-                      couponCode: couponCode,
-                      vatPercent: vatPercent,
-                      flatDiscountedAmount: flatDiscountedAmount,
-                      flatVatAmount: flatVatAmount);
+          // If payment was already handled, prevent further navigation/duplicate popups
+          if (isPaymentHandled) {
+            return NavigationDecision.prevent;
+          }
 
-              if (response.statusCode == 200 || response.statusCode == 201) {
-                logger.i("Payment verified successfully");
-                String subscriptionId = await getSubscriptionByWorkshop();
+          // ONLY check status when the user reaches the final callback URL
+          if (request.url.contains(paymentSuccessUrl)) {
+            if (request.url.contains("message=APPROVED")) {
+              isPaymentHandled = true;
+              logger.i("Payment Success URL detected: ${request.url}");
+
+              try {
+                final Response response = await SubscriptionRepo()
+                    .createSubscription(
+                        packageId: packageId,
+                        amountPaid: amountPaid,
+                        couponCode: couponCode,
+                        vatPercent: vatPercent,
+                        flatDiscountedAmount: flatDiscountedAmount,
+                        flatVatAmount: flatVatAmount);
+
+                if (response.statusCode == 200 || response.statusCode == 201) {
+                  logger.i("Payment verified successfully");
+                  String subscriptionId = await getSubscriptionByWorkshop();
+                  CustomAlert.showInfo(
+                    context: Get.context!,
+                    message:
+                        "${'Payment Successful'.tr}\n ${'Your subscription payment was successful.'.tr}",
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close alert dialog
+                      Navigator.of(context).pop(); // Close webview
+
+                      Get.toNamed(AppRoute.invoiceScreen,
+                          arguments: {"subscriptionId": subscriptionId});
+                    },
+                  );
+                } else {
+                  logger.e(
+                      "Payment verification failed with status: ${response.statusCode}");
+                  CustomAlert.showInfo(
+                    context: Get.context!,
+                    message:
+                        "${'Payment Verification Failed'.tr}\n ${'Unable to verify payment. Please contact support.'.tr}",
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close alert dialog
+                      Navigator.of(context).pop(); // Close webview
+                    },
+                  );
+                }
+              } catch (e) {
+                logger.e("Error verifying payment: $e");
                 CustomAlert.showInfo(
                   context: Get.context!,
                   message:
-                      "${'Payment Successful'.tr}\n ${'Your subscription payment was successful.'.tr}",
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close alert dialog
-                    Navigator.of(context).pop(); // Close webview
-
-                    Get.toNamed(AppRoute.invoiceScreen,
-                        arguments: {"subscriptionId": subscriptionId});
-                  },
-                );
-              } else {
-                logger.e(
-                    "Payment verification failed with status: ${response.statusCode}");
-                CustomAlert.showInfo(
-                  context: Get.context!,
-                  message:
-                      "${'Payment Verification Failed'.tr}\n ${'Unable to verify payment. Please contact support.'.tr}",
+                      "${'Error'.tr}\n ${'An error occurred while verifying payment.'.tr}",
                   onPressed: () {
                     Navigator.of(context).pop(); // Close alert dialog
                     Navigator.of(context).pop(); // Close webview
                   },
                 );
               }
-            } catch (e) {
-              logger.e("Error verifying payment: $e");
+              return NavigationDecision.prevent;
+            } else if (request.url.contains("message=DECLINED")) {
+              isPaymentHandled = true;
+              logger.i("Payment Declined URL detected: ${request.url}");
               CustomAlert.showInfo(
                 context: Get.context!,
                 message:
-                    "${'Error'.tr}\n ${'An error occurred while verifying payment.'.tr}",
+                    "${'Payment Failed'.tr}\n ${'Your subscription payment was not successful.'.tr}",
                 onPressed: () {
                   Navigator.of(context).pop(); // Close alert dialog
                   Navigator.of(context).pop(); // Close webview
                 },
               );
+              return NavigationDecision.prevent;
+            } else if (request.url.contains("message=CANCELLED")) {
+              isPaymentHandled = true;
+              logger.i("Payment Cancelled URL detected: ${request.url}");
+              CustomAlert.showInfo(
+                context: Get.context!,
+                message:
+                    "${'Payment Cancelled'.tr}\n ${'Your subscription payment was cancelled.'.tr}",
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close alert dialog
+                  Navigator.of(context).pop(); // Close webview
+                },
+              );
+              return NavigationDecision.prevent;
+            } else {
+              // Reached callback URL with an unexpected failure status
+              isPaymentHandled = true;
+              CustomAlert.showInfo(
+                context: Get.context!,
+                message: "${'Payment Failed'.tr}\n ${'Something went wrong'.tr}",
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close alert dialog
+                  Navigator.of(context).pop(); // Close webview
+                },
+              );
+              return NavigationDecision.prevent;
             }
-            return NavigationDecision.prevent;
-          } else if (request.url.contains(paymentSuccessUrl) &&
-              request.url.contains("message=DECLINED")) {
-            logger.i("Payment Failed URL detected");
-            logger.i("Payment Failed URL: ${request.url}");
-            logger.i("Payment Failed URL: $paymentSuccessUrl");
-            CustomAlert.showInfo(
-              context: Get.context!,
-              message:
-                  "${'Payment Failed'.tr}\n ${'Your subscription payment was not successful.'.tr}",
-              onPressed: () {
-                Navigator.of(context).pop(); // Close alert dialog
-                Navigator.of(context).pop(); // Close webview
-              },
-            );
-
-            return NavigationDecision.prevent;
           } else if (request.url.contains("message=CANCELLED")) {
-            logger.i("Payment Cancelled URL detected");
-            logger.i("Payment Cancelled URL: ${request.url}");
-            logger.i("Payment Cancelled URL: $paymentSuccessUrl");
+            // User explicitly cancelled from a cancellation URL
+            isPaymentHandled = true;
+            logger.i("Payment Cancelled URL detected: ${request.url}");
             CustomAlert.showInfo(
               context: Get.context!,
               message:
@@ -193,18 +223,10 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
                 Navigator.of(context).pop(); // Close webview
               },
             );
-
             return NavigationDecision.prevent;
-          } else if (request.url.contains("message=")) {
-            CustomAlert.showInfo(
-              context: Get.context!,
-              message: "${'Payment Failed'.tr}\n ${'Something went wrong'.tr}",
-              onPressed: () {
-                Navigator.of(context).pop(); // Close alert dialog
-                Navigator.of(context).pop(); // Close webview
-              },
-            );
           }
+
+          // For all intermediate URLs (e.g. 3DS bank OTP page, verification redirects), allow normal navigation
           return NavigationDecision.navigate;
         },
       ),
