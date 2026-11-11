@@ -1,4 +1,4 @@
-import 'package:Senaeya/Core/AppRoute/app_route.dart';
+﻿import 'package:Senaeya/Core/AppRoute/app_route.dart';
 import 'package:Senaeya/Utils/AppLog/app_log.dart';
 import 'package:Senaeya/View/Screens/profile_screen/model/subscription_details_model.dart';
 import 'package:Senaeya/View/Screens/profile_screen/repo/profile_repo.dart';
@@ -195,7 +195,7 @@ void openSubscriptionWebView(BuildContext context, String paymentUrl,
             );
 
             return NavigationDecision.prevent;
-          } else {
+          } else if (request.url.contains("message=")) {
             CustomAlert.showInfo(
               context: Get.context!,
               message: "${'Payment Failed'.tr}\n ${'Something went wrong'.tr}",
